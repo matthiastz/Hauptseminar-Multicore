@@ -1,0 +1,71 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                             %
+% Anwendungsbeispiel für das Beamer-Template TU Chemnitz                      %
+% (c) Mario Haustein (mario.haustein@hrz.tu-chemnitz.de), 2013-2014           %
+%                                                                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage[utf8]{inputenc}
+\usepackage{babel}
+
+
+
+% TUC-Templates laden.
+\usetheme[fakcolor=if]{tuc2014}
+\mode<article>{\usepackage{beamerarticletuc2014}}
+
+
+%
+% Weitere Anpassungen nach Bedarf.
+%
+
+
+% Metadaten
+\title{Professur Praktische Informatik}
+\subtitle{OpenTuner: An Extensible Framework for Program Autotuning}
+%\subtitle{Hauptseminar}
+\author{Matthias Tietz}
+
+%\normalsize{Betreuer: Dr. Michael Hofmann}
+
+
+
+\date{\today}
+\institute[TUC]
+
+\begin{document}
+    \tucthreeheadlines
+
+    \begin{frame}
+        \titlepage
+    \end{frame}
+
+    \tucnarrowframe
+    \begingroup
+% kein logo
+%    \logo{\includegraphics[width=\hsize]{Grafiken/logo}}
+
+    \begin{frame}
+        \frametitle{Gliederung}
+        \tableofcontents
+    \end{frame}
+
+    \endgroup
+    \tucwideframe
+    \tuctwoheadlines
+
+    %
+    % Inhalt
+    %
+
+    \section{Einleitung - Warum OpenTuner?}
+
+%     \subsection{Soziales}
+
+    \begin{frame}
+    \begin{itemize}
+      \item Viele Gründe sprechen dafür
+    \end{itemize}
+    \end{frame}
+
+\end{document}
