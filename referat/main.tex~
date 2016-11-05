@@ -16,22 +16,27 @@
 % Weitere Anpassungen nach Bedarf.
 %
 
+\begin{document}
 
 % Metadaten
 \title{Professur Praktische Informatik}
 \subtitle{OpenTuner: An Extensible Framework for Program Autotuning}
 %\subtitle{Hauptseminar}
-\author{Matthias Tietz\\Betreuer: Dr. Michael Hofmann}
+\author{Matthias Tietz}
 
-% Betreuer: Dr. Michael Hofmann
+
+%\normalsize{Betreuer: Dr. Michael Hofmann}
+
+
 
 \date{\today}
 \institute[TUC]
 
-\begin{document}
+%\begin{document}
     \tucthreeheadlines
+
     \begin{frame}
-      \titlepage
+        \titlepage
     \end{frame}
 
     \tucnarrowframe
@@ -40,8 +45,8 @@
 %    \logo{\includegraphics[width=\hsize]{Grafiken/logo}}
 
     \begin{frame}
-      \frametitle{Gliederung}
-      \tableofcontents
+        \frametitle{Gliederung}
+        \tableofcontents
     \end{frame}
 
     \endgroup
@@ -52,35 +57,13 @@
     % Inhalt
     %
 
-    \section{Einleitung}
-    
-    \subsection{Problemstellung}
-    
-    \begin{frame}
-    \begin{itemize}
-      \item automatisierter und einfacher Optimierungsprozess
-      \item bessere und portierbare Performance von domänenspezifischen Programmen
-      \item domänenspez. Repräsentation des Suchraumes essentiell für gute Ergebnisse\\
-        $\rightarrow$ evtl. domänenspez. Suchtechniken nötig
+    \section{Einleitung - Warum OpenTuner?}
 
-
-    \end{itemize}
-    \end{frame}
-    
-    
-    \subsection{Warum OpenTuner?}
-    
+%     \subsection{Soziales}
 
     \begin{frame}
     \begin{itemize}
-      \item Erstellen domänenspezifischer und multi-objective Programm-Autotuner
-      \item vollständig anpassbare Konfigurations-Repräsentation
-      \item erweiterbare Suchtechnik-Repräsentation
-      \item einfache Schnittstelle zur Kommunikation mit dem zu optimierenden Programm
-      \item Open-Source-Framework
-      
-      
-      
+      \item Viele Gründe sprechen dafür
     \end{itemize}
     \end{frame}
 
