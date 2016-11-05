@@ -7,6 +7,9 @@
 
 \usepackage[utf8]{inputenc}
 \usepackage{babel}
+\usepackage{floatflt}
+ \usepackage{float}
+\usepackage{graphics}
 
 % TUC-Templates laden.
 \usetheme[fakcolor=if]{tuc2014}
@@ -51,37 +54,77 @@
     %
     % Inhalt
     %
+    
+    %%% Section %%%
 
     \section{Einleitung}
     
     \subsection{Problemstellung}
-    
+      
     \begin{frame}
-    \begin{itemize}
-      \item automatisierter und einfacher Optimierungsprozess
-      \item bessere und portierbare Performance von domänenspezifischen Programmen
-      \item domänenspez. Repräsentation des Suchraumes essentiell für gute Ergebnisse\\
-        $\rightarrow$ evtl. domänenspez. Suchtechniken nötig
-
-
-    \end{itemize}
-    \end{frame}
     
+    \begin{itemize}
+      \item Suchraum: Menge von Parametern die durchsucht werden soll
+      \item geeignete Suchverfahren abhängig von der Beschaffenheit dieser Menge
+      \item komplexe Struktur und Größe des Suchraums macht Handoptimierung oder vollständige Suche
+      unmöglich (bzw. extrem ineffizient) \\ $\rightarrow$ Nadel im Heuhaufen
+    \end{itemize}
+      
+    \begin{figure}[ht]
+      \centering	      
+      \includegraphics[scale=0.2]{bilder/3dpolyp}
+      \label{3dpoly}
+    \end{figure}
+    
+    \begin{itemize}
+      \item Ziele:
+      \begin{itemize}
+        \item automatisierter und einfacher Optimierungsprozess
+        \item bessere und portierbare Performance von domänenspezifischen Programmen
+      \end{itemize}
+    \end{itemize}
+
+    \end{frame}
     
     \subsection{Warum OpenTuner?}
     
-
     \begin{frame}
+    \textbf{Warum OpenTuner?}
+    
     \begin{itemize}
+    \normalsize 
       \item Erstellen domänenspezifischer und multi-objective Programm-Autotuner
       \item vollständig anpassbare Konfigurations-Repräsentation
-      \item erweiterbare Suchtechnik-Repräsentation
+      \item erweiterbare Repräsentation für Suchtechniken und Datentypen
+      $\rightarrow$ essentiell für (gute) Ergebnisse
       \item einfache Schnittstelle zur Kommunikation mit dem zu optimierenden Programm
+      \item Kombination mehrerer Suchtechniken (\textit{Ensembles}), dynamische Zuweisung der
+      Testanteile für die jeweiligen Suchtechniken
       \item Open-Source-Framework
-      
-      
-      
+           
     \end{itemize}
     \end{frame}
+    
+    %%% Section %%%
+    \section{Anwendungsgebiete}
+    
+    %%% Section %%%
+    \section{Das OpenTuner Framework}
+    
+    %%% Section %%%
+    \section{Konkrete Anwendungen der Entwickler}
+    
+    %%% Section %%%
+    \section{Eigene Anwendung}
+    
+    %%% Section %%%
+    \section{Erkenntnisse und Schlussfolgerungen}
+    
+    %%% Section %%%
+    \section{Quellen}
+    
+    
+    
+    
 
 \end{document}
