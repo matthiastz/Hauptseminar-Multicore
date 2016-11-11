@@ -192,14 +192,27 @@
   \begin{itemize}
     \item Abstraktionsschicht zwischen Suchtechnik und roher Konfigurations-Struktur
     \item Liste der Parameter/Datenstruktur ist dynamisch erweiterbar
-    \item Konfiguration wird als Dictionary verwaltet
+    \item Konfiguration wird als Dictionary verwaltet \newline
   \end{itemize}
   \textbf{Parameter-Typen}
   \begin{itemize}
-    \item 
+    \item jeder Parametertyp ist verantwortlich für Schnittstelle zwischen roher 
+    Parameterrepräsentation und stand. Ansicht dieses Parameters für die Suchtechnik
+    \item Parameterrepräsentation und Abstraktion erweiterbar/konfigurierbar
   \end{itemize}
   \end{frame}
-
+  
+%%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \begin{frame}
+      \begin{figure}[ht]
+      \centering	      
+      \includegraphics[scale=1]{bilder/paramtypes}
+      \label{paramtypes}
+    \end{figure}
+  \begin{itemize}
+    \item primitive, komplex beschreiben
+  \end{itemize}
+  \end{frame}
     
 
     
