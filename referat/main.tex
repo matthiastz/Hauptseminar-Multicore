@@ -55,12 +55,14 @@
     % Inhalt
     %
     
-    %%% Section %%%
+%%%%% section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     \section{Einleitung}
     
     \subsection{Problemstellung}
-      
+
+%%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   
+
     \begin{frame}
     
     \begin{itemize}
@@ -88,28 +90,118 @@
     
     \subsection{Warum OpenTuner?}
     
+%%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   
+      
     \begin{frame}
-    \textbf{Warum OpenTuner?}
+    \textbf{Die 3 wesentlichen Anforderungen an ein Autotuning-Framework:}
     
     \begin{itemize}
-    \normalsize 
-      \item Erstellen domänenspezifischer und multi-objective Programm-Autotuner
-      \item vollständig anpassbare Konfigurations-Repräsentation
-      \item erweiterbare Repräsentation für Suchtechniken und Datentypen
-      $\rightarrow$ essentiell für (gute) Ergebnisse
-      \item einfache Schnittstelle zur Kommunikation mit dem zu optimierenden Programm
-      \item Kombination mehrerer Suchtechniken (\textit{Ensembles}), dynamische Zuweisung der
-      Testanteile für die jeweiligen Suchtechniken
-      \item Open-Source-Framework
-           
+       
+    \item 1. Eine passende Konfigurations-Repräsentation
+        \begin{itemize}
+          \item Darstellung der domänenspezif. Datenstrukturen und Bedingungen
+          \item Qualität dieser Repräsentation entscheidend für Effizienz des Autotuners \newline
+        \end{itemize}
+        
+    \item 2. Größe des validen Konfigurations-Raumes
+        \begin{itemize}
+          \item durch Kürzen des Konfigurations-Raumes geht für viele Probleme gute Lösungen verloren
+          (bei bisherigen Autotunern ist dies gängige Praxis, da vollständige Suche)
+          \item rießige Konfigurationsräume möglich $\rightarrow$  intelligente Suchtechniken notwendig \newline
+        \end{itemize}
+        
+    \item 3. Landschaft des Konfigurations-Raumes
+      \begin{itemize}
+        \item Suchräume in der Praxis meist sehr komplex 
+        \item domänenspezif. Suchtechniken notwendig um optimale Lösung effizient zu ermitteln
+      \end{itemize}
+               
     \end{itemize}
     \end{frame}
     
-    %%% Section %%%
-    \section{Anwendungsgebiete}
+%%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   
+
+    \begin{frame}
+    \textbf{Deshalb OpenTuner:}
     
-    %%% Section %%%
-    \section{Das OpenTuner Framework}
+    \begin{itemize}
+      \item Erstellen domänenspezifischer und multi-objective Programm-Autotuner
+      \item vollständig anpassbare Konfigurations-Repräsentation
+      \item erweiterbare Repräsentation für Suchtechniken und Datentypen
+      \item Kombination mehrerer Suchtechniken (\textit{Ensembles}), dynamische Zuweisung der
+      Testanteile für die jeweiligen Suchtechniken
+      \item einfache Schnittstelle zur Kommunikation mit dem zu optimierenden Programm           
+    \end{itemize}
+    \end{frame}
+
+%%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   
+    
+  
+%%%%% section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %\section{Anwendungsgebiete}
+    
+%%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   
+%%%%% section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \section{Das OpenTuner Framework}   
+  \subsection{Allgemeines}
+    
+  \begin{frame}
+  \textbf{}
+    
+  \begin{itemize}
+    \item Autotuning-Problem $\rightarrow$ Suchproblem
+    \item Suchraum: Menge der Konfigurationen (Belegung von Parametern)
+    \item Messung: 1 konkrete Konfig. wird gemessen: Ausführung $\rightarrow$ Ergebnis
+    \item Möglichkeit mehrere Messungen parallel auszuführen
+    
+    \begin{figure}[ht]
+      \centering	      
+      \includegraphics[scale=0.75]{bilder/smdb}
+      \label{smdb}
+    \end{figure}
+
+  \end{itemize}
+  \end{frame}
+    
+%%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \subsection{Verwendung}
+
+  \begin{frame}
+  \textbf{Verwendung}
+  \begin{itemize}
+    \item 1. Suchraum definieren (Konfig.-Manipulator)
+    \item 2. run()-Methode definieren: Auswerten der Konfig. im Suchraum $\rightarrow$ Ergebnis
+    \item 3. Festlegen des Optimierungsziels (Zeit, Energie, Genauigkeit, Kombination…)
+    \item Umsetzung mittels kleinem Python-Programm (OpenTuner API)
+  \end{itemize}
+  \textbf{Suchtechniken}
+  \begin{itemize}
+    \item OpenTuner stellt Suchtechniken für viele Suchraum-Typen bereit
+    \item Ausführen mehrerer Suchtechniken gleichzeitig (Ensembles)
+    \item dynamische Testzuweisung anhand Erfolges dieser Techniken
+    \item erweiterbar: benutzerdefinierte Suchtechniken
+  \end{itemize}
+  \end{frame}
+  
+%%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+  \subsection{Konfigurations-Manipulator}
+
+  \begin{frame}
+  \textbf{Konfigurations-Manipulator}
+  \begin{itemize}
+    \item Abstraktionsschicht zwischen Suchtechnik und roher Konfigurations-Struktur
+    \item Liste der Parameter/Datenstruktur ist dynamisch erweiterbar
+    \item Konfiguration wird als Dictionary verwaltet
+  \end{itemize}
+  \textbf{Parameter-Typen}
+  \begin{itemize}
+    \item 
+  \end{itemize}
+  \end{frame}
+
+    
+
     
     %%% Section %%%
     \section{Konkrete Anwendungen der Entwickler}
