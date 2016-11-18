@@ -8,7 +8,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{babel}
 \usepackage{floatflt}
- \usepackage{float}
+\usepackage{float}
 \usepackage{graphics}
 
 % TUC-Templates laden.
@@ -59,7 +59,7 @@
 
     \section{Einleitung}
     
-    \subsection{Problemstellung}
+%    \subsection{Problemstellung}
 
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   
 
@@ -88,7 +88,7 @@
 
     \end{frame}
     
-    \subsection{Warum OpenTuner?}
+%   \subsection{Warum OpenTuner?}
     
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   
       
@@ -143,7 +143,7 @@
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   
 %%%%% section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \section{Das OpenTuner Framework}   
-  \subsection{Allgemeines}
+%  \subsection{Allgemeines}
     
   \begin{frame}
   \textbf{}
@@ -164,7 +164,7 @@
   \end{frame}
     
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  \subsection{Verwendung}
+%  \subsection{Verwendung}
 
   \begin{frame}
   \textbf{Verwendung}
@@ -185,7 +185,7 @@
   
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-  \subsection{Konfigurations-Manipulator}
+%  \subsection{Konfigurations-Manipulator}
 
   \begin{frame}
   \textbf{Konfigurations-Manipulator}
@@ -206,7 +206,7 @@
   \begin{frame}
       \begin{figure}[ht]
       \centering	      
-      \includegraphics[scale=1]{bilder/paramtypes}
+      \includegraphics[scale=1.1]{bilder/paramtypes}
       \label{paramtypes}
     \end{figure}
     
@@ -226,12 +226,12 @@
     \begin{itemize}
       \item haben ein variables Set an Manipulatoren, welche stochastische Änderungen an den Parametern 
       vornehmen
-      \item einfach erweiterbar, um domänenspezif. Strukturen zum Suchraum hinzuzufügen
+      \item einfach domänenspezif. Strukturen zum Suchraum hinzuzufügen
       \item \texttt{Boolean, Switch} und \texttt{Enum} bewusst als komplex. Parameter, da Suchtechniken
       bei primitiven Parametern nach Gradients (Steigungen) suchen. Diese Parameter sind aber ungeordnete
       Sammlung $\rightarrow$ es existiert dafür kein Gradient.
-      \item \texttt{Permutation} : Liste von Werte inkl. Manipulatoren zur Änderung der Reihenfolge
-      \item \texttt{Schedule} : Sonderfall von \texttt{Permutation} topolog. Sortierung nach jeder Änderung
+      \item \texttt{Permutation} : Liste von Werte inkl. Manipulatoren zur randomisierten Änderung der Reihenfolge
+      \item \texttt{Schedule} ist Sonderfall von \texttt{Permutation} : topolog. Sortierung nach jeder Änderung
       \item \texttt{Selector} : Mapping von Integer-Input auf Enum-Type (Darstellung als Baum)
     \end{itemize}
     
@@ -239,6 +239,40 @@
     \begin{itemize}
       \item Zusätzlich existieren erweiterbare Methoden für die Suchtechniken um zwischen mehreren Parametern 
     zu interagieren. (z.B. Differenz-Funktion)
+    \end{itemize}
+  \end{frame}
+  
+%%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \begin{frame}
+  \textbf{Optimierungsziele}
+    \begin{itemize}
+      \item OpenTuner unterstützt mehrere Ziele, standardmäßig wird nach der \texttt{Zeit} optimiert
+      \item \texttt{Genauigkeit, Energie, Größe} oder ein nutzerdef. Ziel
+      \item Es können auch mehrere Ziele zugleich verfolgt werden, bspw. \texttt{Genauigkeit einhalten, gleichzeitig
+      Zeit minimieren}
+    \end{itemize}
+    
+    \textbf{Suchen und Messen}
+    \begin{itemize}
+      \item kommunizieren ausschließlich über die Ergebnis-Datenbank
+      \item Motivation für die Unterteilung zwischen diesen beiden Modulen:
+      \begin{itemize}
+        \item Ermöglichen der Parallelität zwischen mehreren Prozessen (Suchen und Messen)
+        \item Autotuning während Ausführung der Anwendung oder in Wartezeit (Online/Sideline Learning)
+        \item Mess-Modul einfach ersetzbar ohne das gesamte Framework zu modifizieren (Domäne: Embedded/Mobil
+        $\rightarrow$ leichtgewichtiges Mess-Modul)
+      \end{itemize}
+    \end{itemize}         
+  \end{frame}
+  
+%%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \begin{frame}
+  \textbf{Ergebnis-Datenbank}
+    \begin{itemize}
+      \item vollfunktionale SQL-Datenbank
+      \item alle grundlegenden DB-Typen unterstützt, default: SQLite 
+      \item Abfragen und Eintragen der Ergebnisse in einer Vielzahl von Möglichkeiten
+      \item nützlich für die Performance-Beobachtung der Suchtechniken
     \end{itemize}
   \end{frame}
     
