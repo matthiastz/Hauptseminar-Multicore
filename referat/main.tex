@@ -170,7 +170,7 @@
   \textbf{Verwendung}
   \begin{itemize}
     \item 1. Suchraum definieren (Konfig.-Manipulator)
-    \item 2. run()-Methode definieren: Auswerten der Konfig. im Suchraum $\rightarrow$ Ergebnis
+    \item 2. \texttt{run()}-Methode definieren: Auswerten der Konfig. im Suchraum $\rightarrow$ Ergebnis
     \item 3. Festlegen des Optimierungsziels (Zeit, Energie, Genauigkeit, Kombination…)
     \item Umsetzung mittels kleinem Python-Programm (OpenTuner API)
   \end{itemize}
@@ -209,9 +209,37 @@
       \includegraphics[scale=1]{bilder/paramtypes}
       \label{paramtypes}
     \end{figure}
+    
+  \textbf{Primitive Parameter}
   \begin{itemize}
-    \item primitive, komplex beschreiben
+    \item numerische Werte mit Unter-/Obergrenze
+    \item \texttt{Float} und \texttt{LogFloat (-Int)} gleiche Repräsentation in der Konfiguration, aber 
+    untersch. Ansicht des zugrundeliegenden Wertes für die Suchtechnik (skaliert)
+    \item Grund: ohne Logskal. würde Effekt der Wertänderung mit steigender Parametergröße sinken
+    \item ähnlich bei \texttt{PowerOfTwo} $\rightarrow$ Quadrat nur zulässiger Wert des Parameters
   \end{itemize}
+  \end{frame}
+  
+%%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \begin{frame}
+    \textbf{Komplexe Parameter}
+    \begin{itemize}
+      \item haben ein variables Set an Manipulatoren, welche stochastische Änderungen an den Parametern 
+      vornehmen
+      \item einfach erweiterbar, um domänenspezif. Strukturen zum Suchraum hinzuzufügen
+      \item \texttt{Boolean, Switch} und \texttt{Enum} bewusst als komplex. Parameter, da Suchtechniken
+      bei primitiven Parametern nach Gradients (Steigungen) suchen. Diese Parameter sind aber ungeordnete
+      Sammlung $\rightarrow$ es existiert dafür kein Gradient.
+      \item \texttt{Permutation} : Liste von Werte inkl. Manipulatoren zur Änderung der Reihenfolge
+      \item \texttt{Schedule} : Sonderfall von \texttt{Permutation} topolog. Sortierung nach jeder Änderung
+      \item \texttt{Selector} : Mapping von Integer-Input auf Enum-Type (Darstellung als Baum)
+    \end{itemize}
+    
+    \textbf{Parameter-Interaktion}
+    \begin{itemize}
+      \item Zusätzlich existieren erweiterbare Methoden für die Suchtechniken um zwischen mehreren Parametern 
+    zu interagieren. (z.B. Differenz-Funktion)
+    \end{itemize}
   \end{frame}
     
 
