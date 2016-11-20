@@ -1,4 +1,6 @@
 *.zip
+*.py
+
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof
