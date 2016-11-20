@@ -8,7 +8,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{babel}
 \usepackage{floatflt}
- \usepackage{float}
+\usepackage{float}
 \usepackage{graphics}
 
 % TUC-Templates laden.
@@ -24,9 +24,9 @@
 \title{Professur Praktische Informatik}
 \subtitle{OpenTuner: An Extensible Framework for Program Autotuning}
 %\subtitle{Hauptseminar}
-\author{Matthias Tietz\\Betreuer: Dr. Michael Hofmann}
+\author{Matthias Tietz\\Betreuung: Prof. Dr. Gudula Rünger, Dr. Michael Hofmann}
 
-% Betreuer: Dr. Michael Hofmann
+% Betreuer: Prof. Dr. Gudula Rünger, Dr. Michael Hofmann
 
 \date{\today}
 \institute[TUC]
@@ -59,12 +59,13 @@
 
     \section{Einleitung}
     
-    \subsection{Problemstellung}
+%    \subsection{Problemstellung}
 
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   
 
     \begin{frame}
-    
+    \underline{1. Einleitung}
+        
     \begin{itemize}
       \item Suchraum: Menge von Parametern die durchsucht werden soll
       \item geeignete Suchverfahren abhängig von der Beschaffenheit dieser Menge
@@ -88,7 +89,7 @@
 
     \end{frame}
     
-    \subsection{Warum OpenTuner?}
+%   \subsection{Warum OpenTuner?}
     
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   
       
@@ -143,11 +144,12 @@
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   
 %%%%% section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \section{Das OpenTuner Framework}   
-  \subsection{Allgemeines}
-    
+%  \subsection{Allgemeines}
+   
+  
   \begin{frame}
-  \textbf{}
-    
+  
+  \underline{2. Das OpenTuner Framework}
   \begin{itemize}
     \item Autotuning-Problem $\rightarrow$ Suchproblem
     \item Suchraum: Menge der Konfigurationen (Belegung von Parametern)
@@ -164,15 +166,16 @@
   \end{frame}
     
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  \subsection{Verwendung}
+%  \subsection{Verwendung}
 
   \begin{frame}
   \textbf{Verwendung}
   \begin{itemize}
     \item 1. Suchraum definieren (Konfig.-Manipulator)
-    \item 2. run()-Methode definieren: Auswerten der Konfig. im Suchraum $\rightarrow$ Ergebnis
-    \item 3. Festlegen des Optimierungsziels (Zeit, Energie, Genauigkeit, Kombination…)
-    \item Umsetzung mittels kleinem Python-Programm (OpenTuner API)
+    \item 2. \texttt{run()}-Methode definieren: Auswerten der Konfig. im Suchraum $\rightarrow$ Ergebnis
+    \item 3. Festlegen des Optimierungsziels
+    \item Umsetzung mittels kleinem Python-Programm (OpenTuner API), Framework ist ausschließlich in 
+    Python geschrieben
   \end{itemize}
   \textbf{Suchtechniken}
   \begin{itemize}
@@ -185,7 +188,7 @@
   
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-  \subsection{Konfigurations-Manipulator}
+%  \subsection{Konfigurations-Manipulator}
 
   \begin{frame}
   \textbf{Konfigurations-Manipulator}
@@ -204,28 +207,118 @@
   
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \begin{frame}
-      \begin{figure}[ht]
+    \begin{figure}[ht]
       \centering	      
-      \includegraphics[scale=1]{bilder/paramtypes}
+      \includegraphics[scale=1.1]{bilder/paramtypes}
       \label{paramtypes}
     \end{figure}
+    
+  \textbf{Primitive Parameter}
   \begin{itemize}
-    \item primitive, komplex beschreiben
+    \item numerische Werte mit Unter-/Obergrenze
+    \item \texttt{Float} und \texttt{LogFloat (-Int)} gleiche Repräsentation in der Konfiguration, aber 
+    untersch. Ansicht des zugrundeliegenden Wertes für die Suchtechnik (skaliert)
+    \item Grund: ohne Logskal. würde Effekt der Wertänderung mit steigender Parametergröße sinken
+    \item ähnlich bei \texttt{PowerOfTwo} $\rightarrow$ Quadrat nur zulässiger Wert des Parameters
   \end{itemize}
   \end{frame}
+  
+%%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \begin{frame}
+    \textbf{Komplexe Parameter}
+    \begin{itemize}
+      \item haben ein variables Set an Manipulatoren, welche stochastische Änderungen an den Parametern 
+      vornehmen
+      \item einfach domänenspezif. Strukturen zum Suchraum hinzuzufügen
+      \item \texttt{Boolean, Switch} und \texttt{Enum} bewusst als komplex. Parameter, da Suchtechniken
+      bei primitiven Parametern nach Gradients (Steigungen) suchen. Diese Parameter sind aber ungeordnete
+      Sammlung $\rightarrow$ es existiert dafür kein Gradient.
+      \item \texttt{Permutation} : Liste von Werte inkl. Manipulatoren zur randomisierten Änderung der Reihenfolge
+      \item \texttt{Schedule} ist Sonderfall von \texttt{Permutation} : topolog. Sortierung nach jeder Änderung
+      \item \texttt{Selector} : Mapping von Integer-Input auf Enum-Type (Darstellung als Baum)
+    \end{itemize}
     
-
+    \textbf{Parameter-Interaktion}
+    \begin{itemize}
+      \item Zusätzlich existieren erweiterbare Methoden für die Suchtechniken um zwischen mehreren Parametern 
+    zu interagieren. (z.B. Differenz-Funktion)
+    \end{itemize}
+  \end{frame}
+  
+%%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \begin{frame}
+  \textbf{Optimierungsziele}
+    \begin{itemize}
+      \item OpenTuner unterstützt mehrere Ziele, standardmäßig wird nach der \texttt{Zeit} optimiert
+      \item \texttt{Genauigkeit, Energie, Größe} oder ein nutzerdef. Ziel
+      \item Es können auch mehrere Ziele zugleich verfolgt werden, bspw. \texttt{Genauigkeit einhalten, gleichzeitig
+      Zeit minimieren}
+    \end{itemize}
     
-    %%% Section %%%
+    \textbf{Suchen und Messen}
+    \begin{itemize}
+      \item kommunizieren ausschließlich über die Ergebnis-Datenbank
+      \item Motivation für die Unterteilung zwischen diesen beiden Modulen:
+      \begin{itemize}
+        \item Ermöglichen der Parallelität zwischen mehreren Prozessen (Suchen und Messen)
+        \item Autotuning während Ausführung der Anwendung oder in Wartezeit (Online/Sideline Learning)
+        \item Mess-Modul einfach ersetzbar ohne das gesamte Framework zu modifizieren (Domäne: Embedded/Mobil
+        $\rightarrow$ leichtgewichtiges Mess-Modul)
+      \end{itemize}
+    \end{itemize}         
+  \end{frame}
+  
+%%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \begin{frame}
+  \textbf{Ergebnis-Datenbank}
+    \begin{itemize}
+      \item vollfunktionale SQL-Datenbank
+      \item alle grundlegenden DB-Typen unterstützt, default: SQLite 
+      \item Abfragen und Eintragen der Ergebnisse in einer Vielzahl von Möglichkeiten
+      \item nützlich für die Performance-Beobachtung der Suchtechniken
+    \end{itemize}
+  \end{frame}
+  
+%%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     \section{Konkrete Anwendungen der Entwickler}
     
-    %%% Section %%%
+    \begin{frame}
+    \underline{3. Konkrete Anwendungen der Entwickler} \newline
+    
+     Vorstellen eines Beispiels aus einer bestimmten Kategorie \newline
+    
+    \textbf{a) GCC/G++ Flags}
+      \begin{itemize}
+        \item klassische Parameter-Optimierung
+        \item unterstützte Flags: \texttt{g++ --help=optimizers}
+        \item Parameter inkl. zulässiger Wertebereiche: \texttt{params.def} (gcc source code)
+        \item Implementierung des Autotuners:
+        \begin{itemize}
+          \item 1. Erstellen des \texttt{configuration manipulator} : Set der Parameter (Suchraum)
+          \item 2. Erstellen der \texttt{run}-Funktion
+          \item 3. Festlegen des Optimierungsziels
+        \end{itemize}
+      \end{itemize}
+    \end{frame}
+        
+%%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \begin{frame}
+    \begin{figure}[ht]
+      \centering	      
+      \includegraphics[width=\textwidth]{bilder/gccPyj}
+      \label{gccpy}
+    \end{figure}
+  \end{frame}  
+    
+    
+%%%%% Section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     \section{Eigene Anwendung}
     
-    %%% Section %%%
+%%%%% Section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     \section{Erkenntnisse und Schlussfolgerungen}
     
-    %%% Section %%%
+%%%%% Section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     \section{Quellen}
     
     
