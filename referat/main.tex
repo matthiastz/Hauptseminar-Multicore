@@ -21,66 +21,30 @@
 % Weitere Anpassungen nach Bedarf.
 %
 
-\definecolor{mygreen}{rgb}{0,0.6,0}
-\definecolor{mygray}{rgb}{0.5,0.5,0.5}
-\definecolor{mymauve}{rgb}{0.58,0,0.82}
-
-\lstset{ %
-  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
-  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
-  breaklines=true,                 % sets automatic line breaking
-  captionpos=b,                    % sets the caption-position to bottom
-  commentstyle=\color{mygreen},    % comment style
-  deletekeywords={...},            % if you want to delete keywords from the given language
-  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
-  frame=single,	                   % adds a frame around the code
-  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
-  keywordstyle=\color{blue},       % keyword style
-  language=Octave,                 % the language of the code
-  morekeywords={*,...},           % if you want to add more keywords to the set
-  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
-  numbersep=5pt,                   % how far the line-numbers are from the code
-  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
-  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
-  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
-  showstringspaces=false,          % underline spaces within strings only
-  showtabs=false,                  % show tabs within strings adding particular underscores
-  stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
-  stringstyle=\color{mymauve},     % string literal style
-  tabsize=2,	                   % sets default tabsize to 2 spaces
-  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
-}
-
-
 % Metadaten
-\title{Professur Praktische Informatik}
-\subtitle{OpenTuner: An Extensible Framework for Program Autotuning}
-%\subtitle{Hauptseminar}
-\author{Matthias Tietz\\Betreuung: Prof. Dr. Gudula Rünger, Dr. Michael Hofmann}
+\title{OpenTuner: An Extensible Framework \\ for Program Autotuning}
+\subtitle{Hauptseminar Wintersemester 2016/2017}
+\author{Matthias Tietz}
 
-% Betreuer: Prof. Dr. Gudula Rünger, Dr. Michael Hofmann
-
-\date{\today}
+\date{10.02.2017}
 \institute[TUC]
 
 \begin{document}
+
     \tucthreeheadlines
+    
     \begin{frame}
       \titlepage
     \end{frame}
 
-    \tucnarrowframe
-    \begingroup
-% kein logo
-%    \logo{\includegraphics[width=\hsize]{Grafiken/logo}}
-
     \begin{frame}
-      \frametitle{Gliederung}
-      \tableofcontents
+
+       \frametitle{Gliederung}
+       \tableofcontents
+
     \end{frame}
 
-    \endgroup
-    \tucwideframe
+
     \tuctwoheadlines
 
     %
@@ -96,7 +60,7 @@
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   
 
     \begin{frame}
-    \underline{1. Einleitung}
+    \textbf{1. Einleitung}
         
     \begin{itemize}
       \item Suchraum: Menge von Parametern die durchsucht werden soll
@@ -105,26 +69,6 @@
       unmöglich (bzw. extrem ineffizient) \\ $\rightarrow$ Nadel im Heuhaufen
     \end{itemize}
       
-%      \begin{figure}
-%      \centering	      
-%        \includegraphics[scale=0.2]{bilder/3dpolyp}
-%        \label{3dpoly}
-%      \end{figure}
-
-%    \hspace{1cm}
-
-  
-
-%     \includegraphics[scale=0.2]{bilder/3dpolyp}
-% %    \hspace{1cm}
-% 
-%     \framebox{  
-%       Ziele:
-%       Automatisierter und einfacher Optimierungsprozess. 
-%       Bessere und portierbare Performance von domänenspezifischen Programmen
-
-%     }  
-
   \hspace{0.33cm}    
   \includegraphics[width=4cm]{bilder/3dpolyp}
   \hspace{0.33cm}    
@@ -132,30 +76,15 @@
       Automatisierter und einfacher Optimierungsprozess.
       Bessere und portierbare Performance von domänenspezifischen Programmen.}}
 
-     
-
-
-
-    
-    
-
     \end{frame}
     
-%   \subsection{Warum OpenTuner?}
+
     
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   
       
     \begin{frame}
-
-    \begin{itemize}
-      \item Ziele:
-      \begin{itemize}
-        \item automatisierter und einfacher Optimierungsprozess
-        \item bessere und portierbare Performance von domänenspezifischen Programmen
-      \end{itemize}
-    \end{itemize}
     
-    \textbf{Die 3 wesentlichen Anforderungen an ein Autotuning-Framework:}
+    \textbf{Die Herausforderungen bei der Entwicklung eins Autotuning-Frameworks:}
     
     \begin{itemize}
        
@@ -165,14 +94,14 @@
           \item Qualität der Repräsentation entscheidend für Effizienz des Autotuners \newline
         \end{itemize}
         
-    \item 2. Größe des validen Konfigurations-Raumes
+    \item 2. Größe des gültigen Konfigurations-Raumes
         \begin{itemize}
           \item Kürzen des Konfigurations-Raumes $\rightarrow$ Verlieren guter Lösungen
           (bei bisherigen Autotunern gängige Praxis, da vollständige Suche)
           \item rießige Konfigurationsräume möglich $\rightarrow$  intelligente Suchtechniken notwendig \newline
         \end{itemize}
         
-    \item 3. Landschaft des Konfigurations-Raumes
+    \item 3. Beschaffenheit des Konfigurations-Raumes
       \begin{itemize}
         \item Suchräume in der Praxis meist sehr komplex 
         \item domänenspezif. Suchtechniken notwendig um optimale Lösung effizient zu ermitteln
@@ -185,7 +114,7 @@
 
     \begin{frame}
     
-    \textbf{Deshalb OpenTuner:}   
+    \textbf{Eigenschaften von OpenTuner:}   
     \begin{itemize}
       \item Erstellen domänenspezifischer und multi-objective Programm-Autotuner
       \item vollständig anpassbare Konfigurations-Repräsentation
@@ -204,13 +133,11 @@
     
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   
 %%%%% section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  \section{Das OpenTuner Framework}   
-%  \subsection{Allgemeines}
-   
+  \section{OpenTuner Framework} 
   
   \begin{frame}
   
-  \underline{2. Das OpenTuner Framework}
+  \textbf{2. OpenTuner Framework}
   \begin{itemize}
     \item Autotuning-Problem $\rightarrow$ Suchproblem
     \item Suchraum: Menge der Konfigurationen (Belegung von Parametern)
@@ -256,7 +183,6 @@
   \begin{itemize}
     \item Abstraktionsschicht zwischen Suchtechnik und roher Konfigurations-Struktur
     \item Liste der Parameter/Datenstruktur ist dynamisch erweiterbar
-    \item Konfiguration wird als Dictionary verwaltet \newline
   \end{itemize}
   \textbf{Parameter-Typen}
   \begin{itemize}
@@ -280,7 +206,6 @@
     \item \texttt{Float} und \texttt{LogFloat (-Int)} gleiche Repräsentation in der Konfiguration, aber 
     untersch. Ansicht des zugrundeliegenden Wertes für die Suchtechnik (skaliert)
     \item Grund: ohne Logskal. würde Effekt der Wertänderung mit steigender Parametergröße sinken
-    \item ähnlich bei \texttt{PowerOfTwo} $\rightarrow$ Quadrat nur zulässiger Wert des Parameters
   \end{itemize}
   \end{frame}
   
@@ -294,7 +219,7 @@
       als ungeordnete Sammlung $\rightarrow$ es existiert kein Gradient (wie bei prim. Parm.)
       \item \texttt{Permutation} : Liste von Werte inkl. Manipulatoren zur randomisierten Änderung der Reihenfolge
       \item \texttt{Schedule} ist Sonderfall von \texttt{Permutation} : topolog. Sortierung nach jeder Änderung
-      \item \texttt{Selector} : Mapping von Integer-Input auf Enum-Type (Darstellung als Baum)
+      \item \texttt{Selector}
     \end{itemize}
   \end{frame}
   
@@ -316,41 +241,14 @@
       Zeit minimieren}
     \end{itemize}
   \end{frame}
-  
-%%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  \begin{frame}
-    \textbf{Suchen und Messen}
-    \begin{itemize}
-      \item kommunizieren ausschließlich über die Ergebnis-Datenbank
-      \item Motivation für die Unterteilung zwischen diesen beiden Modulen:
-      \begin{itemize}
-        \item Ermöglichen der Parallelität zwischen mehreren Prozessen (Suchen und Messen)
-        \item Autotuning während Ausführung der Anwendung oder in Wartezeit (Online/Sideline Learning)
-        \item Mess-Modul einfach ersetzbar ohne das gesamte Framework zu modifizieren (Domäne: Embedded/Mobil
-        $\rightarrow$ leichtgewichtiges Mess-Modul)
-      \end{itemize}
-    \end{itemize} 
     
-  \textbf{\\}
-  
-  \textbf{Ergebnis-Datenbank}
-    \begin{itemize}
-      \item vollfunktionale SQL-Datenbank
-      \item alle grundlegenden DB-Typen unterstützt, default: SQLite 
-      \item Abfragen und Eintragen der Ergebnisse in einer Vielzahl von Möglichkeiten
-      \item nützlich für die Performance-Beobachtung der Suchtechniken
-    \end{itemize}
-  \end{frame}
-  
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% Section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     \section{Konkrete Anwendungen der Entwickler}
     
     \begin{frame}
-    \underline{3. Konkrete Anwendungen der Entwickler} \newline
-    
-     Vorstellen eines Beispiels aus einer bestimmten Kategorie \newline
-    
+    \textbf{3. Existierende Anwendungen der Entwickler} \newline
+      
     \textbf{a) GCC/G++ Flags}
       \begin{itemize}
         \item klassische Parameter-Optimierung
@@ -358,7 +256,8 @@
         \item Parameter inkl. zulässiger Wertebereiche: \texttt{params.def} (gcc source code)
         \item Implementierung des Autotuners:
         \begin{itemize}
-          \item 1. Erstellen des \texttt{configuration manipulator} : Set der Parameter (Suchraum)
+          \item 1. Erstellen des \texttt{configuration manipulator} : Menge der Parameter (Suchraum) \newline
+          \emph{Optimierungslevel, GXX-Flags/-Parameter}
           \item 2. Erstellen der \texttt{run}-Funktion
           \item 3. Festlegen des Optimierungsziels
         \end{itemize}
@@ -393,13 +292,81 @@
       \label{gccpy2}
     \end{figure}
   \end{frame}
+  
+%%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  
+ \begin{frame}
+   \begin{itemize}
+     \item die Methode \texttt{run} implementiert die Messfunktion der Konfigurationen
+     \item Konfiguration: spez. GXX-Befehlszeile (Opt, Flags, Params)
+     \item Ausführen der Befehlszeile $\rightarrow$ Executable erstellen
+     \item \texttt{call\_program} : Ausführen und Messen des Programms
+     \item \texttt{Ergebnis} wird erstellt und in Datenbank geschrieben 
+     (record type abhängig von Optimierungsziel) \newline
+     \item vergleichbare Anwendung: Halide, PetaBricks, Stencil
+   \end{itemize}
+ \end{frame}
+ 
+%%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \begin{frame}
+      \begin{figure}[ht]
+      \centering	      
+      \includegraphics[width=\textwidth]{bilder/outfile_8.pdf}
+      \label{gccResults}
+    \end{figure}
+  \end{frame}    
     
+%%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \begin{frame}
+   \textbf{b) Unitary Matrices}
+   
+    \begin{itemize}
+      \item Synthetisierung von Matrizen in optimaler Zeit
+      \item \textbf{bisher} traditioneller Autotuner zur Programmoptimierung
+      \item \textbf{hier} Suche als Subroutine zur Laufzeit
+      \item das Problem hat fixes Set von Operatoren (Controls), repräsentiert als Matrizen
+      \item Ziel: Finden einer Sequenz von Operatoren, sodass Matrixmultiplikation die Zielmatrix ergibt
+      \item Zielfunktion: Abstand (Genauigkeitswert) des Produktes der aktuellen Sequenz zum Ziel (trace fidelity)
+    \end{itemize}
+  \end{frame}
+  
+%%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+    \begin{figure}[ht]
+      \centering	      
+      \includegraphics[width=0.9\textwidth]{bilder/unitary.pdf}
+      \label{gccpy1a}
+    \end{figure}
+\end{frame}
+
+%%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+   \textbf{c) Super Mario}
+   
+   \begin{itemize}
+    \item Abschließen des ersten Levels durch Sequenz von Button-Eingaben 
+    \item
+   \end{itemize}
+   
+\end{frame}
+
+
+  
+%%%%% Section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \section{Anwendungsbeispiele}
+    
+%%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \begin{frame}
+    \begin{itemize}
+      \item abc abc abc
+    \end{itemize}
+    \end{frame}
     
 %%%%% Section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    \section{Eigene Anwendung}
-    
-%%%%% Section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    \section{Erkenntnisse und Schlussfolgerungen}
+    \section{Zusammenfassung}
+     \begin{itemize}
+      \item abc abc abc
+    \end{itemize}
     
 %%%%% Section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     \section{Quellen}

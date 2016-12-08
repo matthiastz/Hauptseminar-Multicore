@@ -105,19 +105,39 @@
       unmöglich (bzw. extrem ineffizient) \\ $\rightarrow$ Nadel im Heuhaufen
     \end{itemize}
       
-    \begin{figure}[ht]
-      \centering	      
-      \includegraphics[scale=0.2]{bilder/3dpolyp}
-      \label{3dpoly}
-    \end{figure}
+%      \begin{figure}
+%      \centering	      
+%        \includegraphics[scale=0.2]{bilder/3dpolyp}
+%        \label{3dpoly}
+%      \end{figure}
+
+%    \hspace{1cm}
+
+  
+
+%     \includegraphics[scale=0.2]{bilder/3dpolyp}
+% %    \hspace{1cm}
+% 
+%     \framebox{  
+%       Ziele:
+%       Automatisierter und einfacher Optimierungsprozess. 
+%       Bessere und portierbare Performance von domänenspezifischen Programmen
+
+%     }  
+
+  \hspace{0.33cm}    
+  \includegraphics[width=4cm]{bilder/3dpolyp}
+  \hspace{0.33cm}    
+  \fbox{\parbox[b][5em][c]{0.55\textwidth}{\textbf{Ziele:}
+      Automatisierter und einfacher Optimierungsprozess.
+      Bessere und portierbare Performance von domänenspezifischen Programmen.}}
+
+     
+
+
+
     
-    \begin{itemize}
-      \item Ziele:
-      \begin{itemize}
-        \item automatisierter und einfacher Optimierungsprozess
-        \item bessere und portierbare Performance von domänenspezifischen Programmen
-      \end{itemize}
-    \end{itemize}
+    
 
     \end{frame}
     
@@ -126,6 +146,7 @@
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   
       
     \begin{frame}
+    
     \textbf{Die 3 wesentlichen Anforderungen an ein Autotuning-Framework:}
     
     \begin{itemize}
@@ -133,13 +154,13 @@
     \item 1. Eine passende Konfigurations-Repräsentation
         \begin{itemize}
           \item Darstellung der domänenspezif. Datenstrukturen und Bedingungen
-          \item Qualität dieser Repräsentation entscheidend für Effizienz des Autotuners \newline
+          \item Qualität der Repräsentation entscheidend für Effizienz des Autotuners \newline
         \end{itemize}
         
     \item 2. Größe des validen Konfigurations-Raumes
         \begin{itemize}
-          \item durch Kürzen des Konfigurations-Raumes geht für viele Probleme gute Lösungen verloren
-          (bei bisherigen Autotunern ist dies gängige Praxis, da vollständige Suche)
+          \item Kürzen des Konfigurations-Raumes $\rightarrow$ Verlieren guter Lösungen
+          (bei bisherigen Autotunern gängige Praxis, da vollständige Suche)
           \item rießige Konfigurationsräume möglich $\rightarrow$  intelligente Suchtechniken notwendig \newline
         \end{itemize}
         
@@ -148,15 +169,15 @@
         \item Suchräume in der Praxis meist sehr komplex 
         \item domänenspezif. Suchtechniken notwendig um optimale Lösung effizient zu ermitteln
       \end{itemize}
-               
     \end{itemize}
+        
     \end{frame}
     
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   
 
     \begin{frame}
-    \textbf{Deshalb OpenTuner:}
     
+    \textbf{Deshalb OpenTuner:}   
     \begin{itemize}
       \item Erstellen domänenspezifischer und multi-objective Programm-Autotuner
       \item vollständig anpassbare Konfigurations-Repräsentation
@@ -259,26 +280,26 @@
   \begin{frame}
     \textbf{Komplexe Parameter}
     \begin{itemize}
-      \item haben ein variables Set an Manipulatoren, welche stochastische Änderungen an den Parametern 
-      vornehmen
+      \item haben variables Set an Manipulatoren $\rightarrow$ stochastische Parameter-Änderungen
       \item einfach domänenspezif. Strukturen zum Suchraum hinzuzufügen
-      \item \texttt{Boolean, Switch} und \texttt{Enum} bewusst als komplex. Parameter, da Suchtechniken
-      bei primitiven Parametern nach Gradients (Steigungen) suchen. Diese Parameter sind aber ungeordnete
-      Sammlung $\rightarrow$ es existiert dafür kein Gradient.
+      \item \texttt{Boolean, Switch} und \texttt{Enum} bewusst als komplex. Parameter, Darstellung
+      als ungeordnete Sammlung $\rightarrow$ es existiert kein Gradient (wie bei prim. Parm.)
       \item \texttt{Permutation} : Liste von Werte inkl. Manipulatoren zur randomisierten Änderung der Reihenfolge
       \item \texttt{Schedule} ist Sonderfall von \texttt{Permutation} : topolog. Sortierung nach jeder Änderung
       \item \texttt{Selector} : Mapping von Integer-Input auf Enum-Type (Darstellung als Baum)
-    \end{itemize}
-    
-    \textbf{Parameter-Interaktion}
-    \begin{itemize}
-      \item Zusätzlich existieren erweiterbare Methoden für die Suchtechniken um zwischen mehreren Parametern 
-    zu interagieren. (z.B. Differenz-Funktion)
     \end{itemize}
   \end{frame}
   
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \begin{frame}
+  \textbf{Parameter-Interaktion}
+    \begin{itemize}
+      \item Zusätzlich existieren erweiterbare Methoden für die Suchtechniken um zwischen mehreren Parametern 
+    zu interagieren. (z.B. Differenz-Funktion)
+    \end{itemize}
+    
+    \textbf{\\}
+  
   \textbf{Optimierungsziele}
     \begin{itemize}
       \item OpenTuner unterstützt mehrere Ziele, standardmäßig wird nach der \texttt{Zeit} optimiert
@@ -286,7 +307,10 @@
       \item Es können auch mehrere Ziele zugleich verfolgt werden, bspw. \texttt{Genauigkeit einhalten, gleichzeitig
       Zeit minimieren}
     \end{itemize}
-    
+  \end{frame}
+  
+%%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \begin{frame}
     \textbf{Suchen und Messen}
     \begin{itemize}
       \item kommunizieren ausschließlich über die Ergebnis-Datenbank
@@ -297,11 +321,10 @@
         \item Mess-Modul einfach ersetzbar ohne das gesamte Framework zu modifizieren (Domäne: Embedded/Mobil
         $\rightarrow$ leichtgewichtiges Mess-Modul)
       \end{itemize}
-    \end{itemize}         
-  \end{frame}
+    \end{itemize} 
+    
+  \textbf{\\}
   
-%%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  \begin{frame}
   \textbf{Ergebnis-Datenbank}
     \begin{itemize}
       \item vollfunktionale SQL-Datenbank
@@ -327,7 +350,8 @@
         \item Parameter inkl. zulässiger Wertebereiche: \texttt{params.def} (gcc source code)
         \item Implementierung des Autotuners:
         \begin{itemize}
-          \item 1. Erstellen des \texttt{configuration manipulator} : Set der Parameter (Suchraum)
+          \item 1. Erstellen des \texttt{configuration manipulator} : Set der Parameter (Suchraum) \newline
+          \emph{Optimierungslevel, GXX-Flags/-Parameter}
           \item 2. Erstellen der \texttt{run}-Funktion
           \item 3. Festlegen des Optimierungsziels
         \end{itemize}
@@ -362,8 +386,66 @@
       \label{gccpy2}
     \end{figure}
   \end{frame}
+  
+%%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  
+ \begin{frame}
+   \begin{itemize}
+     \item die Methode \texttt{run} implementiert die Messfunktion der Konfigurationen
+     \item Konfiguration: spez. GXX-Befehlszeile (Opt, Flags, Params)
+     \item Ausführen der Befehlszeile $\rightarrow$ Executable erstellen
+     \item \texttt{call\_program} : Ausführen und Messen des Programms
+     \item \texttt{Ergebnis} wird erstellt und in Datenbank geschrieben 
+     (record type abhängig von Optimierungsziel) \newline
+     \item vergleichbare Anwendung: Halide, PetaBricks, Stencil
+   \end{itemize}
+ \end{frame}
+ 
+%%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \begin{frame}
+      \begin{figure}[ht]
+      \centering	      
+      \includegraphics[width=\textwidth]{bilder/outfile_8.pdf}
+      \label{gccResults}
+    \end{figure}
+  \end{frame}    
     
-    
+%%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \begin{frame}
+   \textbf{b) Unitary Matrices}
+   
+    \begin{itemize}
+      \item Synthetisierung von Matrizen in optimaler Zeit
+      \item \textbf{bisher} traditioneller Autotuner zur Programmoptimierung
+      \item \textbf{hier} Suche als Subroutine zur Laufzeit
+      \item das Problem hat fixes Set von Operatoren (Controls), repräsentiert als Matrizen
+      \item Ziel: Finden einer Sequenz von Operatoren, sodass Matrixmultiplikation die Zielmatrix ergibt
+      \item Zielfunktion: Abstand (Genauigkeitswert) des Produktes der aktuellen Sequenz zum Ziel (trace fidelity)
+    \end{itemize}
+  \end{frame}
+  
+%%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+    \begin{figure}[ht]
+      \centering	      
+      \includegraphics[width=0.9\textwidth]{bilder/unitary.pdf}
+      \label{gccpy1a}
+    \end{figure}
+\end{frame}
+
+%%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+   \textbf{c) Super Mario}
+   
+   \begin{itemize}
+    \item Abschließen des ersten Levels durch Sequenz von Button-Eingaben 
+    \item
+   \end{itemize}
+   
+\end{frame}
+
+
+  
 %%%%% Section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     \section{Eigene Anwendung}
     
