@@ -23,7 +23,7 @@
 
 % Metadaten
 \title{OpenTuner: An Extensible Framework \\ for Program Autotuning}
-\subtitle{Hauptseminar Wintersemester 2016/2017}
+\subtitle{Hauptseminar WS 2016/2017}
 \author{Matthias Tietz}
 
 \date{10.02.2017}
@@ -54,8 +54,6 @@
 %%%%% section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     \section{Einleitung}
-    
-%    \subsection{Problemstellung}
 
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   
 
@@ -63,23 +61,67 @@
     \textbf{1. Einleitung}
         
     \begin{itemize}
-      \item Suchraum: Menge von Parametern die durchsucht werden soll
-      \item geeignete Suchverfahren abhängig von der Beschaffenheit dieser Menge
-      \item komplexe Struktur und Größe des Suchraums macht Handoptimierung oder vollständige Suche
-      unmöglich (bzw. extrem ineffizient) \\ $\rightarrow$ Nadel im Heuhaufen
+      % findet Anwendung in Domänen wie HPC und Grafikverarbeitung (PS, 3D, image processing)
+      % (hoher Rechenaufwand) -> Zeitgewinn ... hand-optimierte AT ..
+      \item Suche nach optimaler Programm-Implementierung teil-/vollautomatisierbar
+            
+      \item bestehende Autotuning-Frameworks meist domänenspezifisch (ATLAS, FFTW) \newline
+      % lineare Algebra, FFT
+      % referenz / link auf ATLAS, FFTW
+
+    \end{itemize}
+      \text{OpenTuner:}
+    \begin{itemize}
+      \item Ausdrücken des Suchraums statt direkter Optimierung
+      \item Verfahren komfortabler und oft effizienter (große Suchräume)
+      % Suchraum = Parameter, mögliche Implementierungen
+      % per Hand schwer machbar bzw. sehr ineffizient
+      
+      \item mehrere Optimierungsziele komibinierbar
+      % Tradeoff Performance - Genauigkeit
+            
+      \item stark auf Erweiterbarkeit ausgelegt
+      
     \end{itemize}
       
-  \hspace{0.33cm}    
-  \includegraphics[width=4cm]{bilder/3dpolyp}
-  \hspace{0.33cm}    
-  \fbox{\parbox[b][5em][c]{0.55\textwidth}{\textbf{Ziele:}
-      Automatisierter und einfacher Optimierungsprozess.
-      Bessere und portierbare Performance von domänenspezifischen Programmen.}}
-
+%   \hspace{0.33cm}    
+%   \includegraphics[width=4cm]{bilder/3dpolyp}
+%   \hspace{0.33cm}    
+%   \fbox{\parbox[b][5em][c]{0.55\textwidth}{\textbf{Ziele:}
+%       Automatisierter und einfacher Optimierungsprozess.
+%       Bessere und portierbare Performance von domänenspezifischen Programmen.}}
+% 
     \end{frame}
     
-
+%%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   
     
+  \begin{frame}
+    \textbf{gebräuchliche Begriffe:}
+    
+  \begin{itemize}
+
+    \item \textbf{Parameter}: Variablen eines bestimmten Typs 
+    % Modellierung
+    % Programm XY -> welche Parameter sollen modelliert werden? spätere Folie dazu mehr
+    
+    \item \textbf{Konfiguration}: konkrete Zuweisungen von Parametern
+    \item \textbf{Konfigurations-Manipulator}: Bearbeiten der Parametern in Konfig. \newline
+    % Funktion
+    
+    \item \textbf{Suchraum}: zu durchsuchende Menge von Konfigurationen
+    % mögliche Implementierungen
+    
+    \item \textbf{Suchtechnik}: Suchraum erforschen (KM), Anfragen für Messung (Ergebnis)
+    % folie mit grafik schön zu sehen
+     
+    \item \textbf{Suchprozess}: Lesen/Schreiben von Konfigurationen \newline
+    \item \textbf{Messprozess}: konkrete Konfiguration ausführen
+    \item \textbf{Messresultat}: Ergebnis der Messung, abhängig von Optimierungsziel(en)
+    \item \textbf{Ergebnisdatenbank}: Festhalten aller Ergebnisse während Tuning-Vorgangs
+    
+  \end{itemize}
+  \end{frame}
+        
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   
       
     \begin{frame}
@@ -112,28 +154,29 @@
     
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   
 
-    \begin{frame}
+%     \begin{frame}
+%     
+%     \textbf{Eigenschaften von OpenTuner:}   
+%     \begin{itemize}
+%       \item Erstellen domänenspezifischer und multi-objective Programm-Autotuner
+%       \item vollständig anpassbare Konfigurations-Repräsentation
+%       \item erweiterbare Repräsentation für Suchtechniken und Datentypen
+%       \item Kombination mehrerer Suchtechniken (\textit{Ensembles}), dynamische Zuweisung der
+%       Testanteile für die jeweiligen Suchtechniken
+%       \item einfache Schnittstelle zur Kommunikation mit dem zu optimierenden Programm           
+%     \end{itemize}
+%     \end{frame}
     
-    \textbf{Eigenschaften von OpenTuner:}   
-    \begin{itemize}
-      \item Erstellen domänenspezifischer und multi-objective Programm-Autotuner
-      \item vollständig anpassbare Konfigurations-Repräsentation
-      \item erweiterbare Repräsentation für Suchtechniken und Datentypen
-      \item Kombination mehrerer Suchtechniken (\textit{Ensembles}), dynamische Zuweisung der
-      Testanteile für die jeweiligen Suchtechniken
-      \item einfache Schnittstelle zur Kommunikation mit dem zu optimierenden Programm           
-    \end{itemize}
-    \end{frame}
-
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   
-    
+%%%%% section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \section{OpenTuner Framework}
   
-%%%%% section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    %\section{Anwendungsgebiete}
-    
-%%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   
-%%%%% section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  \section{OpenTuner Framework} 
+%%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  
+
+
+
+%%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
   
   \begin{frame}
   
@@ -170,7 +213,7 @@
     \item OpenTuner stellt Suchtechniken für viele Suchraum-Typen bereit
     \item Ausführen mehrerer Suchtechniken gleichzeitig (Ensembles)
     \item dynamische Testzuweisung anhand Erfolges dieser Techniken
-    \item erweiterbar: benutzerdefinierte Suchtechniken
+%     \item erweiterbar: benutzerdefinierte Suchtechniken
   \end{itemize}
   \end{frame}
   
