@@ -22,7 +22,7 @@
 %
 
 % Metadaten
-\title{OpenTuner: An Extensible Framework \\ for Program Autotuning}
+\title{OpenTuner: An Extensible Framework\\for Program Autotuning}
 \subtitle{Hauptseminar WS 2016/2017}
 \author{Matthias Tietz}
 
@@ -96,7 +96,7 @@
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   
     
   \begin{frame}
-    \textbf{gebräuchliche Begriffe:}
+    \textbf{verwendete Begriffe:}
     
   \begin{itemize}
 
@@ -105,7 +105,7 @@
     % Programm XY -> welche Parameter sollen modelliert werden? spätere Folie dazu mehr
     
     \item \textbf{Konfiguration}: konkrete Zuweisungen von Parametern
-    \item \textbf{Konfigurations-Manipulator}: Bearbeiten der Parametern in Konfig. \newline
+    \item \textbf{Konfigurations-Manipulator}: Bearbeiten der Parameter in Konfig. \newline
     % Funktion
     
     \item \textbf{Suchraum}: zu durchsuchende Menge von Konfigurationen
@@ -126,7 +126,7 @@
       
     \begin{frame}
     
-    \textbf{Die Herausforderungen bei der Entwicklung eins Autotuning-Frameworks:}
+    \textbf{Herausforderungen bei der Entwicklung eins Autotuning-Frameworks:}
     
     \begin{itemize}
        
@@ -139,14 +139,17 @@
     \item 2. Größe des gültigen Konfigurations-Raumes
         \begin{itemize}
           \item Kürzen des Konfigurations-Raumes $\rightarrow$ Verlieren guter Lösungen
-          (bei bisherigen Autotunern gängige Praxis, da vollständige Suche)
+          % (bei bisherigen Autotunern gängige Praxis, da vollständige Suche)
+          
           \item rießige Konfigurationsräume möglich $\rightarrow$  intelligente Suchtechniken notwendig \newline
         \end{itemize}
         
     \item 3. Beschaffenheit des Konfigurations-Raumes
       \begin{itemize}
         \item Suchräume in der Praxis meist sehr komplex 
-        \item domänenspezif. Suchtechniken notwendig um optimale Lösung effizient zu ermitteln
+        \item domänenspezif. Suchtechniken notwendig
+        % um optimale Lösung effizient zu ermitteln
+        
       \end{itemize}
     \end{itemize}
         
@@ -181,19 +184,20 @@
   \begin{frame}
   
   \textbf{2. OpenTuner Framework}
-  \begin{itemize}
-    \item Autotuning-Problem $\rightarrow$ Suchproblem
-    \item Suchraum: Menge der Konfigurationen (Belegung von Parametern)
-    \item Messung: 1 konkrete Konfig. wird gemessen: Ausführung $\rightarrow$ Ergebnis
-    \item Möglichkeit mehrere Messungen parallel auszuführen
+  % \begin{itemize}
+    % \item Autotuning-Problem $\rightarrow$ Suchproblem
+    % \item Suchraum: Menge der Konfigurationen (Belegung von Parametern)
+    % \item Messung: 1 konkrete Konfig. wird gemessen: Ausführung $\rightarrow$ Ergebnis
+    % \item Möglichkeit mehrere Messungen parallel auszuführen
     
-    \begin{figure}[ht]
-      \centering	      
-      \includegraphics[scale=0.75]{bilder/smdb}
-      \label{smdb}
-    \end{figure}
-
-  \end{itemize}
+  % \end{itemize}
+  
+  \begin{figure}[ht]
+    \centering	      
+    \includegraphics[scale=0.9]{bilder/smdb}
+    \label{smdb}
+  \end{figure}
+  
   \end{frame}
     
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -205,8 +209,10 @@
     \item 1. Suchraum definieren (Konfig.-Manipulator)
     \item 2. \texttt{run()}-Methode definieren: Auswerten der Konfig. im Suchraum $\rightarrow$ Ergebnis
     \item 3. Festlegen des Optimierungsziels
-    \item Umsetzung mittels kleinem Python-Programm (OpenTuner API), Framework ist ausschließlich in 
-    Python geschrieben
+    \item Umsetzung mittels kleinem Python-Programm (OpenTuner API)
+    % Framework ist ausschließlich in Python geschrieben
+    % Bsp. später darauf eingehen, sieht man es besser
+    
   \end{itemize}
   \textbf{Suchtechniken}
   \begin{itemize}
@@ -215,28 +221,19 @@
     \item dynamische Testzuweisung anhand Erfolges dieser Techniken
 %     \item erweiterbar: benutzerdefinierte Suchtechniken
   \end{itemize}
-  \end{frame}
   
-%%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%  \subsection{Konfigurations-Manipulator}
-
-  \begin{frame}
   \textbf{Konfigurations-Manipulator}
   \begin{itemize}
-    \item Abstraktionsschicht zwischen Suchtechnik und roher Konfigurations-Struktur
-    \item Liste der Parameter/Datenstruktur ist dynamisch erweiterbar
-  \end{itemize}
-  \textbf{Parameter-Typen}
-  \begin{itemize}
-    \item jeder Parametertyp ist verantwortlich für Schnittstelle zwischen roher 
-    Parameterrepräsentation und stand. Ansicht dieses Parameters für die Suchtechnik
-    \item Parameterrepräsentation und Abstraktion erweiterbar/konfigurierbar
+    \item Abstraktionsschicht zwischen Suchtechnik und Konfigurations-Struktur
+    % 
+    \item Zugriff auf Parameter-Objekte: Lesen/Schreiben per Suchtechnik
+    
   \end{itemize}
   \end{frame}
-  
+    
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \begin{frame}
+    \textbf{Parameter-Typen}
     \begin{figure}[ht]
       \centering	      
       \includegraphics[scale=1.1]{bilder/paramtypes}
@@ -246,9 +243,11 @@
   \textbf{Primitive Parameter}
   \begin{itemize}
     \item numerische Werte mit Unter-/Obergrenze
-    \item \texttt{Float} und \texttt{LogFloat (-Int)} gleiche Repräsentation in der Konfiguration, aber 
-    untersch. Ansicht des zugrundeliegenden Wertes für die Suchtechnik (skaliert)
+    \item \texttt{Float} und \texttt{LogFloat (-Int)} gleiche Repräsentation in Konfiguration, aber 
+    zugrundeliegender Wert für Suchtechnik skaliert
     \item Grund: ohne Logskal. würde Effekt der Wertänderung mit steigender Parametergröße sinken
+    % ähnlich bei PowerOfTwo
+    
   \end{itemize}
   \end{frame}
   
@@ -257,52 +256,45 @@
     \textbf{Komplexe Parameter}
     \begin{itemize}
       \item haben variables Set an Manipulatoren $\rightarrow$ stochastische Parameter-Änderungen
-      \item einfach domänenspezif. Strukturen zum Suchraum hinzuzufügen
       \item \texttt{Boolean, Switch} und \texttt{Enum} bewusst als komplex. Parameter, Darstellung
-      als ungeordnete Sammlung $\rightarrow$ es existiert kein Gradient (wie bei prim. Parm.)
+      als ungeordnete Sammlung $\rightarrow$ es existiert kein Gradient (wie bei prim. Param.)
       \item \texttt{Permutation} : Liste von Werte inkl. Manipulatoren zur randomisierten Änderung der Reihenfolge
-      \item \texttt{Schedule} ist Sonderfall von \texttt{Permutation} : topolog. Sortierung nach jeder Änderung
-      \item \texttt{Selector}
+      \item \texttt{Schedule}, \texttt{Selector}
+      % ist Sonderfall von \texttt{Permutation} : topolog. Sortierung nach jeder Änderung
+      % Selector: Mapping von Integer-Input auf Enum-Type (Darstellung als Baum)
+      
     \end{itemize}
-  \end{frame}
-  
-%%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  \begin{frame}
-  \textbf{Parameter-Interaktion}
-    \begin{itemize}
-      \item Zusätzlich existieren erweiterbare Methoden für die Suchtechniken um zwischen mehreren Parametern 
-    zu interagieren. (z.B. Differenz-Funktion)
-    \end{itemize}
-    
-    \textbf{\\}
   
   \textbf{Optimierungsziele}
     \begin{itemize}
-      \item OpenTuner unterstützt mehrere Ziele, standardmäßig wird nach der \texttt{Zeit} optimiert
-      \item \texttt{Genauigkeit, Energie, Größe} oder ein nutzerdef. Ziel
-      \item Es können auch mehrere Ziele zugleich verfolgt werden, bspw. \texttt{Genauigkeit einhalten, gleichzeitig
+      \item OpenTuner unterstützt mehrere Ziele, default: \texttt{time}
+      \item \texttt{accuracy, energy, size, confidence} oder ein nutzerdef. Ziel
+      \item Es können auch mehrere Ziele zugleich verfolgt werden, bspw. \emph{Genauigkeit einhalten, gleichzeitig
       Zeit minimieren}
     \end{itemize}
   \end{frame}
     
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% Section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    \section{Konkrete Anwendungen der Entwickler}
+    \section{Anwendungsbeispiele}
     
     \begin{frame}
-    \textbf{3. Existierende Anwendungen der Entwickler} \newline
+      \textbf{3. Anwendungsbeispiele} \newline
       
-    \textbf{a) GCC/G++ Flags}
+    \textbf{GCC/G++ Flags}
       \begin{itemize}
         \item klassische Parameter-Optimierung
         \item unterstützte Flags: \texttt{g++ --help=optimizers}
         \item Parameter inkl. zulässiger Wertebereiche: \texttt{params.def} (gcc source code)
         \item Implementierung des Autotuners:
         \begin{itemize}
-          \item 1. Erstellen des \texttt{configuration manipulator} : Menge der Parameter (Suchraum) \newline
-          \emph{Optimierungslevel, GXX-Flags/-Parameter}
+          \item 1. Erstellen des \texttt{configuration manipulator}
+          % Menge der Parameter (Suchraum) \newline
+          % \emph{Optimierungslevel, GXX-Flags/-Parameter}
+          
           \item 2. Erstellen der \texttt{run}-Funktion
           \item 3. Festlegen des Optimierungsziels
+          
         \end{itemize}
       \end{itemize}
     \end{frame}
@@ -311,7 +303,7 @@
   \begin{frame}
     \begin{figure}[ht]
       \centering	      
-      \includegraphics[width=\textwidth]{bilder/ot-3-1a}
+      \includegraphics[width=0.8\textwidth]{bilder/ot-3-1a}
       \label{gccpy1a}
     \end{figure}
   \end{frame}
@@ -321,7 +313,7 @@
   \begin{frame}
     \begin{figure}[ht]
       \centering	      
-      \includegraphics[width=\textwidth]{bilder/ot-3-1}
+      \includegraphics[width=0.75\textwidth]{bilder/ot-3-1}
       \label{gccpy1}
     \end{figure}
   \end{frame}
@@ -331,25 +323,11 @@
   \begin{frame}
     \begin{figure}[ht]
       \centering	      
-      \includegraphics[scale=0.9]{bilder/ot-3-2}
+      \includegraphics[width=0.65\textwidth]{bilder/ot-3-2}
       \label{gccpy2}
     \end{figure}
   \end{frame}
-  
-%%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  
- \begin{frame}
-   \begin{itemize}
-     \item die Methode \texttt{run} implementiert die Messfunktion der Konfigurationen
-     \item Konfiguration: spez. GXX-Befehlszeile (Opt, Flags, Params)
-     \item Ausführen der Befehlszeile $\rightarrow$ Executable erstellen
-     \item \texttt{call\_program} : Ausführen und Messen des Programms
-     \item \texttt{Ergebnis} wird erstellt und in Datenbank geschrieben 
-     (record type abhängig von Optimierungsziel) \newline
-     \item vergleichbare Anwendung: Halide, PetaBricks, Stencil
-   \end{itemize}
- \end{frame}
- 
+
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \begin{frame}
       \begin{figure}[ht]
@@ -357,53 +335,114 @@
       \includegraphics[width=\textwidth]{bilder/outfile_8.pdf}
       \label{gccResults}
     \end{figure}
-  \end{frame}    
-    
-%%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  \begin{frame}
-   \textbf{b) Unitary Matrices}
-   
-    \begin{itemize}
-      \item Synthetisierung von Matrizen in optimaler Zeit
-      \item \textbf{bisher} traditioneller Autotuner zur Programmoptimierung
-      \item \textbf{hier} Suche als Subroutine zur Laufzeit
-      \item das Problem hat fixes Set von Operatoren (Controls), repräsentiert als Matrizen
-      \item Ziel: Finden einer Sequenz von Operatoren, sodass Matrixmultiplikation die Zielmatrix ergibt
-      \item Zielfunktion: Abstand (Genauigkeitswert) des Produktes der aktuellen Sequenz zum Ziel (trace fidelity)
-    \end{itemize}
-  \end{frame}
+  \end{frame} 
   
+%%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  
+ \begin{frame}
+   \begin{itemize}
+     \item vergleichbare Anwendung: Halide, PetaBricks, Stencil
+     \item TODO: Bezug nehmen oder neue 1 weitere beschreiben?
+   \end{itemize}
+ \end{frame}
+ 
+%%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \textbf{High Performance Linpack Benchmark (HPL)}
+  \begin{itemize}
+    \item Bestimmen der \texttt{floating point performance} von Rechnern
+    %  kleine Mehrprozessorsysteme - rießige Clustersysteme
+    
+    \item Kriterium für Wahl der Top 500 Supercomputer
+    \item HPL misst Geschwindigkeit für Lösen eines großen LGS
+    % linearen Gleichungssystem
+    
+    \item HPL besitzt eingebauten Autotuner (vollst. Suche)
+    
+    \item ca. 15 versch. Parameter (u.\,a. Matrix-Blockgröße)
+    \item größter Performance-Einfluss: Blockgröße (\texttt{IntegerParameter})
+    % restlichen Parameter großteils Enum, Switch (diskrete Entsch. in verwendeten Algorithmen)
+    
+    % Verteilung der Matrizen auf Prozessoren anhand der Anzahl der CPUs
+    
+    \item OpenTuner im Vergleich zu HPL-Implementierung von Intel
+    % "im Vergleich zu Intel's HPL-Implementierung"
+    
+  \end{itemize}  
+\end{frame}
+
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
     \begin{figure}[ht]
       \centering	      
-      \includegraphics[width=0.9\textwidth]{bilder/unitary.pdf}
-      \label{gccpy1a}
+      \includegraphics[width=0.9\textwidth]{bilder/hpl.pdf}
+      \label{hpl}
     \end{figure}
+  
 \end{frame}
+    
+%%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  \begin{frame}
+%   \textbf{b) Unitary Matrices}
+   
+%     \begin{itemize}
+%       \item Synthetisierung von Matrizen in optimaler Zeit
+%       \item \textbf{bisher} traditioneller Autotuner zur Programmoptimierung
+%       \item \textbf{hier} Suche als Subroutine zur Laufzeit
+%       \item das Problem hat fixes Set von Operatoren (Controls), repräsentiert als Matrizen
+%       \item Ziel: Finden einer Sequenz von Operatoren, sodass Matrixmultiplikation die Zielmatrix ergibt
+%       \item Zielfunktion: Abstand (Genauigkeitswert) des Produktes der aktuellen Sequenz zum Ziel (trace fidelity)
+%     \end{itemize}
+%   \end{frame}
+%   
+%%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \begin{frame}
+%     \begin{figure}[ht]
+%       \centering	      
+%       \includegraphics[width=0.9\textwidth]{bilder/unitary.pdf}
+%       \label{gccpy1a}
+%     \end{figure}
+% \end{frame}
+% 
 
+    
+%%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%  TODO:  %%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%   \begin{frame}
+
+%         \textbf{3. Konkrete Anwendungen der Entwickler} \newline
+
+%    \textbf{Matrixmultiplikation}
+%    
+%     \begin{itemize}
+%       \item reicht evtl. auch nur ein eigenens bsp?
+%       \item abc abc abc
+%     \end{itemize}
+%   \end{frame}
+  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%  TODO:  %%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-   \textbf{c) Super Mario}
+
+   \textbf{Super Mario}
    
    \begin{itemize}
+    % primär: Demonstration, dass Framework flexibel ist, abseits von (wissenschaftlichen) Rechnen
+   
     \item Abschließen des ersten Levels durch Sequenz von Button-Eingaben 
-    \item
+    \item 
    \end{itemize}
    
 \end{frame}
-
-
-  
-%%%%% Section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    \section{Anwendungsbeispiele}
     
-%%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    \begin{frame}
-    \begin{itemize}
-      \item abc abc abc
-    \end{itemize}
-    \end{frame}
+
     
 %%%%% Section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     \section{Zusammenfassung}
