@@ -12,6 +12,8 @@
 \usepackage{graphics}
 \usepackage{listings}
 \usepackage{color}
+\usepackage{url}
+\usepackage{hyperref}
 
 % TUC-Templates laden.
 \usetheme[fakcolor=if]{tuc2014}
@@ -22,7 +24,7 @@
 %
 
 % Metadaten
-\title{OpenTuner: An Extensible Framework \\ for Program Autotuning}
+\title{OpenTuner: An Extensible Framework\\for Program Autotuning}
 \subtitle{Hauptseminar WS 2016/2017}
 \author{Matthias Tietz}
 
@@ -30,6 +32,7 @@
 \institute[TUC]
 
 \begin{document}
+
 
     \tucthreeheadlines
     
@@ -39,9 +42,22 @@
 
     \begin{frame}
 
-       \frametitle{Gliederung}
-       \tableofcontents
+      %\frametitle{Gliederung}
 
+
+      \begin{center}
+      
+      %%%%% TODO: set color, or center \frametitle{...}
+      
+        \large{Gliederung}
+        
+        \normalsize \tableofcontents          
+      \end{center}
+
+
+      
+
+  
     \end{frame}
 
 
@@ -195,6 +211,7 @@
   \begin{figure}[ht]
     \centering	      
     \includegraphics[scale=0.9]{bilder/smdb}
+    \cite{img-OT-paper}
     \label{smdb}
   \end{figure}
   
@@ -237,14 +254,15 @@
     \begin{figure}[ht]
       \centering	      
       \includegraphics[scale=1.1]{bilder/paramtypes}
+      \cite{img-OT-paper}
       \label{paramtypes}
     \end{figure}
     
   \textbf{Primitive Parameter}
   \begin{itemize}
     \item numerische Werte mit Unter-/Obergrenze
-    \item \texttt{Float} und \texttt{LogFloat (-Int)} gleiche Repräsentation in der Konfiguration, aber 
-    zugrundeliegender Wertes für Suchtechnik skaliert
+    \item \texttt{Float} und \texttt{LogFloat (-Int)} gleiche Repräsentation in Konfiguration, aber 
+    zugrundeliegender Wert für Suchtechnik skaliert
     \item Grund: ohne Logskal. würde Effekt der Wertänderung mit steigender Parametergröße sinken
     % ähnlich bei PowerOfTwo
     
@@ -276,9 +294,10 @@
     
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% Section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    \section{Konkrete Anwendungen der Entwickler}
+    \section{Anwendungsbeispiele}
     
     \begin{frame}
+      \textbf{3. Anwendungsbeispiele} \newline
       
     \textbf{GCC/G++ Flags}
       \begin{itemize}
@@ -303,6 +322,7 @@
     \begin{figure}[ht]
       \centering	      
       \includegraphics[width=0.8\textwidth]{bilder/ot-3-1a}
+      \cite{img-OT-paper}
       \label{gccpy1a}
     \end{figure}
   \end{frame}
@@ -313,6 +333,7 @@
     \begin{figure}[ht]
       \centering	      
       \includegraphics[width=0.75\textwidth]{bilder/ot-3-1}
+      \cite{img-OT-paper}
       \label{gccpy1}
     \end{figure}
   \end{frame}
@@ -323,6 +344,7 @@
     \begin{figure}[ht]
       \centering	      
       \includegraphics[width=0.65\textwidth]{bilder/ot-3-2}
+      \cite{img-OT-paper}
       \label{gccpy2}
     \end{figure}
   \end{frame}
@@ -331,7 +353,8 @@
   \begin{frame}
       \begin{figure}[ht]
       \centering	      
-      \includegraphics[width=\textwidth]{bilder/outfile_8.pdf}
+      \includegraphics[width=0.97\textwidth]{bilder/outfile_8.pdf}
+      \cite{img-OT-paper}
       \label{gccResults}
     \end{figure}
   \end{frame} 
@@ -358,7 +381,7 @@
     
     \item HPL besitzt eingebauten Autotuner (vollst. Suche)
     
-    \item ca. 15 versch. Parameter (u.\,a. Matrix-Blockgröße)
+    \item ca. 15 versch. Parameter (u.~a. Matrix-Blockgröße)
     \item größter Performance-Einfluss: Blockgröße (\texttt{IntegerParameter})
     % restlichen Parameter großteils Enum, Switch (diskrete Entsch. in verwendeten Algorithmen)
     
@@ -367,10 +390,19 @@
     \item OpenTuner im Vergleich zu HPL-Implementierung von Intel
     % "im Vergleich zu Intel's HPL-Implementierung"
     
-  \end{itemize}
-  
+  \end{itemize}  
 \end{frame}
 
+%%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+    \begin{figure}[ht]
+      \centering	      
+      \includegraphics[width=0.9\textwidth]{bilder/hpl.pdf}
+      \cite{img-OT-paper}
+      \label{hpl}
+    \end{figure}
+  
+\end{frame}
     
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %  \begin{frame}
@@ -395,40 +427,129 @@
 %     \end{figure}
 % \end{frame}
 % 
+
+    
+%%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%  TODO:  %%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%   \begin{frame}
+
+%         \textbf{3. Konkrete Anwendungen der Entwickler} \newline
+
+%    \textbf{Matrixmultiplikation}
+%    
+%     \begin{itemize}
+%       \item reicht evtl. auch nur ein eigenens bsp?
+%       \item abc abc abc
+%     \end{itemize}
+%   \end{frame}
+  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%  TODO:  %%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-   \textbf{c) Super Mario}
+
+   \textbf{Super Mario}
    
    \begin{itemize}
-    \item Abschließen des ersten Levels durch Sequenz von Button-Eingaben 
-    \item
-   \end{itemize}
+    % primär: Demonstration, dass Framework flexibel ist, abseits von (wissenschaftlichen) Rechnen
+   
+    \item Abschließen des ersten Levels durch Sequenz von Tasten-Eingaben (Konfig.)
+    % erklären, dass das konfig ist 
+    
+    % Bild ?
+    
+    \item Tasten-Eingaben $\rightarrow$ Speichern in Datei $\rightarrow$ Abspielen in NES-Emulator
+    % Bsp. ggf. zeigen
+    
+    \item Wiedergabe im Emulator schneller als in Echtzeit
+    \item Auswerten mehrerer Instanzen des Emulators (parallel)
+    % OpenTuner: Parameter --parallelism -> geht hier so einfach da Ergebnisse sich nicht direkt beeinflussen
+    
+    \text{}
+    
+    \item Ziel: Maximieren der \#Pixel die Mario nach rechts läuft
+    % ! WICHTIG ! : game grafik wird NICHT ausgewertet
+    
+    \item Suchraum: Tendenz horizontal nach rechts bewegen
+    % sonst random eingaben, mario bewegt sich nicht zielstrebig
+    
+    \item Eingaben-Modellierung:
+      \begin{itemize}
+        \item welche Taste
+        \item zu welchem Zeitpunkt (Frame)
+        \item wie lange gedrückt wird
+      \end{itemize}
+    \end{itemize}
    
 \end{frame}
-
-
+    
+    
+%%%%% Section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \section{Zusammenfassung}
+    
+  \begin{frame}
   
-%%%%% Section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    \section{Anwendungsbeispiele}
-    
-%%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    \begin{frame}
-    \begin{itemize}
-      \item abc abc abc
+   \begin{itemize}
+      \item flexibel, erweiterbar, einfache Schnittstelle
+      % flexibel: untersch. Bsp erwähnen
+      
+      \item unterstützt mehrere Ziele (in Komb.) etc.
+      \item nimmt Nutzer viel Arbeit ab --> Abstraktion
+      % Programmierer "stellt ein" anstatt Hardliner mäßig zu coden 
+      % (keineMachine-Learning Expertise nötig)
+      
+      \item lässt trotzdem erfahrenen Nutzern viel Möglichkeiten auf tieferer Ebene Framework 
+      nach Belieben zu nutzen/erweitern
+      \item tatsächlich schneller als de-facto Impl./Lösungen
+      % HPL, Halide, ...
+        
+      \text{}
+      
+      \item Kritik Nutzen allg. --> Kritik Grafiken (Skalierung)
+      % Bezug nehmen Paper -> Grafiken
+      
+      \item Tradeoff Zeitaufwand <-> Nutzen
+      \item Erfolg abh. von Suchraum / Modellierung  
+      % \cite{lamport94}
+      
     \end{itemize}
-    \end{frame}
     
-%%%%% Section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    \section{Zusammenfassung}
-     \begin{itemize}
-      \item abc abc abc
-    \end{itemize}
+  \end{frame}  
     
 %%%%% Section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     \section{Quellen}
+\begin{frame}
+
+  \textbf{Quellen}
+      
+  \begin{thebibliography}{9}
+
+  %\bibitem{lamport94} Leslie Lamport, \emph{\LaTeX: a document preparation system},
+   % Addison Wesley, Massachusetts, 2nd edition, 1994.
+   
+  %%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%
+  %  TODO: Zitatstile -> Reihenfolge: Autor, Titel, Jahr, Verlag, Seite, …
+  %%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%
+   
+  \bibitem{img-OT-paper} [1] Jason Ansel, Shoaib Kamil, Kalyan Veeramachaneni, Jonathan Ragan-Kelley, Jeffrey Bosboom, Una-May O'Reilly, Saman Amarasinghe. \emph{OpenTuner: An Extensible Framework for Program Autotuning.}
+    2014. \url{www.opentuner.org/publications/}
     
-    
-    
-    
+  
+  \bibitem{handsOn-pdf} Shoaib Kamil. \emph{Hands on session.} PLDI 2015
+  
+  \bibitem{opentuner-site} \url{www.opentuner.org}
+  \bibitem{opentuner-git} \url{www.github.com/jansel/opentuner}
+
+  \end{thebibliography}
+
+\end{frame}
 
 \end{document}

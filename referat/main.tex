@@ -10,8 +10,12 @@
 \usepackage{floatflt}
 \usepackage{float}
 \usepackage{graphics}
+\usepackage{graphicx}
 \usepackage{listings}
 \usepackage{color}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{wrapfig}
 
 % TUC-Templates laden.
 \usetheme[fakcolor=if]{tuc2014}
@@ -22,28 +26,38 @@
 %
 
 % Metadaten
-\title{OpenTuner: An Extensible Framework\\for Program Autotuning}
-\subtitle{Hauptseminar WS 2016/2017}
-\author{Matthias Tietz}
 
+% \titlegraphic{\includegraphics[width=4cm]{bilder/opentunerlogo.png}}
+\title{OpenTuner: An Extensible Framework\\for Program Autotuning}
+\subtitle{Hauptseminar WS 2016/2017 - Bachelor Informatik}
+\author{Matthias Tietz}
 \date{10.02.2017}
 \institute[TUC]
 
 \begin{document}
 
     \tucthreeheadlines
+    \tucurl{www.tu-chemnitz.de}
     
+    \begingroup
+      \setbeamertemplate{tuc3 headline 3}{Matthias Tietz}
+      \begin{frame}
+        \titlepage
+      \end{frame}
+    \endgroup
+
+    \begingroup
+      \setbeamertemplate{tuc3 headline 3}{Gliederung}
     \begin{frame}
-      \titlepage
+        \begin{wrapfigure}{r}{0.65\textwidth}
+          \begin{center}
+            \includegraphics[width=0.5\textwidth]{bilder/opentunerlogo2}
+          \end{center}
+        \end{wrapfigure}
+        \large{Gliederung}
+        \normalsize \tableofcontents  
     \end{frame}
-
-    \begin{frame}
-
-       \frametitle{Gliederung}
-       \tableofcontents
-
-    \end{frame}
-
+    \endgroup
 
     \tuctwoheadlines
 
@@ -57,44 +71,54 @@
 
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   
 
+  \begingroup
+  \setbeamertemplate{tuc2 headline 2}{Motivation}
     \begin{frame}
-    \textbf{1. Einleitung}
+    
+    \textbf{Das Paper}
+    \begin{itemize}
+        
+        \item Jason Ansel, Shoaib Kamil, Kalyan Veeramachaneni, Jonathan Ragan-Kelley, Jeffrey Bosboom, Una-May O'Reilly, Saman Amarasinghe
+        % PetaBricks
+        
+        \item Massachusetts Institute of Technology, 2014 
+    \end{itemize}
+    
+    \text{}
+    
+    \textbf{Motivation}
         
     \begin{itemize}
       % findet Anwendung in Domänen wie HPC und Grafikverarbeitung (PS, 3D, image processing)
       % (hoher Rechenaufwand) -> Zeitgewinn ... hand-optimierte AT ..
-      \item Suche nach optimaler Programm-Implementierung teil-/vollautomatisierbar
+      \item Tuning-Prozess automatisierbar
+      % Suche nach optimaler Programm-Implementierung
             
-      \item bestehende Autotuning-Frameworks meist domänenspezifisch (ATLAS, FFTW) \newline
+      \item bestehende Autotuning-Frameworks domänenspezifisch (ATLAS, FFTW) \newline
       % lineare Algebra, FFT
       % referenz / link auf ATLAS, FFTW
 
     \end{itemize}
       \text{OpenTuner:}
     \begin{itemize}
-      \item Ausdrücken des Suchraums statt direkter Optimierung
-      \item Verfahren komfortabler und oft effizienter (große Suchräume)
+      \item Optimierungsverfahren komfortabler und oft effizienter
+      % große Suchräume, bisherige AT beschneiden oft SR !
       % Suchraum = Parameter, mögliche Implementierungen
       % per Hand schwer machbar bzw. sehr ineffizient
       
-      \item mehrere Optimierungsziele komibinierbar
+      \item mehrere Optimierungsziele komibinierbar, hohe Erweiterbarkeit
       % Tradeoff Performance - Genauigkeit
-            
-      \item stark auf Erweiterbarkeit ausgelegt
       
+      \item Performance-Portabilität
+      % AT-Prozess einfach auf neuer Maschine ausführbar
+                  
     \end{itemize}
-      
-%   \hspace{0.33cm}    
-%   \includegraphics[width=4cm]{bilder/3dpolyp}
-%   \hspace{0.33cm}    
-%   \fbox{\parbox[b][5em][c]{0.55\textwidth}{\textbf{Ziele:}
-%       Automatisierter und einfacher Optimierungsprozess.
-%       Bessere und portierbare Performance von domänenspezifischen Programmen.}}
-% 
     \end{frame}
+    \endgroup
     
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   
-    
+  \begingroup
+  \setbeamertemplate{tuc2 headline 2}{Verwendete Begriffe}
   \begin{frame}
     \textbf{verwendete Begriffe:}
     
@@ -121,12 +145,13 @@
     
   \end{itemize}
   \end{frame}
+  \endgroup
         
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   
-      
+    \begingroup
+    \setbeamertemplate{tuc2 headline 2}{Herausforderungen}
     \begin{frame}
-    
-    \textbf{Herausforderungen bei der Entwicklung eins Autotuning-Frameworks:}
+    \textbf{Herausforderungen bei der Entwicklung eines Autotuning-Frameworks:}
     
     \begin{itemize}
        
@@ -154,6 +179,7 @@
     \end{itemize}
         
     \end{frame}
+    \endgroup
     
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   
 
@@ -181,6 +207,8 @@
 
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
   
+  \begingroup
+  \setbeamertemplate{tuc2 headline 2}{Architektur}
   \begin{frame}
   
   \textbf{2. OpenTuner Framework}
@@ -194,15 +222,17 @@
   
   \begin{figure}[ht]
     \centering	      
-    \includegraphics[scale=0.9]{bilder/smdb}
+    \includegraphics[scale=1]{bilder/smdb}
     \label{smdb}
   \end{figure}
-  
+
   \end{frame}
+  \endgroup
     
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %  \subsection{Verwendung}
-
+  \begingroup
+  \setbeamertemplate{tuc2 headline 2}{Module}
   \begin{frame}
   \textbf{Verwendung}
   \begin{itemize}
@@ -230,8 +260,11 @@
     
   \end{itemize}
   \end{frame}
+  \endgroup
     
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \begingroup
+  \setbeamertemplate{tuc2 headline 2}{Module}
   \begin{frame}
     \textbf{Parameter-Typen}
     \begin{figure}[ht]
@@ -250,8 +283,11 @@
     
   \end{itemize}
   \end{frame}
+  \endgroup
   
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \begingroup
+  \setbeamertemplate{tuc2 headline 2}{Module}
   \begin{frame}
     \textbf{Komplexe Parameter}
     \begin{itemize}
@@ -273,11 +309,14 @@
       Zeit minimieren}
     \end{itemize}
   \end{frame}
+  \endgroup
     
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% Section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     \section{Anwendungsbeispiele}
     
+    \begingroup
+    \setbeamertemplate{tuc2 headline 2}{GCC/G++ Flags}
     \begin{frame}
       \textbf{3. Anwendungsbeispiele} \newline
       
@@ -286,6 +325,9 @@
         \item klassische Parameter-Optimierung
         \item unterstützte Flags: \texttt{g++ --help=optimizers}
         \item Parameter inkl. zulässiger Wertebereiche: \texttt{params.def} (gcc source code)
+        
+        \text{}
+        
         \item Implementierung des Autotuners:
         \begin{itemize}
           \item 1. Erstellen des \texttt{configuration manipulator}
@@ -298,8 +340,11 @@
         \end{itemize}
       \end{itemize}
     \end{frame}
+    \endgroup
         
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \begingroup
+    \setbeamertemplate{tuc2 headline 2}{GCC/G++ Flags}
   \begin{frame}
     \begin{figure}[ht]
       \centering	      
@@ -307,9 +352,11 @@
       \label{gccpy1a}
     \end{figure}
   \end{frame}
+  \endgroup
   
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  
+  \begingroup
+  \setbeamertemplate{tuc2 headline 2}{GCC/G++ Flags}
   \begin{frame}
     \begin{figure}[ht]
       \centering	      
@@ -317,9 +364,11 @@
       \label{gccpy1}
     \end{figure}
   \end{frame}
+\endgroup
   
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  
+    \begingroup
+  \setbeamertemplate{tuc2 headline 2}{GCC/G++ Flags}
   \begin{frame}
     \begin{figure}[ht]
       \centering	      
@@ -327,26 +376,35 @@
       \label{gccpy2}
     \end{figure}
   \end{frame}
+  \endgroup
 
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \begingroup
+  \setbeamertemplate{tuc2 headline 2}{GCC/G++ Flags}
   \begin{frame}
       \begin{figure}[ht]
       \centering	      
-      \includegraphics[width=\textwidth]{bilder/outfile_8.pdf}
+      \includegraphics[width=0.8\textwidth]{bilder/fft.pdf}
       \label{gccResults}
     \end{figure}
   \end{frame} 
+  \endgroup
   
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \begingroup
+  \setbeamertemplate{tuc2 headline 2}{GCC/G++ Flags}
+  \begin{frame}
+      \begin{figure}[ht]
+      \centering	      
+      \includegraphics[width=0.8\textwidth]{bilder/mm.pdf}
+      \label{gccResults}
+    \end{figure}
+  \end{frame} 
+  \endgroup
   
- \begin{frame}
-   \begin{itemize}
-     \item vergleichbare Anwendung: Halide, PetaBricks, Stencil
-     \item TODO: Bezug nehmen oder neue 1 weitere beschreiben?
-   \end{itemize}
- \end{frame}
- 
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \begingroup
+  \setbeamertemplate{tuc2 headline 2}{HPL}
 \begin{frame}
   \textbf{High Performance Linpack Benchmark (HPL)}
   \begin{itemize}
@@ -359,7 +417,7 @@
     
     \item HPL besitzt eingebauten Autotuner (vollst. Suche)
     
-    \item ca. 15 versch. Parameter (u.\,a. Matrix-Blockgröße)
+    \item ca. 15 versch. Parameter (u.~a. Matrix-Blockgröße)
     \item größter Performance-Einfluss: Blockgröße (\texttt{IntegerParameter})
     % restlichen Parameter großteils Enum, Switch (diskrete Entsch. in verwendeten Algorithmen)
     
@@ -370,16 +428,19 @@
     
   \end{itemize}  
 \end{frame}
+\endgroup
 
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \begingroup
+  \setbeamertemplate{tuc2 headline 2}{HPL}
 \begin{frame}
     \begin{figure}[ht]
       \centering	      
       \includegraphics[width=0.9\textwidth]{bilder/hpl.pdf}
       \label{hpl}
     \end{figure}
-  
 \end{frame}
+\endgroup
     
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %  \begin{frame}
@@ -424,37 +485,189 @@
 %     \end{itemize}
 %   \end{frame}
   
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%  TODO:  %%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%   \begingroup
+%   \setbeamertemplate{tuc2 headline 2}{Vergleichbare Anwendungen}
+%   \begin{frame}
+%     \textbf{Vergleichbare Anwendungen:}
+%     \begin{itemize}
+%     
+%     \item Halide
+%     \begin{itemize}
+%       \item Sprache und Compiler zur Bildverarbeitung
+%       \item Scheduling in Grafikpipeline
+%     \end{itemize}
+%     
+%     \item PetaBricks
+%     \begin{itemize}
+%       \item Sprache und Compiler zur Bildverarbeitung
+%       \item Scheduling in Grafikpipeline
+%     \end{itemize}
+%     
+%     \item Stencil
+%     \begin{itemize}
+%       \item Sprache und Compiler zur Bildverarbeitung
+%       \item Scheduling in Grafikpipeline
+%     \end{itemize}
+%     
+%    \end{itemize}
+%   \end{frame}
+%  \endgroup
     
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
+ \begingroup
+  \setbeamertemplate{tuc2 headline 2}{Super Mario}
 
-   \textbf{Super Mario}
+\begin{frame}
+  \textbf{Super Mario}
    
    \begin{itemize}
     % primär: Demonstration, dass Framework flexibel ist, abseits von (wissenschaftlichen) Rechnen
    
-    \item Abschließen des ersten Levels durch Sequenz von Button-Eingaben 
-    \item 
-   \end{itemize}
-   
-\end{frame}
+    \item Abschließen des ersten Levels durch Sequenz von Tasten-Eingaben (Konfig.)
+    % erklären, dass das konfig ist 
     
-
+    % Bild ?
     
-%%%%% Section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    \section{Zusammenfassung}
-     \begin{itemize}
-      \item abc abc abc
+    \item Tasten-Eingaben $\rightarrow$ Speichern in Datei $\rightarrow$ Abspielen in NES-Emulator
+    % Bsp. ggf. zeigen
+    
+    \item Wiedergabe im Emulator schneller als in Echtzeit
+    \item Auswerten mehrerer Instanzen des Emulators parallel
+    % OpenTuner: Parameter --parallelism -> geht hier so einfach da Ergebnisse sich nicht direkt beeinflussen
+    
+    \text{}
+    
+    \item Ziel: Maximieren der \#Pixel die Mario nach rechts läuft
+    % ! WICHTIG ! : game grafik wird NICHT ausgewertet
+    
+    \item Suchraum: Tendenz horizontal nach rechts bewegen
+    % sonst random eingaben, mario bewegt sich nicht zielstrebig
+    
+    \item Eingaben-Modellierung:
+      \begin{itemize}
+        \item welche Taste
+        \item zu welchem Zeitpunkt (Frame)
+        \item wie lange gedrückt wird
+      \end{itemize}
     \end{itemize}
+   \end{frame}
+\endgroup
+
+%%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \begingroup
+  \setbeamertemplate{tuc2 headline 2}{Super Mario}
+  \begin{frame}
+  
+  \begin{figure}
+    \centering\includegraphics[width=\textwidth]{bilder/mario-tuning2}
+    \caption{Tuning-Prozess}
+  \end{figure} 
+  \end{frame}
+  \endgroup
+  
+%%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \begingroup
+  \setbeamertemplate{tuc2 headline 2}{Super Mario}
+  \begin{frame}
+  
+    \begin{figure}
+    \centering\includegraphics[width=0.7\textwidth]{bilder/mario-won2}
+    \caption{Ziel erreicht}
+  \end{figure}
+  
+  \centering\fbox{\parbox[c]{4.4cm}{Demo: First Level of Super Mario}}
+  
+  \end{frame}  
+  \endgroup
+  
+%%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \section{Aktueller Stand}
+  \begingroup
+%   \setbeamertemplate{tuc2 headline 2}{Super Mario}
+  \begin{frame}
+  
+  \textbf{4. Aktueller Stand des Projekts}
+  
+  \begin{itemize}
+    \item \url{www.github.com/jansel/opentuner}, MIT-Lizenz
+    \item Entwicklung 2014-2015
+    \item gute Dokumentation, Support via Issues
+  \end{itemize}
+  
+  
+  
+  \end{frame}  
+  \endgroup
     
 %%%%% Section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    \section{Quellen}
+  \section{Zusammenfassung}
     
+  \begin{frame}
+  
+   \textbf{PRO\\}
+   \begin{itemize}
+      \item Flexibilität und Erweiterbarkeit
+      % flexibel: untersch. Bsp erwähnen
+
+      \item einfache und klare Handhabung
+      % Programmierer "stellt ein" anstatt Hardliner mäßig zu coden 
+      % (keineMachine-Learning Expertise nötig)
+      
+      \item große Anzahl von Beispielanwendungen
+      
+      \item Unterstützung mehrerer Optimierungsziele (Kombination)
+      % lässt trotzdem erfahrenen Nutzern viel Möglichkeiten auf tieferer Ebene Framework 
+      % nach Belieben zu nutzen/erweitern
+
+      \item bessere Ergebnisse als bisherige Autotuner
+      % HPL, Halide, ...
+        
+     \end{itemize}
+
+    \text{} % fake leerzeile
+      
+   \textbf{CONTRA\\}
+    \begin{itemize}
+      \item Optimierungsgrad variiert stark (Bsp.)
+      % gute Modellierung, Komplexität des Problems
+      
+      \item Trade-off: Zeitaufwand $\leftrightarrow$ Nutzen
+      \end{itemize}
     
+  \end{frame}
+  
+  
+%%%%% Section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begingroup
+\setbeamertemplate{tuc2 headline 1}{Quellen}
+
+\begin{frame}
+
+  \textbf{Quellen}
+      
+  \begin{thebibliography}{9}
+
+  %\bibitem{lamport94} Leslie Lamport, \emph{\LaTeX: a document preparation system},
+   % Addison Wesley, Massachusetts, 2nd edition, 1994.
+   
+  %%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%
+  %  TODO: Zitatstile -> Reihenfolge: Autor, Titel, Jahr, Verlag, Seite, …
+  %%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%
+   
+  \bibitem{img-OT-paper} Jason Ansel, Shoaib Kamil, Kalyan Veeramachaneni, Jonathan Ragan-Kelley, Jeffrey Bosboom, Una-May O'Reilly, Saman Amarasinghe. \emph{OpenTuner: An Extensible Framework for Program Autotuning.}
+    2014.
     
-    
+  
+  \bibitem{handsOn-pdf} Shoaib Kamil. \emph{Hands on session.} PLDI 2015
+  \bibitem{opentuner-git} \url{www.github.com/jansel/opentuner}
+  \bibitem{opentuner-site} \url{www.opentuner.org}
+
+  \end{thebibliography}
+
+\end{frame}
+\endgroup
 
 \end{document}
