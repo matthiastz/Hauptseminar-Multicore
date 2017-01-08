@@ -29,24 +29,27 @@
 
 % \titlegraphic{\includegraphics[width=4cm]{bilder/opentunerlogo.png}}
 \title{OpenTuner: An Extensible Framework\\for Program Autotuning}
-\subtitle{Hauptseminar WS 2016/2017 - Bachelor Informatik}
 \author{Matthias Tietz}
-\date{10.02.2017}
-\institute[TUC]
+\date{10.01.2017}
+\institute[TUC]{\small  Hauptseminar\\Bachelor Informatik}
+
+
+\tucurl{www.tu-chemnitz.de}
 
 \begin{document}
 
     \tucthreeheadlines
-    \tucurl{www.tu-chemnitz.de}
-    
+
     \begingroup
+      \setbeamertemplate{tuc3 headline 2}{Hauptseminar - Bachelor Informatik}
       \setbeamertemplate{tuc3 headline 3}{Matthias Tietz}
       \begin{frame}
         \titlepage
-      \end{frame}
+    \end{frame}
     \endgroup
 
     \begingroup
+      \setbeamertemplate{tuc3 headline 2}{Hauptseminar - Bachelor Informatik}
       \setbeamertemplate{tuc3 headline 3}{Gliederung}
     \begin{frame}
         \begin{wrapfigure}{r}{0.65\textwidth}
@@ -77,11 +80,13 @@
     
     \textbf{Das Paper}
     \begin{itemize}
+    
+        \item OpenTuner: An Extensible Framework for Program Autotuning
         
-        \item Jason Ansel, Shoaib Kamil, Kalyan Veeramachaneni, Jonathan Ragan-Kelley, Jeffrey Bosboom, Una-May O'Reilly, Saman Amarasinghe
+        \item Jason Ansel, Shoaib Kamil, Kalyan Veeramachaneni, Jonathan Ragan-Kelley, Jeffrey Bosboom, Una-May O'Reilly, Saman Amarasinghe (MIT 2014)
         % PetaBricks
         
-        \item Massachusetts Institute of Technology, 2014 
+%         \item Massachusetts Institute of Technology, 2014 
     \end{itemize}
     
     \text{}
@@ -89,19 +94,21 @@
     \textbf{Motivation}
         
     \begin{itemize}
-      % findet Anwendung in Domänen wie HPC und Grafikverarbeitung (PS, 3D, image processing)
+      \item Optimierung rechenintensiver Programme
+      % findet Anwendung in Domänen wie HPC und Grafik-/Signalverarbeitung (PS, 3D, image processing)
       % (hoher Rechenaufwand) -> Zeitgewinn ... hand-optimierte AT ..
+      
+      \item bestehende Autotuning-Frameworks domänenspezifisch (ATLAS, FFTW)
+      % lineare Algebra, FFT
+      % referenz / link auf ATLAS, FFTW
+      
       \item Tuning-Prozess automatisierbar
       % Suche nach optimaler Programm-Implementierung
             
-      \item bestehende Autotuning-Frameworks domänenspezifisch (ATLAS, FFTW) \newline
-      % lineare Algebra, FFT
-      % referenz / link auf ATLAS, FFTW
-
     \end{itemize}
       \text{OpenTuner:}
     \begin{itemize}
-      \item Optimierungsverfahren komfortabler und oft effizienter
+      \item Optimierungsverfahren komfortabler und effizienter
       % große Suchräume, bisherige AT beschneiden oft SR !
       % Suchraum = Parameter, mögliche Implementierungen
       % per Hand schwer machbar bzw. sehr ineffizient
@@ -109,7 +116,7 @@
       \item mehrere Optimierungsziele komibinierbar, hohe Erweiterbarkeit
       % Tradeoff Performance - Genauigkeit
       
-      \item Performance-Portabilität
+       \item Performance-Portabilität
       % AT-Prozess einfach auf neuer Maschine ausführbar
                   
     \end{itemize}
@@ -120,7 +127,7 @@
   \begingroup
   \setbeamertemplate{tuc2 headline 2}{Verwendete Begriffe}
   \begin{frame}
-    \textbf{verwendete Begriffe:}
+    \textbf{Verwendete Begriffe:}
     
   \begin{itemize}
 
@@ -128,20 +135,20 @@
     % Modellierung
     % Programm XY -> welche Parameter sollen modelliert werden? spätere Folie dazu mehr
     
-    \item \textbf{Konfiguration}: konkrete Zuweisungen von Parametern
-    \item \textbf{Konfigurations-Manipulator}: Bearbeiten der Parameter in Konfig. \newline
+    \item \textbf{Konfiguration}: konkrete Wert-Zuweisung (Parameter)
+    \item \textbf{Konfigurations-Manipulator}: Bearbeiten der Parameter \newline
     % Funktion
     
     \item \textbf{Suchraum}: zu durchsuchende Menge von Konfigurationen
     % mögliche Implementierungen
     
-    \item \textbf{Suchtechnik}: Suchraum erforschen (KM), Anfragen für Messung (Ergebnis)
+    \item \textbf{Suchtechnik}: Suchraum erforschen, Anfragen für Messung
     % folie mit grafik schön zu sehen
-     
     \item \textbf{Suchprozess}: Lesen/Schreiben von Konfigurationen \newline
+    
     \item \textbf{Messprozess}: konkrete Konfiguration ausführen
     \item \textbf{Messresultat}: Ergebnis der Messung, abhängig von Optimierungsziel(en)
-    \item \textbf{Ergebnisdatenbank}: Festhalten aller Ergebnisse während Tuning-Vorgangs
+    \item \textbf{Ergebnisdatenbank}: Festhalten aller Ergebnisse des Tuning-Vorgangs
     
   \end{itemize}
   \end{frame}
@@ -157,22 +164,25 @@
        
     \item 1. Eine passende Konfigurations-Repräsentation
         \begin{itemize}
-          \item Darstellung der domänenspezif. Datenstrukturen und Bedingungen
-          \item Qualität der Repräsentation entscheidend für Effizienz des Autotuners \newline
+          \item Darstellung der Datenstrukturen und Bedingungen
+          \item entscheidend für Effizienz des Autotuners \newline
+          % Quali der Repr.
+          
         \end{itemize}
         
-    \item 2. Größe des gültigen Konfigurations-Raumes
+    \item 2. Größe des gültigen Suchraumes
         \begin{itemize}
-          \item Kürzen des Konfigurations-Raumes $\rightarrow$ Verlieren guter Lösungen
+          \item rießige Konfigurationsräume möglich $\rightarrow$  intelligente Suchtechniken
+          
+          \item Kürzen des Suchraumes $\rightarrow$ Verlieren guter Lösungen \newline
           % (bei bisherigen Autotunern gängige Praxis, da vollständige Suche)
           
-          \item rießige Konfigurationsräume möglich $\rightarrow$  intelligente Suchtechniken notwendig \newline
         \end{itemize}
         
-    \item 3. Beschaffenheit des Konfigurations-Raumes
+    \item 3. Beschaffenheit des Suchraumes
       \begin{itemize}
         \item Suchräume in der Praxis meist sehr komplex 
-        \item domänenspezif. Suchtechniken notwendig
+        \item domänenspezifische Suchtechniken notwendig
         % um optimale Lösung effizient zu ermitteln
         
       \end{itemize}
@@ -222,7 +232,7 @@
   
   \begin{figure}[ht]
     \centering	      
-    \includegraphics[scale=1]{bilder/smdb}
+    \includegraphics[width=0.8\textwidth]{bilder/smdb.pdf}
     \label{smdb}
   \end{figure}
 
@@ -236,27 +246,23 @@
   \begin{frame}
   \textbf{Verwendung}
   \begin{itemize}
-    \item 1. Suchraum definieren (Konfig.-Manipulator)
-    \item 2. \texttt{run()}-Methode definieren: Auswerten der Konfig. im Suchraum $\rightarrow$ Ergebnis
+    \item 1. Suchraum definieren 
+    \item 2. \texttt{run()}-Methode definieren: Auswerten der Konfiguration $\rightarrow$ Ergebnis
     \item 3. Festlegen des Optimierungsziels
-    \item Umsetzung mittels kleinem Python-Programm (OpenTuner API)
+    \item Umsetzung: Python-Programm (OpenTuner API) \newline
     % Framework ist ausschließlich in Python geschrieben
     % Bsp. später darauf eingehen, sieht man es besser
     
   \end{itemize}
   \textbf{Suchtechniken}
   \begin{itemize}
-    \item OpenTuner stellt Suchtechniken für viele Suchraum-Typen bereit
-    \item Ausführen mehrerer Suchtechniken gleichzeitig (Ensembles)
-    \item dynamische Testzuweisung anhand Erfolges dieser Techniken
-%     \item erweiterbar: benutzerdefinierte Suchtechniken
-  \end{itemize}
-  
-  \textbf{Konfigurations-Manipulator}
-  \begin{itemize}
-    \item Abstraktionsschicht zwischen Suchtechnik und Konfigurations-Struktur
-    % 
-    \item Zugriff auf Parameter-Objekte: Lesen/Schreiben per Suchtechnik
+    \item OpenTuner stellt grundlegende Suchtechniken bereit
+    \item Ausführen mehrerer Suchtechniken (Ensembles)
+    \item Austausch von Ergebnissen über Datenbank
+%     $\rightarrow$ Profitieren von Verbesserungen anderer Suchtechniken
+
+    \item dynamische Testzuweisung anhand Erfolg der Suchtechniken
+
     
   \end{itemize}
   \end{frame}
@@ -269,16 +275,15 @@
     \textbf{Parameter-Typen}
     \begin{figure}[ht]
       \centering	      
-      \includegraphics[scale=1.1]{bilder/paramtypes}
+      \includegraphics[scale=1.3]{bilder/paramtypes}
       \label{paramtypes}
     \end{figure}
     
   \textbf{Primitive Parameter}
   \begin{itemize}
     \item numerische Werte mit Unter-/Obergrenze
-    \item \texttt{Float} und \texttt{LogFloat (-Int)} gleiche Repräsentation in Konfiguration, aber 
-    zugrundeliegender Wert für Suchtechnik skaliert
-    \item Grund: ohne Logskal. würde Effekt der Wertänderung mit steigender Parametergröße sinken
+    \item \texttt{Float} und \texttt{LogFloat(-Int)} gleiche Repräsentation, Werte skaliert
+    \item Grund: Effekt der Wertänderung bei steigender Parametergröße
     % ähnlich bei PowerOfTwo
     
   \end{itemize}
@@ -291,11 +296,13 @@
   \begin{frame}
     \textbf{Komplexe Parameter}
     \begin{itemize}
-      \item haben variables Set an Manipulatoren $\rightarrow$ stochastische Parameter-Änderungen
+
       \item \texttt{Boolean, Switch} und \texttt{Enum} bewusst als komplex. Parameter, Darstellung
-      als ungeordnete Sammlung $\rightarrow$ es existiert kein Gradient (wie bei prim. Param.)
-      \item \texttt{Permutation} : Liste von Werte inkl. Manipulatoren zur randomisierten Änderung der Reihenfolge
-      \item \texttt{Schedule}, \texttt{Selector}
+      als ungeordnete Sammlung $\rightarrow$ es existiert kein Gradient
+      % (wie bei prim. Param.)
+      
+      \item \texttt{Permutation:} Liste von Werten inkl. Reihenfolge-Manipulator
+      \item \texttt{Schedule, Selector} \newline
       % ist Sonderfall von \texttt{Permutation} : topolog. Sortierung nach jeder Änderung
       % Selector: Mapping von Integer-Input auf Enum-Type (Darstellung als Baum)
       
@@ -305,8 +312,8 @@
     \begin{itemize}
       \item OpenTuner unterstützt mehrere Ziele, default: \texttt{time}
       \item \texttt{accuracy, energy, size, confidence} oder ein nutzerdef. Ziel
-      \item Es können auch mehrere Ziele zugleich verfolgt werden, bspw. \emph{Genauigkeit einhalten, gleichzeitig
-      Zeit minimieren}
+      \item Ziel-Kombination: \texttt{time-accuracy}
+      % Genauigkeit einhalten, gleichzeitig Zeit minimieren
     \end{itemize}
   \end{frame}
   \endgroup
@@ -322,22 +329,22 @@
       
     \textbf{GCC/G++ Flags}
       \begin{itemize}
-        \item klassische Parameter-Optimierung
+        \item klassischer Parameter-Autotuner
         \item unterstützte Flags: \texttt{g++ --help=optimizers}
         \item Parameter inkl. zulässiger Wertebereiche: \texttt{params.def} (gcc source code)
         
-        \text{}
+%         \item Autotuner-Implementierung: 
+%         \begin{itemize}
+%           \item \texttt{configuration manipulator}
+%           \item \texttt{run()} 
+%           \item Optimierungsziel        
+%         \end{itemize}
         
-        \item Implementierung des Autotuners:
+        \item Ziel-Programme zur Laufzeit-Optimierung:
         \begin{itemize}
-          \item 1. Erstellen des \texttt{configuration manipulator}
-          % Menge der Parameter (Suchraum) \newline
-          % \emph{Optimierungslevel, GXX-Flags/-Parameter}
-          
-          \item 2. Erstellen der \texttt{run}-Funktion
-          \item 3. Festlegen des Optimierungsziels
-          
-        \end{itemize}
+          \item \texttt{fft.c} - Schnelle Fourier-Transformation
+          \item \texttt{matrixmultiply.cpp} - Matrix-Multiplikation
+        \end{itemize}        
       \end{itemize}
     \end{frame}
     \endgroup
@@ -402,27 +409,28 @@
   \end{frame} 
   \endgroup
   
+  
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  \begingroup
   \setbeamertemplate{tuc2 headline 2}{HPL}
 \begin{frame}
   \textbf{High Performance Linpack Benchmark (HPL)}
   \begin{itemize}
-    \item Bestimmen der \texttt{floating point performance} von Rechnern
+    \item Bestimmen der \texttt{floating point performance} von Computern
     %  kleine Mehrprozessorsysteme - rießige Clustersysteme
     
     \item Kriterium für Wahl der Top 500 Supercomputer
-    \item HPL misst Geschwindigkeit für Lösen eines großen LGS
+    \item HPL misst Geschwindigkeit für Lösen großer LGS
     % linearen Gleichungssystem
     
-    \item HPL besitzt eingebauten Autotuner (vollst. Suche)
-    
-    \item ca. 15 versch. Parameter (u.~a. Matrix-Blockgröße)
-    \item größter Performance-Einfluss: Blockgröße (\texttt{IntegerParameter})
+    \item ca. 15 verschiedene Parameter
     % restlichen Parameter großteils Enum, Switch (diskrete Entsch. in verwendeten Algorithmen)
     
+    \item größter Performance-Einfluss: Matrix-Blockgröße
     % Verteilung der Matrizen auf Prozessoren anhand der Anzahl der CPUs
-    
+   
+    \item HPL besitzt eingebauten Autotuner (vollst. Suche)
+        
     \item OpenTuner im Vergleich zu HPL-Implementierung von Intel
     % "im Vergleich zu Intel's HPL-Implementierung"
     
@@ -484,35 +492,44 @@
 %       \item abc abc abc
 %     \end{itemize}
 %   \end{frame}
-  
+
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   \begingroup
-%   \setbeamertemplate{tuc2 headline 2}{Vergleichbare Anwendungen}
-%   \begin{frame}
-%     \textbf{Vergleichbare Anwendungen:}
-%     \begin{itemize}
-%     
-%     \item Halide
-%     \begin{itemize}
-%       \item Sprache und Compiler zur Bildverarbeitung
-%       \item Scheduling in Grafikpipeline
+ \begingroup
+  \setbeamertemplate{tuc2 headline 2}{Ähnliche Anwendungen}
+\begin{frame}
+  \textbf{Ähnliche Anwendungen des Frameworks} \newline
+  
+ 
+  \textbf{Halide}
+  \begin{itemize}
+    \item Sprache und Compiler für Bildverarbeitung
+    \item Ausführungsreihenfolge in Grafik-Pipeline
+    \item Pipeline-Schedule bestimmt die Performance
+   \end{itemize}
+   
+%     \begin{wrapfigure}{r}{0.25\textwidth}
+%       \includegraphics[width=0.23\textwidth]{bilder/stencil}
+%   \end{wrapfigure}
+%    
+%   
+%   \text{}
+%    
+%    \textbf{Stencil}
+%    \begin{itemize}
+%      \item Implementierung von compute kernels
+%      \item Anordnung von Elementen in festen Muster (Stencil)
+%      \item Verwendung in Simulationen, Differentialgleichung
 %     \end{itemize}
-%     
-%     \item PetaBricks
-%     \begin{itemize}
-%       \item Sprache und Compiler zur Bildverarbeitung
-%       \item Scheduling in Grafikpipeline
-%     \end{itemize}
-%     
-%     \item Stencil
-%     \begin{itemize}
-%       \item Sprache und Compiler zur Bildverarbeitung
-%       \item Scheduling in Grafikpipeline
-%     \end{itemize}
-%     
-%    \end{itemize}
-%   \end{frame}
-%  \endgroup
+    
+   \text{}
+   
+   \textbf{PetaBricks}
+   \begin{itemize}
+     \item Kombination versch. Algorithmen \texttt{(algorithmic selectors)}
+     \item \texttt{block sizes, thread counts, iteration counts …}
+   \end{itemize}
+\end{frame}
+\endgroup
     
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  \begingroup
@@ -524,7 +541,7 @@
    \begin{itemize}
     % primär: Demonstration, dass Framework flexibel ist, abseits von (wissenschaftlichen) Rechnen
    
-    \item Abschließen des ersten Levels durch Sequenz von Tasten-Eingaben (Konfig.)
+    \item Absolvieren des ersten Levels: Sequenz von Tasten-Eingaben (Konfig.)
     % erklären, dass das konfig ist 
     
     % Bild ?
@@ -541,7 +558,7 @@
     \item Ziel: Maximieren der \#Pixel die Mario nach rechts läuft
     % ! WICHTIG ! : game grafik wird NICHT ausgewertet
     
-    \item Suchraum: Tendenz horizontal nach rechts bewegen
+    \item Suchraum: horizontale Bewegung nach rechts
     % sonst random eingaben, mario bewegt sich nicht zielstrebig
     
     \item Eingaben-Modellierung:
@@ -576,7 +593,7 @@
     \caption{Ziel erreicht}
   \end{figure}
   
-  \centering\fbox{\parbox[c]{4.4cm}{Demo: First Level of Super Mario}}
+  \centering\fbox{\parbox[c]{4.65cm}{Demo: Erstes Level in Super Mario}}
   
   \end{frame}  
   \endgroup
@@ -590,9 +607,12 @@
   \textbf{4. Aktueller Stand des Projekts}
   
   \begin{itemize}
-    \item \url{www.github.com/jansel/opentuner}, MIT-Lizenz
+    \item \url{www.github.com/jansel/opentuner}
+    \item MIT-Lizenz
     \item Entwicklung 2014-2015
-    \item gute Dokumentation, Support via Issues
+    \item Erweiterung durch Nutzer
+    \item gute Dokumentation
+    \item Ziel: Einsatz in bestehenden und neuen Domänen
   \end{itemize}
   
   
@@ -602,8 +622,9 @@
     
 %%%%% Section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \section{Zusammenfassung}
-    
+  
   \begin{frame}
+  \textbf{5. Zusammenfassung} \newline
   
    \textbf{PRO\\}
    \begin{itemize}
@@ -614,9 +635,9 @@
       % Programmierer "stellt ein" anstatt Hardliner mäßig zu coden 
       % (keineMachine-Learning Expertise nötig)
       
-      \item große Anzahl von Beispielanwendungen
+      \item viele Beispielanwendungen
       
-      \item Unterstützung mehrerer Optimierungsziele (Kombination)
+      \item mehrere Optimierungsziele (Kombination)
       % lässt trotzdem erfahrenen Nutzern viel Möglichkeiten auf tieferer Ebene Framework 
       % nach Belieben zu nutzen/erweitern
 
@@ -629,7 +650,7 @@
       
    \textbf{CONTRA\\}
     \begin{itemize}
-      \item Optimierungsgrad variiert stark (Bsp.)
+      \item Optimierungsgrad variiert stark
       % gute Modellierung, Komplexität des Problems
       
       \item Trade-off: Zeitaufwand $\leftrightarrow$ Nutzen
@@ -644,7 +665,7 @@
 
 \begin{frame}
 
-  \textbf{Quellen}
+  \textbf{Quellen \newline}
       
   \begin{thebibliography}{9}
 
@@ -661,9 +682,13 @@
     2014.
     
   
-  \bibitem{handsOn-pdf} Shoaib Kamil. \emph{Hands on session.} PLDI 2015
-  \bibitem{opentuner-git} \url{www.github.com/jansel/opentuner}
-  \bibitem{opentuner-site} \url{www.opentuner.org}
+  \bibitem{handsOn-pdf} Shoaib Kamil. \emph{Hands on session.} Programming Language Design and Implementation 2015
+  
+  \bibitem{opentuner-git} \url{www.github.com/jansel/opentuner} \footnotesize (08.01.2017)
+  \normalsize
+  \bibitem{opentuner-site} \url{www.opentuner.org} \footnotesize (05.12.2016)
+  \normalsize
+  \bibitem{stencil} \url{en.wikipedia.org/wiki/Stencil_code} \footnotesize (08.01.2017)
 
   \end{thebibliography}
 
