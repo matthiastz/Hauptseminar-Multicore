@@ -28,7 +28,7 @@
 % Metadaten
 
 % \titlegraphic{\includegraphics[width=4cm]{bilder/opentunerlogo.png}}
-\title{OpenTuner: An Extensible Framework\\for Program Autotuning}
+\title{OpenTuner: An Extensible Framework \\for Program Autotuning}
 \author{Matthias Tietz}
 \date{10.01.2017}
 \institute[TUC]{\small  Hauptseminar\\Bachelor Informatik}
@@ -57,7 +57,7 @@
             \includegraphics[width=0.5\textwidth]{bilder/opentunerlogo2}
           \end{center}
         \end{wrapfigure}
-        \large{Gliederung}
+%         \large{Gliederung}
         \normalsize \tableofcontents  
     \end{frame}
     \endgroup
@@ -71,6 +71,10 @@
 %%%%% section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     \section{Einleitung}
+    
+  \begin{frame}
+    \tableofcontents[currentsection]
+  \end{frame}
 
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   
 
@@ -78,7 +82,7 @@
   \setbeamertemplate{tuc2 headline 2}{Motivation}
     \begin{frame}
     
-    \textbf{Das Paper}
+    \textbf{Paper}
     \begin{itemize}
     
         \item OpenTuner: An Extensible Framework for Program Autotuning
@@ -98,22 +102,23 @@
       % findet Anwendung in Domänen wie HPC und Grafik-/Signalverarbeitung (PS, 3D, image processing)
       % (hoher Rechenaufwand) -> Zeitgewinn ... hand-optimierte AT ..
       
-      \item bestehende Autotuning-Frameworks domänenspezifisch (ATLAS, FFTW)
-      % lineare Algebra, FFT
-      % referenz / link auf ATLAS, FFTW
-      
-      \item Tuning-Prozess automatisierbar
+      \item Tuning-Prozess: automatisierbar, effizient?
       % Suche nach optimaler Programm-Implementierung
-            
-    \end{itemize}
-      \text{OpenTuner:}
-    \begin{itemize}
-      \item Optimierungsverfahren komfortabler und effizienter
       % große Suchräume, bisherige AT beschneiden oft SR !
       % Suchraum = Parameter, mögliche Implementierungen
       % per Hand schwer machbar bzw. sehr ineffizient
       
-      \item mehrere Optimierungsziele komibinierbar, hohe Erweiterbarkeit
+      \item bestehende Autotuning-Frameworks domänenspezifisch (ATLAS, FFTW)
+      % lineare Algebra, FFT
+      % referenz / link auf ATLAS, FFTW
+      
+      \end{itemize}
+      
+      \text{OpenTuner:}
+    \begin{itemize}
+      \item komfortables Optimierungsverfahren
+      
+      \item mehrere Optimierungsziele kombinierbar, hohe Erweiterbarkeit
       % Tradeoff Performance - Genauigkeit
       
        \item Performance-Portabilität
@@ -125,13 +130,13 @@
     
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   
   \begingroup
-  \setbeamertemplate{tuc2 headline 2}{Verwendete Begriffe}
+  \setbeamertemplate{tuc2 headline 2}{Wichtige Begriffe}
   \begin{frame}
-    \textbf{Verwendete Begriffe:}
+    \textbf{Wichtige Begriffe:}
     
   \begin{itemize}
 
-    \item \textbf{Parameter}: Variablen eines bestimmten Typs 
+    \item \textbf{Parameter}: Variable eines bestimmten Typs 
     % Modellierung
     % Programm XY -> welche Parameter sollen modelliert werden? spätere Folie dazu mehr
     
@@ -210,25 +215,16 @@
 %%%%% section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \section{OpenTuner Framework}
   
-%%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  
-
-
+  \begin{frame}
+    \tableofcontents[currentsection]
+  \end{frame}
 
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
   
   \begingroup
-  \setbeamertemplate{tuc2 headline 2}{Architektur}
+  \setbeamertemplate{tuc2 headline 2}{Organisation}
   \begin{frame}
   
-  \textbf{2. OpenTuner Framework}
-  % \begin{itemize}
-    % \item Autotuning-Problem $\rightarrow$ Suchproblem
-    % \item Suchraum: Menge der Konfigurationen (Belegung von Parametern)
-    % \item Messung: 1 konkrete Konfig. wird gemessen: Ausführung $\rightarrow$ Ergebnis
-    % \item Möglichkeit mehrere Messungen parallel auszuführen
-    
-  % \end{itemize}
   
   \begin{figure}[ht]
     \centering	      
@@ -297,7 +293,7 @@
     \textbf{Komplexe Parameter}
     \begin{itemize}
 
-      \item \texttt{Boolean, Switch} und \texttt{Enum} bewusst als komplex. Parameter, Darstellung
+      \item \texttt{Boolean, Switch, Enum} als komplex. Parameter, Darstellung
       als ungeordnete Sammlung $\rightarrow$ es existiert kein Gradient
       % (wie bei prim. Param.)
       
@@ -322,10 +318,15 @@
 %%%%% Section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     \section{Anwendungsbeispiele}
     
+    \begin{frame}
+      \tableofcontents[currentsection]
+    \end{frame}
+    
+%%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    
     \begingroup
     \setbeamertemplate{tuc2 headline 2}{GCC/G++ Flags}
     \begin{frame}
-      \textbf{3. Anwendungsbeispiele} \newline
       
     \textbf{GCC/G++ Flags}
       \begin{itemize}
@@ -506,27 +507,13 @@
     \item Ausführungsreihenfolge in Grafik-Pipeline
     \item Pipeline-Schedule bestimmt die Performance
    \end{itemize}
-   
-%     \begin{wrapfigure}{r}{0.25\textwidth}
-%       \includegraphics[width=0.23\textwidth]{bilder/stencil}
-%   \end{wrapfigure}
-%    
-%   
-%   \text{}
-%    
-%    \textbf{Stencil}
-%    \begin{itemize}
-%      \item Implementierung von compute kernels
-%      \item Anordnung von Elementen in festen Muster (Stencil)
-%      \item Verwendung in Simulationen, Differentialgleichung
-%     \end{itemize}
-    
+      
    \text{}
    
    \textbf{PetaBricks}
    \begin{itemize}
      \item Kombination versch. Algorithmen \texttt{(algorithmic selectors)}
-     \item \texttt{block sizes, thread counts, iteration counts …}
+     \item \texttt{block sizes, thread counts, iteration counts} \ldots
    \end{itemize}
 \end{frame}
 \endgroup
@@ -600,11 +587,16 @@
   
 %%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \section{Aktueller Stand}
+  
+    \begin{frame}
+      \tableofcontents[currentsection]
+    \end{frame}
+    
+%%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
   \begingroup
 %   \setbeamertemplate{tuc2 headline 2}{Super Mario}
   \begin{frame}
-  
-  \textbf{4. Aktueller Stand des Projekts}
   
   \begin{itemize}
     \item \url{www.github.com/jansel/opentuner}
@@ -623,8 +615,13 @@
 %%%%% Section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \section{Zusammenfassung}
   
+    \begin{frame}
+      \tableofcontents[currentsection]
+    \end{frame}
+    
+%%%%% new frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  
   \begin{frame}
-  \textbf{5. Zusammenfassung} \newline
   
    \textbf{PRO\\}
    \begin{itemize}
@@ -687,8 +684,7 @@
   \bibitem{opentuner-git} \url{www.github.com/jansel/opentuner} \footnotesize (08.01.2017)
   \normalsize
   \bibitem{opentuner-site} \url{www.opentuner.org} \footnotesize (05.12.2016)
-  \normalsize
-  \bibitem{stencil} \url{en.wikipedia.org/wiki/Stencil_code} \footnotesize (08.01.2017)
+  
 
   \end{thebibliography}
 
