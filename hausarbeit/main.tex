@@ -4,6 +4,9 @@
 \usepackage{lmodern}
 \usepackage{ngerman}
 \usepackage{graphicx}
+\usepackage{xspace}
+
+\newcommand{\zB}{\mbox{z.\,B.}\xspace}
 
 % \title{OpenTuner: An Extensible Framework for Program Autotuning
 % \includegraphics{bilder/tuc-logo-black.pdf}
@@ -19,7 +22,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
-
 
 \maketitle \thispagestyle{empty} \newpage
 
@@ -60,9 +62,16 @@ bestmöglichen Programm-Implementierung zu automatisieren. Anstatt ein Programm 
 zu optimieren, beschreibt der Nutzer eine Menge möglicher Implementierungen, die 
 systematisch von geeigneten Techniken durchsucht wird. Das Optimierungsverfahren
 mittels Autotuner ist zumeist effizienter als die Optimierung von Hand, da deutlich größere
-Suchräume verarbeitet werden können.
+Suchräume verarbeitet werden können. \newline
 
-
+\noindent
+Bei der Erstellung eines Autotuners steht oftmals die Verbesserung der Laufzeit
+für das spezifische Programm im Vordergrund. OpenTuner bietet neben \texttt{time}\footnote{Zeit, Ausführungszeit}  
+alternativ weitere Optimierungsziele, \zB \texttt{accuracy}\footnote{Genauigkeit, \zB Genauigkeit einer Berechnung}  
+und \texttt{energy}\footnote{Energie, Energiebedarf eines bestimmten Systems}.
+Es ist außerdem möglich, mehrere Ziele bei der Optimierung zu verfolgen. 
+So kann man bspw. das Optimierungsziel \texttt{time-accuracy} definieren, also die Ausführungszeit
+des Programms verbessern und gleichzeitig die Genauigkeit berücksichtigen.
 
 
 \section{Das Framework}
