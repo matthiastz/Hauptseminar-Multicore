@@ -98,7 +98,7 @@
     \textbf{Motivation}
         
     \begin{itemize}
-      \item Optimierung rechenintensiver Programme
+%       \item Optimierung rechenintensiver Programme
       % findet Anwendung in Domänen wie HPC und Grafik-/Signalverarbeitung (PS, 3D, image processing)
       % (hoher Rechenaufwand) -> Zeitgewinn ... hand-optimierte AT ..
       
@@ -149,9 +149,9 @@
     
     \item \textbf{Suchtechnik}: Suchraum erforschen, Anfragen für Messung
     % folie mit grafik schön zu sehen
-    \item \textbf{Suchprozess}: Lesen/Schreiben von Konfigurationen \newline
+%     \item \textbf{Suchprozess}: Lesen/Schreiben von Konfigurationen \newline
     
-    \item \textbf{Messprozess}: konkrete Konfiguration ausführen
+%     \item \textbf{Messprozess}: konkrete Konfiguration ausführen
     \item \textbf{Messresultat}: Ergebnis der Messung, abhängig von Optimierungsziel(en)
     \item \textbf{Ergebnisdatenbank}: Festhalten aller Ergebnisse des Tuning-Vorgangs
     
@@ -279,7 +279,7 @@
   \begin{itemize}
     \item numerische Werte mit Unter-/Obergrenze
     \item \texttt{Float} und \texttt{LogFloat(-Int)} gleiche Repräsentation, Werte skaliert
-    \item Grund: Effekt der Wertänderung bei steigender Parametergröße
+%     \item Grund: Effekt der Wertänderung bei steigender Parametergröße
     % ähnlich bei PowerOfTwo
     
   \end{itemize}
@@ -293,8 +293,8 @@
     \textbf{Komplexe Parameter}
     \begin{itemize}
 
-      \item \texttt{Boolean, Switch, Enum} als komplex. Parameter, Darstellung
-      als ungeordnete Sammlung $\rightarrow$ es existiert kein Gradient
+%       \item \texttt{Boolean, Switch, Enum} als komplex. Parameter, Darstellung
+%       als ungeordnete Sammlung $\rightarrow$ es existiert kein Gradient
       % (wie bei prim. Param.)
       
       \item \texttt{Permutation:} Liste von Werten inkl. Reihenfolge-Manipulator
@@ -536,7 +536,7 @@
     \item Tasten-Eingaben $\rightarrow$ Speichern in Datei $\rightarrow$ Abspielen in NES-Emulator
     % Bsp. ggf. zeigen
     
-    \item Wiedergabe im Emulator schneller als in Echtzeit
+    \item Wiedergabe in Emulator schneller als in Echtzeit
     \item Auswerten mehrerer Instanzen des Emulators parallel
     % OpenTuner: Parameter --parallelism -> geht hier so einfach da Ergebnisse sich nicht direkt beeinflussen
     
