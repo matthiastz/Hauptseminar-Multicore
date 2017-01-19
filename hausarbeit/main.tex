@@ -118,8 +118,7 @@ OpenTuner stellt im Auslieferungszustand grundlegende Suchtechniken bereit, die 
 Suchräumen anwendbar sind. Die Verwendung der Suchtechniken findet hierarchisch statt --
 die Suchsteuerung spricht eine \texttt{root technique}\footnote{zentrale Technik (sog.~Meta-Technik),
 ist den normalen Suchtechniken/Heuristiken übergeordnet} an, die dann während des Tuning-Vorgangs 
-Tests auf eine Menge von \texttt{sub-techniques}\footnote{die Standard-Suchtechniken} verteilt. \newline
-
+Tests auf eine Menge von \texttt{sub-techniques}\footnote{die Standard-Suchtechniken} verteilt. 
 Die \emph{Ensembles} sind ein Konzept von OpenTuner, welches die Kombination mehrerer Suchtechniken
 ermöglicht. Einzelne Suchtechniken tauschen Ergebnisse über die Datenbank aus -- findet eine 
 Suchtechnik eine gute Konfiguration, so können andere Techniken davon profitieren.
@@ -127,6 +126,26 @@ Suchtechniken bekommen ihre Testanteile dynamisch zugewiesen, abhängig davon wi
 jeweils ist.
 
 \subsection{Konfigurations-Manipulator}
+Der Konfigurations-Manipulator stellt die Schnittstelle zwischen Suchtechniken und Konfigurationen
+dar. Dieser verwaltet die Menge der Parameter inklusive der jeweiligen Belegung und regelt den Zugriff
+(Lesen/Schreiben) durch die Suchtechniken.
+
+\subsubsection{Parameter-Arten}
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=0.85\textwidth]{bilder/paramtypes}
+\cite{OT-paper} \caption{Hierarchie der integrierten Parameter-Arten} 
+\end{center}
+\end{figure}
+
+Primitive Parameter repräsentieren numerische Werte einschließlich einem dafür
+zulässigen und definierbaren Wertebereich. Zusätzlich existieren Varianten dieser Parameter,
+deren konkreter Wert skaliert nach außen gegeben werden. Für ein Anwendungsszenario mit 
+stark wachsenden Parametergrößen bietet sich die logarithmische Skalierung an. 
+
+
+
 
 
 
