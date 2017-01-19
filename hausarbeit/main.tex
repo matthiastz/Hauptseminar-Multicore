@@ -8,10 +8,10 @@
 
 \newcommand{\zB}{\mbox{z.\,B.}\xspace}
 \newcommand{\iAllg}{\mbox{i.\,Allg.}\xspace}
+\setlength{\parindent}{0em} % Einrückung verhindern
 
-% \title{OpenTuner: An Extensible Framework for Program Autotuning
-% \includegraphics{bilder/tuc-logo-black.pdf}
-% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   
 \title{\includegraphics[width=0.6\textwidth]{bilder/tuc-logo-black.pdf}
     OpenTuner:~An~Extensible~Framework\\for~Program~Autotuning
@@ -30,14 +30,12 @@
 \thispagestyle{empty}
 ~
 \vfill
-\noindent % Einrückung vermeiden
 Technische Universität Chemnitz\\
 Fakultät für Informatik\\
 Professur Praktische Informatik\\
 Hauptseminar Multicore-Programmierung\\
 Wintersemester 2016/2017\\
 
-\noindent
 OpenTuner: An Extensible Framework for Program Autotuning\\
 Autor: Matthias Tietz\\
 Matrikelnummer:~375681\\
@@ -66,7 +64,6 @@ systematisch von geeigneten Techniken durchsucht wird. Das Optimierungsverfahren
 mittels Autotuner ist zumeist effizienter als die Optimierung von Hand, da deutlich größere
 Suchräume verarbeitet werden können. \newline
 
-\noindent
 Bei der Erstellung eines Autotuners steht oftmals die Verbesserung der Laufzeit
 für das spezifische Programm im Vordergrund. OpenTuner bietet neben \texttt{time}\footnote{Zeit, Ausführungszeit}  
 alternativ weitere Optimierungsziele, \zB \texttt{accuracy}\footnote{Genauigkeit, \zB Genauigkeit einer Berechnung}  
@@ -75,7 +72,6 @@ Es ist außerdem möglich, mehrere Ziele bei der Optimierung zu verfolgen.
 So kann man bspw. das Optimierungsziel \texttt{time-accuracy} definieren, also die Ausführungszeit
 des Programms verbessern und gleichzeitig die Genauigkeit berücksichtigen. \newline
 
-\noindent
 Bestehende Autotuning-Frameworks wurden \iAllg zielgerichtet für den Einsatz in einer 
 bestimmten Domäne entwickelt. \textsc{ATLAS} \cite{atlas} ist ein Projekt aus dem Bereich der Linearen Algebra,
 \textsc{FFTW} \cite{fftw} verwendet Autotuning zum Lösen schneller Fourier-Transformationen.
@@ -85,7 +81,6 @@ ausgeprägte Erweiterbarkeit und einen großen Funktionsumfang des Frameworks er
 Das durch OpenTuner realisierte Optimierungsverfahren kann auf andere Rechnersysteme übertragen
 und mit den dort existierenden Bedingungen wiederholt werden. \newline
 
-\noindent
 Bei der Entwicklung eines Autotuning-Frameworks existieren drei grundsätzliche Herausforderungen.
 Zunächst die Möglichkeit für einen Problemfall eine \emph{passende Konfigurations-Repräsentation} wählen
 zu können. Das umfasst die Darstellung der notwendigen Datenstrukturen und Bedingungen. Eine gute 
@@ -101,16 +96,37 @@ hohes Maß an Komplexität besitzen.
 
 \section{OpenTuner Framework}
 Die Architektur des Frameworks ist vergleichsweise kompakt und lässt sich in die folgenden drei 
-Komponenten gliedern: Suche, Messung und Ergebnis-Datenbank. \newline
+Komponenten gliedern: Suche, Messung und Ergebnis-Datenbank.
 
+
+\begin{figure}[h]
 \begin{center}
-\includegraphics{bilder/smdb} \cite{OT-paper}  
-\end{center}
+\includegraphics{bilder/smdb}
+\cite{OT-paper} \caption{Komponenten des OpenTuner Framework} 
+\end{center}   
+\end{figure}
 
-\noindent
-Die Menge der Suchtechniken verwenden den Konfigurations-Manipulator, um Konfigurationen lesen und 
-schreiben zu können.
+Die Menge der Suchtechniken verwendet den Konfigurations-Manipulator, um Konfigurationen lesen und 
+schreiben zu können. Ausgewählte Konfigurationen werden durch eine benutzerdefinierte Messfunktion
+ausgeführt und anschließend ausgewertet. Die Datenbank dient dem Festhalten der Ergebnisse des Tuning-Vorgangs
+und dem Informationsaustausch zwischen Suche und Messung.
 
+%%% ggf. noch Messungen parallel??? %%%
+
+\subsection{Suchtechniken}
+OpenTuner stellt im Auslieferungszustand grundlegende Suchtechniken bereit, die auf viele Arten von 
+Suchräumen anwendbar sind. Die Verwendung der Suchtechniken findet hierarchisch statt --
+die Suchsteuerung spricht eine \texttt{root technique}\footnote{zentrale Technik (sog.~Meta-Technik),
+ist den normalen Suchtechniken/Heuristiken übergeordnet} an, die dann während des Tuning-Vorgangs 
+Tests auf eine Menge von \texttt{sub-techniques}\footnote{die Standard-Suchtechniken} verteilt. \newline
+
+Die \emph{Ensembles} sind ein Konzept von OpenTuner, welches die Kombination mehrerer Suchtechniken
+ermöglicht. Einzelne Suchtechniken tauschen Ergebnisse über die Datenbank aus -- findet eine 
+Suchtechnik eine gute Konfiguration, so können andere Techniken davon profitieren.
+Suchtechniken bekommen ihre Testanteile dynamisch zugewiesen, abhängig davon wie erfolgreich eine
+jeweils ist.
+
+\subsection{Konfigurations-Manipulator}
 
 
 
