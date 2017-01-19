@@ -7,6 +7,7 @@
 \usepackage{xspace}
 
 \newcommand{\zB}{\mbox{z.\,B.}\xspace}
+\newcommand{\iAllg}{\mbox{i.\,Allg.}\xspace}
 
 % \title{OpenTuner: An Extensible Framework for Program Autotuning
 % \includegraphics{bilder/tuc-logo-black.pdf}
@@ -39,6 +40,7 @@ Wintersemester 2016/2017\\
 \noindent
 OpenTuner: An Extensible Framework for Program Autotuning\\
 Autor: Matthias Tietz\\
+Matrikelnummer:~375681\\
 Bachelor Informatik, 5.~Fachsemester
 
 \newpage
@@ -73,21 +75,44 @@ Es ist außerdem möglich, mehrere Ziele bei der Optimierung zu verfolgen.
 So kann man bspw. das Optimierungsziel \texttt{time-accuracy} definieren, also die Ausführungszeit
 des Programms verbessern und gleichzeitig die Genauigkeit berücksichtigen. \newline
 
-%%% Zitat \cite : ATLAS, FFTW
+\noindent
+Bestehende Autotuning-Frameworks wurden \iAllg zielgerichtet für den Einsatz in einer 
+bestimmten Domäne entwickelt. \textsc{ATLAS} \cite{atlas} ist ein Projekt aus dem Bereich der Linearen Algebra,
+\textsc{FFTW} \cite{fftw} verwendet Autotuning zum Lösen schneller Fourier-Transformationen.
+Im Gegensatz dazu verfolgt OpenTuner den Ansatz, ein generelles System zur Erstellung 
+von Autotunern für verschiedene Domänen einzuführen. Diese Flexibilität wird grundsätzlich durch eine stark
+ausgeprägte Erweiterbarkeit und einen großen Funktionsumfang des Frameworks ermöglicht.
+Das durch OpenTuner realisierte Optimierungsverfahren kann auf andere Rechnersysteme übertragen
+und mit den dort existierenden Bedingungen wiederholt werden. \newline
 
 \noindent
-Bestehende Autotuning-Frameworks wurden i.~Allg. zielgerichtet für den Einsatz in einer 
-bestimmten Domäne entwickelt. \textsc{ATLAS} ist ein Projekt aus dem Bereich der Linearen Algebra,
-\textsc{FFTW} verwendet Autotuning zum Lösen schneller Fourier-Transformationen.
-% Konzept Erweiterbarkeit, Portabilität
+Bei der Entwicklung eines Autotuning-Frameworks existieren drei grundsätzliche Herausforderungen.
+Zunächst die Möglichkeit für einen Problemfall eine \emph{passende Konfigurations-Repräsentation} wählen
+zu können. Das umfasst die Darstellung der notwendigen Datenstrukturen und Bedingungen. Eine gute 
+Repräsentation ist entscheidend für die Effizienz des Autotuners. Ebenso kritisch kann die 
+\emph{Größe des gültigen Suchraumes} sein, denn durch Kombination verschiedener Parameter sind 
+schnell rießige Suchräume möglich. Eine vollständige Suche würde dort oftmals nicht abschließen,
+daher bedarf es intelligenter Suchtechniken, welche nur einen kleinen Teil der Konfigurationsmenge
+durchsuchen, um ein gutes Ergebnis zu erzielen. Die \emph{Beschaffenheit des Suchraumes} stellt
+ebenfalls eine Herausforderung dar, da in vielen praktischen Anwendungen die Suchräume meist ein
+hohes Maß an Komplexität besitzen.
 
-%%%
-% 3 main challenges bei AT FW Entwicklung
-%%%
+%%% ein wenig kürzen %%%
+
+\section{OpenTuner Framework}
+Die Architektur des Frameworks ist vergleichsweise kompakt und lässt sich in die folgenden drei 
+Komponenten gliedern: Suche, Messung und Ergebnis-Datenbank. \newline
+
+\begin{center}
+\includegraphics{bilder/smdb} \cite{OT-paper}  
+\end{center}
+
+\noindent
+Die Menge der Suchtechniken verwenden den Konfigurations-Manipulator, um Konfigurationen lesen und 
+schreiben zu können.
 
 
-\section{Das Framework}
-abc
+
 
 \section{Verwendung}
 abc
@@ -101,7 +126,26 @@ abc
 \section{Literaturverzeichnis}
 abc
 
-\section{Eigenständigkeitserklärung}
-abc
+\begin{thebibliography}{9}
+   
+  %%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%
+  %  TODO: Zitatstile -> Reihenfolge: Autor, Titel, Jahr, Verlag, Seite, …
+  %%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%
+  
+    \bibitem{OT-paper} Jason Ansel, Shoaib Kamil, Kalyan Veeramachaneni, Jonathan Ragan-Kelley, Jeffrey Bosboom, Una-May O'Reilly, Saman Amarasinghe. \emph{OpenTuner: An Extensible Framework for Program Autotuning.}
+    2014.
+   
+\bibitem{atlas} Liste der Autoren \emph{Titel oder Quelle des zitierten Werkes} ggf. Seiten.
+    Jahr. und weiteres.
+\bibitem{fftw} Liste der Autoren \emph{Titel oder Quelle des zitierten Werkes} ggf. Seiten.
+    Jahr. und weiteres.
+
+\end{thebibliography}
+
+
+% \section{Eigenständigkeitserklärung}
+% abc
 
 \end{document}
