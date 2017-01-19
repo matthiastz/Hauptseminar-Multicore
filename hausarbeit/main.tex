@@ -8,6 +8,8 @@
 
 \newcommand{\zB}{\mbox{z.\,B.}\xspace}
 \newcommand{\iAllg}{\mbox{i.\,Allg.}\xspace}
+\newcommand{\ua}{\mbox{u.\,a.}\xspace}
+\def\CC{{C\nolinebreak[4]\hspace{-.05em}\raisebox{.4ex}{\tiny\bf ++}}}
 \setlength{\parindent}{0em} % Einrückung verhindern
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -52,6 +54,8 @@ Bachelor Informatik, 5.~Fachsemester
 %% TODO: Sichtwortverzeichnis? : Autotuner, Param, Konfig, ...
 %%%%%%%%
 
+%%% section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Einleitung}
 % sub: Related Work, Begriffe
 
@@ -94,10 +98,11 @@ hohes Maß an Komplexität besitzen.
 
 %%% ein wenig kürzen %%%
 
+%%% section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{OpenTuner Framework}
 Die Architektur des Frameworks ist vergleichsweise kompakt und lässt sich in die folgenden drei 
 Komponenten gliedern: Suche, Messung und Ergebnis-Datenbank.
-
 
 \begin{figure}[h]
 \begin{center}
@@ -140,26 +145,93 @@ dar. Dieser verwaltet die Menge der Parameter inklusive der jeweiligen Belegung 
 \end{figure}
 
 Primitive Parameter repräsentieren numerische Werte einschließlich einem dafür
-zulässigen und definierbaren Wertebereich. Zusätzlich existieren Varianten dieser Parameter,
-deren konkreter Wert skaliert nach außen gegeben werden. Für ein Anwendungsszenario mit 
-stark wachsenden Parametergrößen bietet sich die logarithmische Skalierung an. 
+zulässigen und definierbaren Wertebereich\footnote{untere und obere Grenze des Parameters}. 
+Zusätzlich existieren Varianten dieser Parameter,
+deren konkreter Wert skaliert nach außen gegeben wird. Für ein Anwendungsszenario mit 
+stark wachsenden Parametergrößen bietet sich die logarithmische Skalierung an. \newline
+
+Der komplexe Parameter \texttt{Permutation} erstellt für eine gegebene Liste von Werten dessen 
+Reihenfolge und besitzt die Funktionalität zufällige Änderungen an dieser Ordnung vorzunehmen.
+Für beide Parameter-Arten lassen sich bestehende Parameter erweitern oder einfach neue erstellen.
+
+\subsection{Optimierungsziele}
+
+OpenTuner unterstützt mehrere Optimierungsziele, standardmäßig wird nach der Zeit optimiert.
+Ergänzend zu \texttt{time} kann \texttt{accuracy}, \texttt{energy}, \texttt{size}, 
+\texttt{confidence} oder ein eigens vom Nutzer definiertes Ziel gewählt werden.
+Darüber hinaus kann man bei der Optimierung mehr als ein Ziel gleichzeitig verfolgen und
+Ziele nutzerspezifisch kombinieren (\zB \texttt{ threshold accuracy  while
+minimizing time}). 
+
+\subsection{Suchen und Messen}
+
+Das OpenTuner Framework besitzt die beiden Module \emph{Suchen} und \emph{Messen},
+deren Kommunikation ausschließlich über die Ergebnis-Datenbank stattfindet.
+Beim Entwurf von OpenTuner wurde sich bewusst dazu entschieden, diese zwei Komponenten
+klar zu trennen. Diese Trennung hat \ua den Vorteil, dass mehrere Messungen parallel 
+ausgeführt werden können. Da für den Großteil der Autotuning-Anwendungen der Messaufwand
+den Suchaufwand deutlich übersteigt, ist die Unterteilung besonders sinnvoll.
+Außerdem können dadurch Bestandteile wie \zB das Messmodul einfach erweitert oder 
+ausgetauscht werden, ohne das zugrundeliegende Framework ändern zu müssen.
 
 
-
-
-
+%%% section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Verwendung}
-abc
+Um mit OpenTuner einen Autotuner zu implementieren, sind folgende Schritte notwendig:
+\begin{itemize}
+  \item Suchraum definieren $\rightarrow$ \emph{configuration manipulator}
+  \item Messfunktion erstellen (Konfigurationsauswertung) $\rightarrow$ \emph{run function}
+  \item Festlegen des Optimierungsziels
+\end{itemize}
+Die Umsetzung geschieht mitteils einem Python-Programm, weil so die direkte Schnittstelle
+zu OpenTuner spezifiziert ist. \newline
+
+Da mit OpenTuner ein praxisorientierter Ansatz verfolgt wird, folgt nun eine Reihe von
+Beispielen, in denen das Framework eingesetzt wird, um Anwendungen in unterschiedlicher 
+Hinsicht zu optimieren. Für das jeweilige Beispiel wird der Problembereich beschrieben,
+auf die Umsetzung des Autotuners eingangen und die erzielten Resultate mit denen bisheriger
+Autotuner verglichen.
+
+
 \subsection{Beispielhafte Anwendungen}
+\subsubsection{GCC/G++ Flags}
+Für diesen Anwendungsfall steht die Auswahl und Kombination von Compileroptionen
+im Vordergrund. Der Autotuner soll eine Menge von Flags und Parametern durchsuchen,
+um die resultierende Ausführungszeit des kompilierten Zielprogramms zu minimieren.
+Die unterstützten Flags erhält man mit \texttt{g++ --help=optimizers}, die 
+Parameter inklusive der zulässigen Wertebereich aus \texttt{params.def} (gcc source code). \newline
+
+Die Umsetzung des Autotuners lässt sich ideal mit OpenTuner realisieren, denn der
+Suchraum kann durch Verwendung primitiver Parameter ausreichend modelliert werden:
+\begin{itemize}
+  \item Optimierungslevel \texttt{(-O0,$\ldots$,-O3)} $\leftrightarrow$ \texttt{IntegerParameter~(min:~0, max:~3)}
+  \item Flag $\leftrightarrow$ \texttt{EnumParameter~(on,~off,~default)}
+  \item Parameter $\leftrightarrow$ \texttt{IntegerParameter~(min:~x, max:~y)}
+\end{itemize}
+Um die eigentliche Übersetzung mit einem Compiler ausführen zu können, sind konkrete
+Zielprogramme notwendig. Für die Ergebnisse in diesem Beispiel wurde sich auf diese
+Auswahl beschränkt: Schnelle Fourier-Transformation in C (\texttt{fft.c}) \cite{fftc} und 
+ein Template zur Matrix-Multiplikation in \CC (\texttt{matrixmultiply.cpp}) \cite{mmcpp}.
+
+%%%%%%%%%
+% box um code bsp.: schritte 1,2,3 mit erklärung
+% 2 <-> messfunktion
+% ergebnisse: grafiken
+%
+%%%%%%%%%
 
 \subsection{Ausprobieren der Techniken}
+
+%%% section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Fazit}
 abc
 
+%%% section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Literaturverzeichnis}
-abc
+% abc
 
 \begin{thebibliography}{9}
    
@@ -175,6 +247,10 @@ abc
 \bibitem{atlas} Liste der Autoren \emph{Titel oder Quelle des zitierten Werkes} ggf. Seiten.
     Jahr. und weiteres.
 \bibitem{fftw} Liste der Autoren \emph{Titel oder Quelle des zitierten Werkes} ggf. Seiten.
+    Jahr. und weiteres.
+\bibitem{fftc} SPLASH2 [35]Liste der Autoren \emph{Titel oder Quelle des zitierten Werkes} ggf. Seiten.
+    Jahr. und weiteres.
+\bibitem{mmcpp} Xiang Fan [11] Liste der Autoren \emph{Titel oder Quelle des zitierten Werkes} ggf. Seiten.
     Jahr. und weiteres.
 
 \end{thebibliography}
