@@ -47,7 +47,7 @@
 
 % Add new keywords here: ConfigManip, Parameters…
 \lstset{emph={%  
-    IntegerParameter, ConfigurationManipulator,EnumParameter,format%
+    IntegerParameter, ConfigurationManipulator,EnumParameter,format,call_program%
     },emphstyle={\textbf}%
 }%
 
@@ -56,6 +56,8 @@
 \newcommand{\bspw}{\mbox{bspw.}\xspace}
 \newcommand{\iAllg}{\mbox{i.\,Allg.}\xspace}
 \newcommand{\ua}{\mbox{u.\,a.}\xspace}
+\newcommand{\vs}{\mbox{vs.}\xspace}
+
 \def\CC{{C\nolinebreak[4]\hspace{-.05em}\raisebox{.4ex}{\tiny\bf ++}}}
 \setlength{\parindent}{0em} % Einrückung verhindern
 
@@ -252,7 +254,7 @@ Parameter inklusive der zulässigen Wertebereich aus \texttt{params.def} (gcc so
 Die Umsetzung des Autotuners lässt sich ideal mit OpenTuner realisieren, denn der
 Suchraum kann durch Verwendung primitiver Parameter ausreichend modelliert werden:
 \begin{itemize}
-  \item Optimierungslevel \texttt{(-O0,$\ldots$,-O3)} $\leftrightarrow$ \texttt{IntegerParameter~(min:~0, max:~3)}
+  \item Optimierungslevel \texttt{(O0,$\ldots$,O3)} $\leftrightarrow$ \texttt{IntegerParameter~(min:~0, max:~3)}
   \item Flag $\leftrightarrow$ \texttt{EnumParameter~(on,~off,~default)}
   \item Parameter $\leftrightarrow$ \texttt{IntegerParameter~(min:~x, max:~y)}
 \end{itemize}
@@ -285,6 +287,8 @@ Diese Konfiguration wird durch die Variable \texttt{gcc\_cmd} repräsentiert, we
 schrittweise konkrete Parameterbelegungen hinzugefügt bekommt. \newline
 
 \lstinputlisting[language=Python]{etc/flagsonoff.py}
+Nun wird der Konfiguration die Information übertragen, ob das jeweilige GCC-Flag
+aktiviert werden soll oder nicht, \zB~'-falign-functions' \vs~'-fno-align-functions'.
 
 \lstinputlisting[language=Python]{etc/params.py}
 
