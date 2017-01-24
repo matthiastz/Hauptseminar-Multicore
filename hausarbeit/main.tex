@@ -8,6 +8,7 @@
 \usepackage{listings}
 \usepackage{color}
 
+
 \definecolor{mygreen}{rgb}{0,0.6,0}
 \definecolor{mygray}{rgb}{0.5,0.5,0.5}
 \definecolor{mymauve}{rgb}{0.58,0,0.82}
@@ -234,7 +235,7 @@ Um mit OpenTuner einen Autotuner zu implementieren, sind folgende Schritte notwe
   \item Festlegen des Optimierungsziels
 \end{itemize}
 Weitere Optionen lassen sich von außen an den Autotuner übergeben. So kann 
-mit \texttt{./autotuner.py --parallelism=2} spezifiziert werden, wieviele Konfigurationen
+mit \texttt{./autotuner.py -{}-parallelism=2} spezifiziert werden, wieviele Konfigurationen
 (hier:~2) OpenTuner parallel auswerten soll. \newline
 
 Da mit OpenTuner ein praxisorientierter Ansatz verfolgt wird, folgt nun eine Reihe von
@@ -291,20 +292,36 @@ Nun wird der Konfiguration die Information übertragen, ob das jeweilige GCC-Fla
 aktiviert werden soll oder nicht, \zB~'-falign-functions' \vs~'-fno-align-functions'.
 
 \lstinputlisting[language=Python]{etc/params.py}
+Für jeden Parameter aus \texttt{GCC\_PARAMS} wird die Bezeichnung und der
+konkrete Wert an \texttt{gcc\_cmd} übergeben, \zB~'-{}-param early-inlining-insns=512'.
+Das Erstellen der zu testenden Konfiguration ist damit abgeschlossen. \newline
 
 \lstinputlisting[language=Python]{etc/measure.py}
+Um nun herausfinden zu können, wie gut die erstellte Konfiguration tatsächlich ist, 
+wird diese (\texttt{gcc\_cmd}) kompiliert und anschließend ausgeführt: \texttt{'./tmp.bin'}.
+Die ursprüngliche Intention des Tuning-Vorgangs war es, die Ausführungszeit des 
+Executable zu minimieren. Deshalb wird das entstandene Messergebnis aus der Datenbank,
+in Spalte (Attribut) \texttt{time}, abgefragt und zurückgegeben. \newline
+
+Dieser Autotuner wurde in vollständiger Form\footnote{zu finden im Framework: 
+examples/gccflags/gccflags.py} auf die Beispiele \texttt{fft.c} 
+und \texttt{matrixmultiply.cpp} angewandt, es wurden immer 30 Tuning-Runs\footnote{wiederholte Anwendung 
+des Autotuners} vollzogen.
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=0.75\textwidth]{bilder/fft}
+\cite{OT-paper}
+\end{center}
+\end{figure}
+
+Bereits im zweiten Durchlauf des Autotuners wird die bisherige Bestzeit (\texttt{gcc -O2}) 
+erreicht und kontinuierlich verbessert. Der Code des Zielprogramms \texttt{fft.c} war bereits
+hochoptimiert\footnote{cache aware tiling, threading} -- dennoch war durch OpenTuner schließlich
+eine Zeitverbesserung von $1.15 \times$  zu verzeichnen.
 
 
 
-
-
-
-%%%%%%%%%
-% box um code bsp.: schritte 1,2,3 mit erklärung
-% 2 <-> messfunktion
-% ergebnisse: grafiken
-%
-%%%%%%%%%
 
 \subsection{Ausprobieren der Techniken}
 
