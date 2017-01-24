@@ -7,7 +7,7 @@
 \usepackage{xspace}
 \usepackage{listings}
 \usepackage{color}
-
+\usepackage{url}
 
 \definecolor{mygreen}{rgb}{0,0.6,0}
 \definecolor{mygray}{rgb}{0.5,0.5,0.5}
@@ -244,8 +244,7 @@ Hinsicht zu optimieren. Für das jeweilige Beispiel wird der Problembereich besc
 auf die Umsetzung des Autotuners eingangen und die erzielten Resultate mit denen bisheriger
 Autotuner verglichen.
 
-\subsection{Beispielhafte Anwendungen}
-\subsubsection{GCC/G++ Flags}
+\subsection{GCC/G++ Flags}
 Für diesen Anwendungsfall steht die Auswahl und Kombination von Compileroptionen
 im Vordergrund. Der Autotuner soll eine Menge von Flags und Parametern durchsuchen,
 um die resultierende Ausführungszeit des kompilierten Zielprogramms zu minimieren.
@@ -267,7 +266,7 @@ ein Template zur Matrix-Multiplikation in \CC (\texttt{matrixmultiply.cpp}) \cit
 % kurze Überleitung zur Implementierung der Schritte 1-3 in Python
 Die Implementierung des Autotuners geschieht anhand eines Python-Programms, da so die direkte Schnittstelle
 zu OpenTuner spezifiziert ist. Es folgen nun repräsentative Code-Abschnitte, um eine
-mögliche Umsetzung konkret nachvollziehen zu können.  \newline
+mögliche Umsetzung nachvollziehen zu können.  \newline
 
 \lstinputlisting[language=Python]{etc/2830.py}
 Zunächst erstellt man eine neue Variable zur Repräsentation des Suchraums: \texttt{manipulator}.
@@ -310,8 +309,8 @@ des Autotuners} vollzogen.
 
 \begin{figure}[h]
 \begin{center}
-\includegraphics[width=0.75\textwidth]{bilder/fft}
-\cite{OT-paper}
+\includegraphics[width=0.8\textwidth]{bilder/fft_cropped}
+\cite{OT-paper} \caption{\texttt{fft.c}}
 \end{center}
 \end{figure}
 
@@ -320,10 +319,41 @@ erreicht und kontinuierlich verbessert. Der Code des Zielprogramms \texttt{fft.c
 hochoptimiert\footnote{cache aware tiling, threading} -- dennoch war durch OpenTuner schließlich
 eine Zeitverbesserung von $1.15 \times$  zu verzeichnen.
 
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=0.8\textwidth]{bilder/mm_cropped}
+\cite{OT-paper} \caption{\texttt{matrixmultiply.cpp}}
+\end{center}
+\end{figure}
 
+Bei dem Beispiel der Matrix-Multiplikation wird die Bestzeit ebenfalls schnell unterboten.
+Hier wird die Verbesserung aber besonders deutlich: der resultierende Speedup beträgt
+$2.82 \times$. Dieses Ergebnis ist überdurchschnittlich, was letztlich auch darauf beruht,
+dass die ursprüngliche Implementierung (\texttt{matrixmultiply.cpp}) kaum optimiert war.
 
+\subsection{High Performance Linpack Benchmark (HPL)}
+Der High Performance Linpack Benchmark \cite{hpl} dient zur Bestimmung der 
+\texttt{floating point performance} verschiedenster Computersysteme und gilt als 
+Kriterium für die Wahl der Top 500 Supercomputer \cite{top500}.
+Zur Bestimmung der Performance eines Systems misst der Benchmark die Geschwindigkeit 
+für das Lösen großer Linearer Gleichungssysteme. \newline
 
-\subsection{Ausprobieren der Techniken}
+Es müssen etwa 15 verschiedene Parameter
+optimiert werden, dabei hat die Matrix-Blockgröße den stärksten Einfluss.
+HPL besitzt selbst einen eingebauten Autotuner, der als Suchtechnik 
+\emph{vollständige Suche} einsetzt. Die folgende Grafik zeigt die erreichte Leistung
+mit OpenTuner im Vergleich zur optimierten HPL-Implementierung von Intel\footnote{\url{http://software.intel.com/en-us/articles/intel-math-kernel-library-linpack-download}}.
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=0.8\textwidth]{bilder/hpl}
+\cite{OT-paper} \caption{HPL}
+\end{center}
+\end{figure}
+
+\subsection{Ähnliche Anwendungen}
+
+\subsection{Super Mario}
 
 %%% section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -346,19 +376,26 @@ abc
     \bibitem{OT-paper} Jason Ansel, Shoaib Kamil, Kalyan Veeramachaneni, Jonathan Ragan-Kelley, Jeffrey Bosboom, Una-May O'Reilly, Saman Amarasinghe. \emph{OpenTuner: An Extensible Framework for Program Autotuning.}
     2014.
    
-\bibitem{atlas} Liste der Autoren \emph{Titel oder Quelle des zitierten Werkes} ggf. Seiten.
-    Jahr. und weiteres.
-\bibitem{fftw} Liste der Autoren \emph{Titel oder Quelle des zitierten Werkes} ggf. Seiten.
-    Jahr. und weiteres.
-\bibitem{fftc} SPLASH2 [35]Liste der Autoren \emph{Titel oder Quelle des zitierten Werkes} ggf. Seiten.
-    Jahr. und weiteres.
-\bibitem{mmcpp} Xiang Fan [11] Liste der Autoren \emph{Titel oder Quelle des zitierten Werkes} ggf. Seiten.
-    Jahr. und weiteres.
+\bibitem{atlas} R. C. Whaley and J. J. Dongarra, \textquotedblleft Automatically tuned linear 
+algebra software,\textquotedblright~in \emph{Supercomputing}, Washington, DC, 1998.
+
+\bibitem{fftw} M. Frigo and S. G. Johnson, \textquotedblleft The design and implementation of 
+FFTW3,\textquotedblright~\emph{IEEE}, vol. 93, no. 2, February 2005.
+
+\bibitem{fftc} S. Woo, M. Ohara, E. Torrie, J. Singh, and A. Gupta, 
+\textquotedblleft The SPLASH-2 programs:  characterization and methodological considerations,\textquotedblright
+~in \emph{Symposium on Computer Architecture News}, June 1995.
+    
+\bibitem{mmcpp}  X. Fan, \textquotedblleft Optimize your code:  Matrix multiplication,\textquotedblright~
+\url{https://tinyurl.com/kuvzbp9}, 2009.
+
+\bibitem{hpl} J. J. Dongarra, P. Luszczek, and A. Petitet, 
+\textquotedblleft The LINPACK Benchmark:  past, present and future,\textquotedblright~
+\emph{Concurrency and Computation:  Practice and Experience}, vol. 15, no. 9, pp. 803--820, 2003.
+
+\bibitem{top500}  Top500,
+\textquotedblleft Top 500 supercomputer sites,\textquotedblright~
+\url{www.top500.org}, 2010.
 
 \end{thebibliography}
-
-
-% \section{Eigenständigkeitserklärung}
-% abc
-
 \end{document}
