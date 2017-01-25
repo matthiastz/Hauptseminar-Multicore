@@ -55,6 +55,7 @@
 
 \newcommand{\zB}{\mbox{z.\,B.}\xspace}
 \newcommand{\bspw}{\mbox{bspw.}\xspace}
+\newcommand{\bzw}{\mbox{bzw.}\xspace}
 \newcommand{\iAllg}{\mbox{i.\,Allg.}\xspace}
 \newcommand{\ua}{\mbox{u.\,a.}\xspace}
 \newcommand{\vs}{\mbox{vs.}\xspace}
@@ -342,7 +343,7 @@ Es müssen etwa 15 verschiedene Parameter
 optimiert werden, dabei hat die Matrix-Blockgröße den stärksten Einfluss.
 HPL besitzt selbst einen eingebauten Autotuner, der als Suchtechnik 
 \emph{vollständige Suche} einsetzt. Die folgende Grafik zeigt die erreichte Leistung
-mit OpenTuner im Vergleich zur optimierten HPL-Implementierung von Intel\footnote{\url{http://software.intel.com/en-us/articles/intel-math-kernel-library-linpack-download}}.
+mit OpenTuner im Vergleich zur optimierten HPL-Implementierung von Intel\footnote{\url{http://software.intel.com/en-us/articles/intel-math-kernel-library-linpack-download}}. \newline
 
 \begin{figure}[h]
 \begin{center}
@@ -350,10 +351,18 @@ mit OpenTuner im Vergleich zur optimierten HPL-Implementierung von Intel\footnot
 \cite{OT-paper} \caption{HPL}
 \end{center}
 \end{figure}
+Diesmal sind deutlich mehr Tuning-Runs notwendig, um die Bestzeit zu erreichen \bzw zu unterbieten.
+Nach mehr als $1200$ Sekunden jedoch, erreicht OpenTuner eine neue günstigste Execution Time,
+welche gegen Ende nochmals leicht verbessert wird. Hier gilt zu beachten, dass der resultierende
+Speedup minimal ausfällt, aber OpenTuner im Vergleich zum bisherigen Autotuner nur einen 
+sehr kleinen Anteil des Suchraums benötigt, um ein vergleichbar gutes \bzw besseres Ergebnis 
+zu erzielen.
+
+
+\subsection{Super Mario}
 
 \subsection{Ähnliche Anwendungen}
 
-\subsection{Super Mario}
 
 %%% section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
