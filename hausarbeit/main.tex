@@ -358,8 +358,33 @@ Speedup minimal ausfällt, aber OpenTuner im Vergleich zum bisherigen Autotuner 
 sehr kleinen Anteil des Suchraums benötigt, um ein vergleichbar gutes \bzw besseres Ergebnis 
 zu erzielen.
 
-
 \subsection{Super Mario}
+Um zu verdeutlichen, wie flexibel und vielseitig einsetzbar das OpenTuner Framework tatsächlich ist,
+folgt nun ein sehr demonstratives Anwendungsbeispiel. Denn OpenTuner kann verwendet werden,
+um das erste Level des Videospiels Super Mario Bros. erfolgreich zu absolvieren.
+Das Spielziel wird erreicht durch eine Abfolge von Tasten-Eingaben, welche die eigentlichen
+Konfigurationen im Autotuner darstellen. \newline
+
+Die Zielfunktion besteht nun darin, die Pixel-Anzahl, welche Mario in Richtung Zielflagge (rechts)
+zurückgelegt hat, zu maximieren. Ein NES-Emulator\footnote{\url{www.fceux.com/web/home.html}}
+nimmt die konkreten Eingaben an, die Wiedergabe erfolgt schneller als in Echtzeit. Zudem können
+mehrere Instanzen des Emulators parallel ausgewertet werden, wodurch die Ergebnissuche 
+deutlich beschleunigt wird. \newline
+
+Das vollständige Setup (Autotuner, NES-Emulator und -Rom) habe ich auf meinem 
+Heimsystem\footnote{Core i5-3570K, Ubuntu 16.10} getestet und kann daher 
+bestätigen, dass es möglich ist, OpenTuner sogar für ein Videospiel erfolgreich
+einsetzen zu können. Auf besagtem System lief der Autotuner mit 8 Instanzen des
+Emulators flüssig (\texttt{./mario.py -{}-parallelism=8 \ldots}) und nach etwa drei Minuten
+war bereits der erste erfolgreiche Durchlauf zu verzeichnen. \newline
+
+Im weiteren Verlauf des Tuning-Vorgangs entstehen immer bessere Durchläufe, jedoch
+hat dieses automatisierte System einen entscheidenden Nachteil: im Gegensatz zum menschlichen
+Spieler, sind keinerlei Informationen über die wirkliche Spielumgebung vorhanden.
+Denn im ersten Level gibt es eine Abkürzung, welche durch einen Tastendruck nach 
+unten erreicht wird -- der Autotuner ist dafür nicht konfiguriert und wird diesen Weg
+nicht wählen.
+
 
 \subsection{Ähnliche Anwendungen}
 
