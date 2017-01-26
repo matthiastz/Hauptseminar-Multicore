@@ -7,7 +7,8 @@
 \usepackage{xspace}
 \usepackage{listings}
 \usepackage{color}
-\usepackage{url}
+\usepackage[hyphens]{url}
+\usepackage{hyperref}
 
 \definecolor{mygreen}{rgb}{0,0.6,0}
 \definecolor{mygray}{rgb}{0.5,0.5,0.5}
@@ -261,7 +262,7 @@ Suchraum kann durch Verwendung primitiver Parameter ausreichend modelliert werde
 \end{itemize}
 Um die eigentliche Übersetzung mit einem Compiler durchführen zu können, sind konkrete
 Zielprogramme notwendig. Für die Ergebnisse in diesem Beispiel wurde sich auf diese
-Auswahl beschränkt: Schnelle Fourier-Transformation in C (\texttt{fft.c}) \cite{fftc} und 
+Auswahl beschränkt: Schnelle Fourier-Transformation in C (\texttt{fft.c}) und 
 ein Template zur Matrix-Multiplikation in \CC (\texttt{matrixmultiply.cpp}) \cite{mmcpp}. \newline
 
 % kurze Überleitung zur Implementierung der Schritte 1-3 in Python
@@ -376,7 +377,7 @@ Heimsystem\footnote{Core i5-3570K, Ubuntu 16.10} getestet und kann daher
 bestätigen, dass es möglich ist, OpenTuner sogar für ein Videospiel erfolgreich
 einsetzen zu können. Auf besagtem System lief der Autotuner mit 8 Instanzen des
 Emulators flüssig (\texttt{./mario.py -{}-parallelism=8 \ldots}) und nach etwa drei Minuten
-war bereits der erste erfolgreiche Durchlauf zu verzeichnen. \newline
+war bereits der erste erfolgreiche Durchlauf\footnote{Mein Replay: \url{www.youtube.com/watch?v=5c7Ytwyywtk}} zu verzeichnen. \newline
 
 Im weiteren Verlauf des Tuning-Vorgangs entstehen immer bessere Durchläufe, jedoch
 hat dieses automatisierte System einen entscheidenden Nachteil: im Gegensatz zum menschlichen
@@ -387,6 +388,19 @@ nicht wählen.
 
 
 \subsection{Ähnliche Anwendungen}
+Das Projekt Halide \cite{halide} stellt eine Sprache und Compiler für den Bereich der 
+Bildverarbeitung, insbesondere der Einsatz strukturierter Rendering-Pipelines, dar.
+Die Ausführungsreihenfolge in diesen Pipelines kann mit OpenTuner modelliert und 
+optimiert werden, \texttt{PermutationParameter} und \texttt{ScheduleParameter}
+können hier ideal verwendet werden. Die Pipeline-Schedule bestimmt die Performance
+von Halide maßgeblich, daher ist eine Verbesserung der Ausführungszeit wünschenswert. \newline
+
+PetaBricks \cite{petab} nutzt das Konzept der \emph{algorithmic selectors}, also die 
+Synthese verschiedener Algorithmen (\emph{poly-algorithms}) zur Lösung eines bestimmten Problems.
+OpenTuner unterstützt die Verwendung von Selektoren\footnote{\texttt{SelectorParameter}}
+und kann damit für eine konkrete Bedingung einen bestimmten Algorithmus auswählen. 
+Eine Anwendung könnte darin bestehen, geeignete Suchalgorithmen für konkrete
+Eingabegrößen, zu wählen.
 
 
 %%% section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -407,29 +421,24 @@ abc
   %%%%%%%%%%%%%%%%%%%
   %%%%%%%%%%%%%%%%%%%
   
-    \bibitem{OT-paper} Jason Ansel, Shoaib Kamil, Kalyan Veeramachaneni, Jonathan Ragan-Kelley, Jeffrey Bosboom, Una-May O'Reilly, Saman Amarasinghe. \emph{OpenTuner: An Extensible Framework for Program Autotuning.}
-    2014.
+\bibitem{OT-paper} Jason Ansel, Shoaib Kamil, Kalyan Veeramachaneni, Jonathan Ragan-Kelley, Jeffrey Bosboom, Una-May O'Reilly, Saman Amarasinghe. \emph{OpenTuner: An Extensible Framework for Program Autotuning.} 2014.
    
-\bibitem{atlas} R. C. Whaley and J. J. Dongarra, \textquotedblleft Automatically tuned linear 
-algebra software,\textquotedblright~in \emph{Supercomputing}, Washington, DC, 1998.
+\bibitem{atlas} \url{http://math-atlas.sourceforge.net/}
 
-\bibitem{fftw} M. Frigo and S. G. Johnson, \textquotedblleft The design and implementation of 
-FFTW3,\textquotedblright~\emph{IEEE}, vol. 93, no. 2, February 2005.
-
-\bibitem{fftc} S. Woo, M. Ohara, E. Torrie, J. Singh, and A. Gupta, 
-\textquotedblleft The SPLASH-2 programs:  characterization and methodological considerations,\textquotedblright
-~in \emph{Symposium on Computer Architecture News}, June 1995.
+\bibitem{fftw} \url{http://www.fftw.org/}
     
-\bibitem{mmcpp}  X. Fan, \textquotedblleft Optimize your code:  Matrix multiplication,\textquotedblright~
-\url{https://tinyurl.com/kuvzbp9}, 2009.
+\bibitem{mmcpp}  X. Fan, \textquotedblleft Optimize your code:  Matrix multiplication,\textquotedblright{}
+\url{https://blogs.msdn.microsoft.com/xiangfan/2009/04/28/optimize-your-code-matrix-multiplication}, 2009.
 
-\bibitem{hpl} J. J. Dongarra, P. Luszczek, and A. Petitet, 
-\textquotedblleft The LINPACK Benchmark:  past, present and future,\textquotedblright~
-\emph{Concurrency and Computation:  Practice and Experience}, vol. 15, no. 9, pp. 803--820, 2003.
+\bibitem{hpl} \url{http://www.netlib.org/benchmark/hpl/}
 
 \bibitem{top500}  Top500,
 \textquotedblleft Top 500 supercomputer sites,\textquotedblright~
 \url{www.top500.org}, 2010.
+
+\bibitem{petab}  \url{http://projects.csail.mit.edu/petabricks/}
+
+\bibitem{halide} \url{http://halide-lang.org/}
 
 \end{thebibliography}
 \end{document}
