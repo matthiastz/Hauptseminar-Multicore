@@ -230,6 +230,7 @@ ausgetauscht werden, ohne das zugrundeliegende Framework ändern zu müssen.
 %%% section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Verwendung}
+\label{Verwendung}
 Um mit OpenTuner einen Autotuner zu implementieren, sind folgende Schritte notwendig:
 \begin{itemize}
   \item Suchraum definieren $\rightarrow$ \emph{configuration manipulator}
@@ -263,7 +264,7 @@ Suchraum kann durch Verwendung primitiver Parameter ausreichend modelliert werde
 Um die eigentliche Übersetzung mit einem Compiler durchführen zu können, sind konkrete
 Zielprogramme notwendig. Für die Ergebnisse in diesem Beispiel wurde sich auf diese
 Auswahl beschränkt: Schnelle Fourier-Transformation in C (\texttt{fft.c}) und 
-ein Template zur Matrix-Multiplikation in \CC (\texttt{matrixmultiply.cpp}) \cite{mmcpp}. \newline
+ein Template zur Matrix-Multiplikation in \CC (\texttt{matrixmultiply.cpp}). \newline
 
 % kurze Überleitung zur Implementierung der Schritte 1-3 in Python
 Die Implementierung des Autotuners geschieht anhand eines Python-Programms, da so die direkte Schnittstelle
@@ -405,8 +406,56 @@ Eingabegrößen, zu wählen.
 
 %%% section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Fazit}
-abc
+\section{Zusammenfassung}
+OpenTuner wurde hauptsächlich zwischen 2014 und 2015 entwickelt und steht auf GitHub 
+zur freien Verfügung \cite{ghub}. Das Projekt wurde in vergangener Zeit nicht aktiv
+weiterentwickelt, was auch durch die Aussage der Autoren zu begründen ist, dass das
+Framework \emph{out-of-the-box} funktioniert. Durch die bewusst flexible Architektur
+ist es den Nutzern möglich, beliebig neue Funktionalitäten hinzuzufügen oder 
+existierende Bestandteile zu erweitern. \newline
+
+Ziel des Projekts ist es, die Erstellung neuer Autotuner zu vereinfachen, bessere
+Optimierungsergebnisse zu erzielen und das Tuning-System auf lange Sicht wartbar
+zu gestalten. OpenTuner steht in Konkurrenz zu bisherigen Verfahren in 
+bestehenden Domänen\footnote{Lineare Algebra, Hochleistungsrechnen, Signalverarbeitung}
+und ist außerdem verwendbar in neuen Bereichen, was auch durch die Anwendungsbeispiele\ref{Verwendung} 
+deutlich wird.
+
+\subsection{Fazit}
+Das OpenTuner Framework zeichnet sich in erster Linie durch seine hohe Flexibilität
+und Erweiterbarkeit aus. Bisherige Verfahren funktionieren meist nur für einen speziellen
+Anwendungsfall, OpenTuner hat nicht nur den Vorteil auf verschiedenste Szenarien anwendbar zu sein,
+sondern ist auch stark konfigurierbar, um \bspw neue Suchtechniken zu unterstützen. \newline
+
+Der Nutzer kann, anstatt ein Programm direkt und mit großem Aufwand zu optimieren,
+eine Art \emph{Modellierung} des Problembereichs vornehmen, was in einer deutlich
+einfacheren und klaren Handhabung resultiert. Dennoch ist natürlich grundlegendes
+Wissen über Autotuning \bzw die Domäne notwendig. \newline
+
+Das Projekt stellt über das Framework und der zugehörigen Website \cite{ot} eine
+Vielzahl an Beispielanwendungen bereit, wodurch sich der praktische Einsatz sehr
+gut nachvollziehen lässt. Um einen ersten Autotuner zu erstellen, existiert eine
+ausreichend gute Dokumentation, je fortgeschrittener die Funktionalität ist,
+desto schwieriger wird es aber, umfassende Beschreibungen zu finden. \newline
+
+Eine weitere Besonderheit besteht darin, dass alternativ zu \texttt{time} 
+standardmäßig weitere Optimierungsziele unterstützt werden, neue
+Ziele definierbar sind und mehrere in Kombination verwendet werden können.
+Entscheidendes Kriterium ist letztlich natürlich, dass OpenTuner 
+effektiv \emph{bessere Ergebnisse} als bisherige Autotuner \emph{erreichen kann}. \newline
+
+Zu bedenken gilt dennoch, dass der mögliche Optimierungsgrad stark variiert, das ist 
+vom konkreten Anwendungsfall und vor allem von der Qualität des Autotuners abhängig.
+Es kann mitunter vorkommen, dass die benötigte Zeit für den Optimierungsvorgang
+so groß ist, dass eine Verwendung bedenklich ist.
+Es gilt also abzuwägen, ob der Zeitaufwand für den Entwurf und Einsatz des Autotuners
+und der effektive Nutzen der Optimierung, in einem vertretbaren Verhältnis stehen.
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%
+% TODO: noch was?
+%%%%%%%%%%%%%%%%%%%%
+
 
 %%% section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -422,23 +471,26 @@ abc
   %%%%%%%%%%%%%%%%%%%
   
 \bibitem{OT-paper} Jason Ansel, Shoaib Kamil, Kalyan Veeramachaneni, Jonathan Ragan-Kelley, Jeffrey Bosboom, Una-May O'Reilly, Saman Amarasinghe. \emph{OpenTuner: An Extensible Framework for Program Autotuning.} 2014.
+
+\bibitem{} Shoaib Kamil. \emph{Hands on session.} Programming Language Design and
+Implementation 2015
+
+\bibitem{ghub} \url{www.github.com/jansel/opentuner}, Januar 2017
+
+\bibitem{ot} \url{http://www.opentuner.org}, Januar 2017
    
-\bibitem{atlas} \url{http://math-atlas.sourceforge.net/}
+\bibitem{atlas} \url{http://math-atlas.sourceforge.net/}, Januar 2017
 
-\bibitem{fftw} \url{http://www.fftw.org/}
+\bibitem{fftw} \url{http://www.fftw.org/}, Januar 2017
     
-\bibitem{mmcpp}  X. Fan, \textquotedblleft Optimize your code:  Matrix multiplication,\textquotedblright{}
-\url{https://blogs.msdn.microsoft.com/xiangfan/2009/04/28/optimize-your-code-matrix-multiplication}, 2009.
 
-\bibitem{hpl} \url{http://www.netlib.org/benchmark/hpl/}
+\bibitem{hpl} \url{http://www.netlib.org/benchmark/hpl/}, Januar 2017
 
-\bibitem{top500}  Top500,
-\textquotedblleft Top 500 supercomputer sites,\textquotedblright~
-\url{www.top500.org}, 2010.
+\bibitem{top500}  Top500, \url{www.top500.org}, Januar 2017
 
-\bibitem{petab}  \url{http://projects.csail.mit.edu/petabricks/}
+\bibitem{petab}  \url{http://projects.csail.mit.edu/petabricks/}, Januar 2017
 
-\bibitem{halide} \url{http://halide-lang.org/}
+\bibitem{halide} \url{http://halide-lang.org/}, Januar 2017
 
 \end{thebibliography}
 \end{document}
