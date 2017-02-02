@@ -5,13 +5,67 @@
 \usepackage{ngerman}
 \usepackage{graphicx}
 \usepackage{xspace}
+\usepackage{listings}
+\usepackage{color}
+\usepackage[hyphens]{url}
+\usepackage{hyperref}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+% \fontfamily{pzc}\selectfont
+% \ttfamily
+
+\lstset{ %
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}; should come as last argument
+  basicstyle=\footnotesize\fontfamily{bch}\selectfont,        
+  % the size & type of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={min,max},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=single,	                   % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  language=Python,                 % the language of the code
+  morekeywords={},                 % if you want to add more keywords to the set
+  numbers=none,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,	                   % sets default tabsize to 2 spaces
+%   title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+
+
+% Add new keywords here: ConfigManip, Parameters…
+\lstset{emph={%  
+    IntegerParameter, ConfigurationManipulator,EnumParameter,format,call_program%
+    },emphstyle={\textbf}%
+}%
+
 
 \newcommand{\zB}{\mbox{z.\,B.}\xspace}
+\newcommand{\bspw}{\mbox{bspw.}\xspace}
+\newcommand{\bzw}{\mbox{bzw.}\xspace}
 \newcommand{\iAllg}{\mbox{i.\,Allg.}\xspace}
+\newcommand{\ua}{\mbox{u.\,a.}\xspace}
+\newcommand{\vs}{\mbox{vs.}\xspace}
 
-% \title{OpenTuner: An Extensible Framework for Program Autotuning
-% \includegraphics{bilder/tuc-logo-black.pdf}
-% 
+\def\CC{{C\nolinebreak[4]\hspace{-.05em}\raisebox{.4ex}{\tiny\bf ++}}}
+\setlength{\parindent}{0em} % Einrückung verhindern
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   
 \title{\includegraphics[width=0.6\textwidth]{bilder/tuc-logo-black.pdf}
     OpenTuner:~An~Extensible~Framework\\for~Program~Autotuning
@@ -30,16 +84,15 @@
 \thispagestyle{empty}
 ~
 \vfill
-\noindent % Einrückung vermeiden
 Technische Universität Chemnitz\\
 Fakultät für Informatik\\
 Professur Praktische Informatik\\
 Hauptseminar Multicore-Programmierung\\
 Wintersemester 2016/2017\\
 
-\noindent
 OpenTuner: An Extensible Framework for Program Autotuning\\
 Autor: Matthias Tietz\\
+Matrikelnummer:~375681\\
 Bachelor Informatik, 5.~Fachsemester
 
 \newpage
@@ -53,6 +106,8 @@ Bachelor Informatik, 5.~Fachsemester
 %% TODO: Sichtwortverzeichnis? : Autotuner, Param, Konfig, ...
 %%%%%%%%
 
+%%% section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Einleitung}
 % sub: Related Work, Begriffe
 
@@ -65,16 +120,14 @@ systematisch von geeigneten Techniken durchsucht wird. Das Optimierungsverfahren
 mittels Autotuner ist zumeist effizienter als die Optimierung von Hand, da deutlich größere
 Suchräume verarbeitet werden können. \newline
 
-\noindent
 Bei der Erstellung eines Autotuners steht oftmals die Verbesserung der Laufzeit
 für das spezifische Programm im Vordergrund. OpenTuner bietet neben \texttt{time}\footnote{Zeit, Ausführungszeit}  
 alternativ weitere Optimierungsziele, \zB \texttt{accuracy}\footnote{Genauigkeit, \zB Genauigkeit einer Berechnung}  
 und \texttt{energy}\footnote{Energie, Energiebedarf eines bestimmten Systems}.
 Es ist außerdem möglich, mehrere Ziele bei der Optimierung zu verfolgen. 
-So kann man bspw. das Optimierungsziel \texttt{time-accuracy} definieren, also die Ausführungszeit
+So kann man \bspw das Optimierungsziel \texttt{time-accuracy} definieren, also die Ausführungszeit
 des Programms verbessern und gleichzeitig die Genauigkeit berücksichtigen. \newline
 
-\noindent
 Bestehende Autotuning-Frameworks wurden \iAllg zielgerichtet für den Einsatz in einer 
 bestimmten Domäne entwickelt. \textsc{ATLAS} \cite{atlas} ist ein Projekt aus dem Bereich der Linearen Algebra,
 \textsc{FFTW} \cite{fftw} verwendet Autotuning zum Lösen schneller Fourier-Transformationen.
@@ -82,28 +135,332 @@ Im Gegensatz dazu verfolgt OpenTuner den Ansatz, ein generelles System zur Erste
 von Autotunern für verschiedene Domänen einzuführen. Diese Flexibilität wird grundsätzlich durch eine stark
 ausgeprägte Erweiterbarkeit und einen großen Funktionsumfang des Frameworks ermöglicht.
 Das durch OpenTuner realisierte Optimierungsverfahren kann auf andere Rechnersysteme übertragen
-und für die dort existierenden Bedingungen wiederholt werden. 
-% Portabilität
+und mit den dort existierenden Bedingungen wiederholt werden. \newline
 
-%%%
-% 3 main challenges bei AT FW Entwicklung
-%%%
+Bei der Entwicklung eines Autotuning-Frameworks existieren drei grundsätzliche Herausforderungen.
+Zunächst die Möglichkeit für einen Problemfall eine \emph{passende Konfigurations-Repräsentation} wählen
+zu können. Das umfasst die Darstellung der notwendigen Datenstrukturen und Bedingungen. Eine gute 
+Repräsentation ist entscheidend für die Effizienz des Autotuners. Ebenso kritisch kann die 
+\emph{Größe des gültigen Suchraumes} sein, denn durch Kombination verschiedener Parameter sind 
+schnell rießige Suchräume möglich. Eine vollständige Suche würde dort oftmals nicht abschließen,
+daher bedarf es intelligenter Suchtechniken, welche nur einen kleinen Teil der Konfigurationsmenge
+durchsuchen, um ein gutes Ergebnis zu erzielen. Die \emph{Beschaffenheit des Suchraumes} stellt
+ebenfalls eine Herausforderung dar, da in vielen praktischen Anwendungen die Suchräume meist ein
+hohes Maß an Komplexität besitzen.
+
+%%% ein wenig kürzen %%%
+
+%%% section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{OpenTuner Framework}
+Die Architektur des Frameworks ist vergleichsweise kompakt und lässt sich in die folgenden drei 
+Komponenten gliedern: Suche, Messung und Ergebnis-Datenbank.
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics{bilder/smdb}
+\cite{OT-paper} \caption{Komponenten des OpenTuner Framework} 
+\end{center}   
+\end{figure}
+
+Die Menge der Suchtechniken verwendet den Konfigurations-Manipulator, um Konfigurationen lesen und 
+schreiben zu können. Ausgewählte Konfigurationen werden durch eine benutzerdefinierte Messfunktion
+ausgeführt und anschließend ausgewertet. Die Datenbank dient dem Festhalten der Ergebnisse des Tuning-Vorgangs
+und dem Informationsaustausch zwischen Suche und Messung.
+
+%%% ggf. noch Messungen parallel??? %%%
+
+\subsection{Suchtechniken}
+OpenTuner stellt im Auslieferungszustand grundlegende Suchtechniken bereit, die auf viele Arten von 
+Suchräumen anwendbar sind. Die Verwendung der Suchtechniken findet hierarchisch statt --
+die Suchsteuerung spricht eine \texttt{root technique}\footnote{zentrale Technik (sog.~Meta-Technik),
+ist den normalen Suchtechniken/Heuristiken übergeordnet} an, die dann während des Tuning-Vorgangs 
+Tests auf eine Menge von \texttt{sub-techniques}\footnote{die Standard-Suchtechniken} verteilt. 
+Die \emph{Ensembles} sind ein Konzept von OpenTuner, welches die Kombination mehrerer Suchtechniken
+ermöglicht. Einzelne Suchtechniken tauschen Ergebnisse über die Datenbank aus -- findet eine 
+Suchtechnik eine gute Konfiguration, so können andere Techniken davon profitieren.
+Suchtechniken bekommen ihre Testanteile dynamisch zugewiesen, abhängig davon wie erfolgreich eine
+jeweils ist.
+
+\subsection{Konfigurations-Manipulator}
+Der Konfigurations-Manipulator stellt die Schnittstelle zwischen Suchtechniken und Konfigurationen
+dar. Dieser verwaltet die Menge der Parameter inklusive der jeweiligen Belegung und regelt den Zugriff
+(Lesen/Schreiben) durch die Suchtechniken.
+
+\subsubsection{Parameter-Arten}
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=0.85\textwidth]{bilder/paramtypes}
+\cite{OT-paper} \caption{Hierarchie der integrierten Parameter-Arten} 
+\end{center}
+\end{figure}
+
+Primitive Parameter repräsentieren numerische Werte einschließlich einem dafür
+zulässigen und definierbaren Wertebereich\footnote{untere und obere Grenze des Parameters}. 
+Zusätzlich existieren Varianten dieser Parameter,
+deren konkreter Wert skaliert nach außen gegeben wird. Für ein Anwendungsszenario mit 
+stark wachsenden Parametergrößen bietet sich die logarithmische Skalierung an. \newline
+
+Der komplexe Parameter \texttt{Permutation} erstellt für eine gegebene Liste von Werten dessen 
+Reihenfolge und besitzt die Funktionalität zufällige Änderungen an dieser Ordnung vorzunehmen.
+Für beide Parameter-Arten lassen sich bestehende Parameter erweitern oder einfach neue erstellen.
+
+\subsection{Optimierungsziele}
+
+OpenTuner unterstützt mehrere Optimierungsziele, standardmäßig wird nach der Zeit optimiert.
+Ergänzend zu \texttt{time} kann \texttt{accuracy}, \texttt{energy}, \texttt{size}, 
+\texttt{confidence} oder ein eigens vom Nutzer definiertes Ziel gewählt werden.
+Darüber hinaus kann man bei der Optimierung mehr als ein Ziel gleichzeitig verfolgen und
+Ziele nutzerspezifisch kombinieren (\zB \texttt{threshold accuracy  while
+minimizing time}). 
+
+\subsection{Suchen und Messen}
+
+Das OpenTuner Framework besitzt die beiden Module \emph{Suchen} und \emph{Messen},
+deren Kommunikation ausschließlich über die Ergebnis-Datenbank stattfindet.
+Beim Entwurf von OpenTuner wurde sich bewusst dazu entschieden, diese zwei Komponenten
+klar zu trennen. Diese Trennung hat \ua den Vorteil, dass mehrere Messungen parallel 
+ausgeführt werden können. Da für den Großteil der Autotuning-Anwendungen der Messaufwand
+den Suchaufwand deutlich übersteigt, ist die Unterteilung besonders sinnvoll.
+Außerdem können dadurch Bestandteile wie \zB das Messmodul einfach erweitert oder 
+ausgetauscht werden, ohne das zugrundeliegende Framework ändern zu müssen.
 
 
-\section{Das Framework}
-abc
+%%% section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Verwendung}
-abc
-\subsection{Beispielhafte Anwendungen}
+\label{Verwendung}
+Um mit OpenTuner einen Autotuner zu implementieren, sind folgende Schritte notwendig:
+\begin{itemize}
+  \item Suchraum definieren $\rightarrow$ \emph{configuration manipulator}
+  \item Messfunktion erstellen (Konfigurationsauswertung) $\rightarrow$ \emph{run function}
+  \item Festlegen des Optimierungsziels
+\end{itemize}
+Weitere Optionen lassen sich von außen an den Autotuner übergeben. So kann 
+mit \texttt{./autotuner.py -{}-parallelism=2} spezifiziert werden, wieviele Konfigurationen
+(hier:~2) OpenTuner parallel auswerten soll. \newline
 
-\subsection{Ausprobieren der Techniken}
+Da mit OpenTuner ein praxisorientierter Ansatz verfolgt wird, folgt nun eine Reihe von
+Beispielen, in denen das Framework eingesetzt wird, um Anwendungen in unterschiedlicher 
+Hinsicht zu optimieren. Für das jeweilige Beispiel wird der Problembereich beschrieben,
+auf die Umsetzung des Autotuners eingangen und die erzielten Resultate mit denen bisheriger
+Autotuner verglichen.
 
-\section{Fazit}
-abc
+\subsection{GCC/G++ Flags}
+Für diesen Anwendungsfall steht die Auswahl und Kombination von Compileroptionen
+im Vordergrund. Der Autotuner soll eine Menge von Flags und Parametern durchsuchen,
+um die resultierende Ausführungszeit des kompilierten Zielprogramms zu minimieren.
+Die unterstützten Flags erhält man mit \texttt{g++ --help=optimizers}, die 
+Parameter inklusive der zulässigen Wertebereich aus \texttt{params.def} (gcc source code). \newline
+
+Die Umsetzung des Autotuners lässt sich ideal mit OpenTuner realisieren, denn der
+Suchraum kann durch Verwendung primitiver Parameter ausreichend modelliert werden:
+\begin{itemize}
+  \item Optimierungslevel \texttt{(O0,$\ldots$,O3)} $\leftrightarrow$ \texttt{IntegerParameter~(min:~0, max:~3)}
+  \item Flag $\leftrightarrow$ \texttt{EnumParameter~(on,~off,~default)}
+  \item Parameter $\leftrightarrow$ \texttt{IntegerParameter~(min:~x, max:~y)}
+\end{itemize}
+Um die eigentliche Übersetzung mit einem Compiler durchführen zu können, sind konkrete
+Zielprogramme notwendig. Für die Ergebnisse in diesem Beispiel wurde sich auf diese
+Auswahl beschränkt: Schnelle Fourier-Transformation in C (\texttt{fft.c}) und 
+ein Template zur Matrix-Multiplikation in \CC (\texttt{matrixmultiply.cpp}). \newline
+
+% kurze Überleitung zur Implementierung der Schritte 1-3 in Python
+Die Implementierung des Autotuners geschieht anhand eines Python-Programms, da so die direkte Schnittstelle
+zu OpenTuner spezifiziert ist. Es folgen nun repräsentative Code-Abschnitte, um eine
+mögliche Umsetzung nachvollziehen zu können.  \newline
+
+\lstinputlisting[language=Python]{etc/2830.py}
+Zunächst erstellt man eine neue Variable zur Repräsentation des Suchraums: \texttt{manipulator}.
+Die standardmäßig unterstützten Optimierungslevel des GCC werden dem Konfigurations-Manipulator
+als \texttt{IntegerParameter}, inklusive der zulässigen Grenzen, hinzugefügt. \newline
+
+\lstinputlisting[language=Python]{etc/gccflags.py}
+Der Suchraum wird nun durch die einzelnen GCC-Flags als Menge von \texttt{EnumParameter} 
+erweitert. \newline
+
+\lstinputlisting[language=Python]{etc/gccparams.py}
+Nach Einfügen der GCC-Parameter ist der Suchraum vollständig und es kann der nächste Schritt,
+die Definition der Messfunktion, folgen. \newline
+
+\lstinputlisting[language=Python]{etc/run.py}
+Um eine Messung ausführen zu können, ist dafür zunächst eine Konfiguration notwendig.
+Diese Konfiguration wird durch die Variable \texttt{gcc\_cmd} repräsentiert, welche
+schrittweise konkrete Parameterbelegungen hinzugefügt bekommt. \newline
+
+\lstinputlisting[language=Python]{etc/flagsonoff.py}
+Nun wird der Konfiguration die Information übertragen, ob das jeweilige GCC-Flag
+aktiviert werden soll oder nicht, \zB~'-falign-functions' \vs~'-fno-align-functions'.
+
+\lstinputlisting[language=Python]{etc/params.py}
+Für jeden Parameter aus \texttt{GCC\_PARAMS} wird die Bezeichnung und der
+konkrete Wert an \texttt{gcc\_cmd} übergeben, \zB~'-{}-param early-inlining-insns=512'.
+Das Erstellen der zu testenden Konfiguration ist damit abgeschlossen. \newline
+
+\lstinputlisting[language=Python]{etc/measure.py}
+Um nun herausfinden zu können, wie gut die erstellte Konfiguration tatsächlich ist, 
+wird diese (\texttt{gcc\_cmd}) kompiliert und anschließend ausgeführt: \texttt{'./tmp.bin'}.
+Die ursprüngliche Intention des Tuning-Vorgangs war es, die Ausführungszeit des 
+Executable zu minimieren. Deshalb wird das entstandene Messergebnis aus der Datenbank,
+in Spalte (Attribut) \texttt{time}, abgefragt und zurückgegeben. \newline
+
+Dieser Autotuner wurde in vollständiger Form\footnote{zu finden im Framework: 
+examples/gccflags/gccflags.py} auf die Beispiele \texttt{fft.c} 
+und \texttt{matrixmultiply.cpp} angewandt, es wurden immer 30 Tuning-Runs\footnote{wiederholte Anwendung 
+des Autotuners} vollzogen.
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=0.8\textwidth]{bilder/fft_cropped}
+\cite{OT-paper} \caption{\texttt{fft.c}}
+\end{center}
+\end{figure}
+
+Bereits im zweiten Durchlauf des Autotuners wird die bisherige Bestzeit (\texttt{gcc -O2}) 
+erreicht und kontinuierlich verbessert. Der Code des Zielprogramms \texttt{fft.c} war bereits
+hochoptimiert\footnote{cache aware tiling, threading} -- dennoch war durch OpenTuner schließlich
+eine Zeitverbesserung von $1.15 \times$  zu verzeichnen.
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=0.8\textwidth]{bilder/mm_cropped}
+\cite{OT-paper} \caption{\texttt{matrixmultiply.cpp}}
+\end{center}
+\end{figure}
+
+Bei dem Beispiel der Matrix-Multiplikation wird die Bestzeit ebenfalls schnell unterboten.
+Hier wird die Verbesserung aber besonders deutlich: der resultierende Speedup beträgt
+$2.82 \times$. Dieses Ergebnis ist überdurchschnittlich, was letztlich auch darauf beruht,
+dass die ursprüngliche Implementierung (\texttt{matrixmultiply.cpp}) kaum optimiert war.
+
+\subsection{High Performance Linpack Benchmark (HPL)}
+Der High Performance Linpack Benchmark \cite{hpl} dient zur Bestimmung der 
+\texttt{floating point performance} verschiedenster Computersysteme und gilt als 
+Kriterium für die Wahl der Top 500 Supercomputer \cite{top500}.
+Zur Bestimmung der Performance eines Systems misst der Benchmark die Geschwindigkeit 
+für das Lösen großer Linearer Gleichungssysteme. \newline
+
+Es müssen etwa 15 verschiedene Parameter
+optimiert werden, dabei hat die Matrix-Blockgröße den stärksten Einfluss.
+HPL besitzt selbst einen eingebauten Autotuner, der als Suchtechnik 
+\emph{vollständige Suche} einsetzt. Die folgende Grafik zeigt die erreichte Leistung
+mit OpenTuner im Vergleich zur optimierten HPL-Implementierung von Intel\footnote{\url{http://software.intel.com/en-us/articles/intel-math-kernel-library-linpack-download}}. \newline
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=0.8\textwidth]{bilder/hpl}
+\cite{OT-paper} \caption{HPL}
+\end{center}
+\end{figure}
+Diesmal sind deutlich mehr Tuning-Runs notwendig, um die Bestzeit zu erreichen \bzw zu unterbieten.
+Nach mehr als $1200$ Sekunden jedoch, erreicht OpenTuner eine neue günstigste Execution Time,
+welche gegen Ende nochmals leicht verbessert wird. Hier gilt zu beachten, dass der resultierende
+Speedup minimal ausfällt, aber OpenTuner im Vergleich zum bisherigen Autotuner nur einen 
+sehr kleinen Anteil des Suchraums benötigt, um ein vergleichbar gutes \bzw besseres Ergebnis 
+zu erzielen.
+
+\subsection{Super Mario}
+Um zu verdeutlichen, wie flexibel und vielseitig einsetzbar das OpenTuner Framework tatsächlich ist,
+folgt nun ein sehr demonstratives Anwendungsbeispiel. Denn OpenTuner kann verwendet werden,
+um das erste Level des Videospiels Super Mario Bros. erfolgreich zu absolvieren.
+Das Spielziel wird erreicht durch eine Abfolge von Tasten-Eingaben, welche die eigentlichen
+Konfigurationen im Autotuner darstellen. \newline
+
+Die Zielfunktion besteht nun darin, die Pixel-Anzahl, welche Mario in Richtung Zielflagge (rechts)
+zurückgelegt hat, zu maximieren. Ein NES-Emulator\footnote{\url{www.fceux.com/web/home.html}}
+nimmt die konkreten Eingaben an, die Wiedergabe erfolgt schneller als in Echtzeit. Zudem können
+mehrere Instanzen des Emulators parallel ausgewertet werden, wodurch die Ergebnissuche 
+deutlich beschleunigt wird. \newline
+
+Das vollständige Setup (Autotuner, NES-Emulator und -Rom) habe ich auf meinem 
+Heimsystem\footnote{Core i5-3570K, Ubuntu 16.10} getestet und kann daher 
+bestätigen, dass es möglich ist, OpenTuner sogar für ein Videospiel erfolgreich
+einsetzen zu können. Auf besagtem System lief der Autotuner mit 8 Instanzen des
+Emulators flüssig (\texttt{./mario.py -{}-parallelism=8 \ldots}) und nach etwa drei Minuten
+war bereits der erste erfolgreiche Durchlauf\footnote{Mein Replay: \url{www.youtube.com/watch?v=5c7Ytwyywtk}} zu verzeichnen. \newline
+
+Im weiteren Verlauf des Tuning-Vorgangs entstehen immer bessere Durchläufe, jedoch
+hat dieses automatisierte System einen entscheidenden Nachteil: im Gegensatz zum menschlichen
+Spieler, sind keinerlei Informationen über die wirkliche Spielumgebung vorhanden.
+Denn im ersten Level gibt es eine Abkürzung, welche durch einen Tastendruck nach 
+unten erreicht wird -- der Autotuner ist dafür nicht konfiguriert und wird diesen Weg
+nicht wählen.
+
+
+\subsection{Ähnliche Anwendungen}
+Das Projekt Halide \cite{halide} stellt eine Sprache und Compiler für den Bereich der 
+Bildverarbeitung, insbesondere der Einsatz strukturierter Rendering-Pipelines, dar.
+Die Ausführungsreihenfolge in diesen Pipelines kann mit OpenTuner modelliert und 
+optimiert werden, \texttt{PermutationParameter} und \texttt{ScheduleParameter}
+können hier ideal verwendet werden. Die Pipeline-Schedule bestimmt die Performance
+von Halide maßgeblich, daher ist eine Verbesserung der Ausführungszeit wünschenswert. \newline
+
+PetaBricks \cite{petab} nutzt das Konzept der \emph{algorithmic selectors}, also die 
+Synthese verschiedener Algorithmen (\emph{poly-algorithms}) zur Lösung eines bestimmten Problems.
+OpenTuner unterstützt die Verwendung von Selektoren\footnote{\texttt{SelectorParameter}}
+und kann damit für eine konkrete Bedingung einen bestimmten Algorithmus auswählen. 
+Eine Anwendung könnte darin bestehen, geeignete Suchalgorithmen für konkrete
+Eingabegrößen, zu wählen.
+
+
+%%% section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Zusammenfassung}
+OpenTuner wurde hauptsächlich zwischen 2014 und 2015 entwickelt und steht auf GitHub 
+zur freien Verfügung \cite{ghub}. Das Projekt wurde in vergangener Zeit nicht aktiv
+weiterentwickelt, was auch durch die Aussage der Autoren zu begründen ist, dass das
+Framework \emph{out-of-the-box} funktioniert. Durch die bewusst flexible Architektur
+ist es den Nutzern möglich, beliebig neue Funktionalitäten hinzuzufügen oder 
+existierende Bestandteile zu erweitern. \newline
+
+Ziel des Projekts ist es, die Erstellung neuer Autotuner zu vereinfachen, bessere
+Optimierungsergebnisse zu erzielen und das Tuning-System auf lange Sicht wartbar
+zu gestalten. OpenTuner steht in Konkurrenz zu bisherigen Verfahren in 
+bestehenden Domänen\footnote{Lineare Algebra, Hochleistungsrechnen, Signalverarbeitung}
+und ist außerdem verwendbar in neuen Bereichen, was auch durch die Anwendungsbeispiele\ref{Verwendung} 
+deutlich wird.
+
+\subsection{Fazit}
+Das OpenTuner Framework zeichnet sich in erster Linie durch seine hohe Flexibilität
+und Erweiterbarkeit aus. Bisherige Verfahren funktionieren meist nur für einen speziellen
+Anwendungsfall, OpenTuner hat nicht nur den Vorteil auf verschiedenste Szenarien anwendbar zu sein,
+sondern ist auch stark konfigurierbar, um \bspw neue Suchtechniken zu unterstützen. \newline
+
+Der Nutzer kann, anstatt ein Programm direkt und mit großem Aufwand zu optimieren,
+eine Art \emph{Modellierung} des Problembereichs vornehmen, was in einer deutlich
+einfacheren und klaren Handhabung resultiert. Dennoch ist natürlich grundlegendes
+Wissen über Autotuning \bzw die Domäne notwendig. \newline
+
+Das Projekt stellt über das Framework und der zugehörigen Website \cite{ot} eine
+Vielzahl an Beispielanwendungen bereit, wodurch sich der praktische Einsatz sehr
+gut nachvollziehen lässt. Um einen ersten Autotuner zu erstellen, existiert eine
+ausreichend gute Dokumentation, je fortgeschrittener die Funktionalität ist,
+desto schwieriger wird es aber, umfassende Beschreibungen zu finden. \newline
+
+Eine weitere Besonderheit besteht darin, dass alternativ zu \texttt{time} 
+standardmäßig weitere Optimierungsziele unterstützt werden, neue
+Ziele definierbar sind und mehrere in Kombination verwendet werden können.
+Entscheidendes Kriterium ist letztlich natürlich, dass OpenTuner 
+effektiv \emph{bessere Ergebnisse} als bisherige Autotuner \emph{erreichen kann}. \newline
+
+Zu bedenken gilt dennoch, dass der mögliche Optimierungsgrad stark variiert, das ist 
+vom konkreten Anwendungsfall und vor allem von der Qualität des Autotuners abhängig.
+Es kann mitunter vorkommen, dass die benötigte Zeit für den Optimierungsvorgang
+so groß ist, dass eine Verwendung bedenklich ist.
+Es gilt also abzuwägen, ob der Zeitaufwand für den Entwurf und Einsatz des Autotuners
+und der effektive Nutzen der Optimierung, in einem vertretbaren Verhältnis stehen.
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%
+% TODO: noch was?
+%%%%%%%%%%%%%%%%%%%%
+
+
+%%% section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Literaturverzeichnis}
-abc
+% abc
 
 \begin{thebibliography}{9}
    
@@ -112,16 +469,28 @@ abc
   %  TODO: Zitatstile -> Reihenfolge: Autor, Titel, Jahr, Verlag, Seite, …
   %%%%%%%%%%%%%%%%%%%
   %%%%%%%%%%%%%%%%%%%
+  
+\bibitem{OT-paper} Jason Ansel, Shoaib Kamil, Kalyan Veeramachaneni, Jonathan Ragan-Kelley, Jeffrey Bosboom, Una-May O'Reilly, Saman Amarasinghe. \emph{OpenTuner: An Extensible Framework for Program Autotuning.} 2014.
+
+\bibitem{} Shoaib Kamil. \emph{Hands on session.} Programming Language Design and
+Implementation 2015
+
+\bibitem{ghub} \url{www.github.com/jansel/opentuner}, Januar 2017
+
+\bibitem{ot} \url{http://www.opentuner.org}, Januar 2017
    
-\bibitem{atlas} Liste der Autoren \emph{Titel oder Quelle des zitierten Werkes} ggf. Seiten.
-    Jahr. und weiteres.
-\bibitem{fftw} Liste der Autoren \emph{Titel oder Quelle des zitierten Werkes} ggf. Seiten.
-    Jahr. und weiteres.
+\bibitem{atlas} \url{http://math-atlas.sourceforge.net/}, Januar 2017
+
+\bibitem{fftw} \url{http://www.fftw.org/}, Januar 2017
+    
+
+\bibitem{hpl} \url{http://www.netlib.org/benchmark/hpl/}, Januar 2017
+
+\bibitem{top500}  Top500, \url{www.top500.org}, Januar 2017
+
+\bibitem{petab}  \url{http://projects.csail.mit.edu/petabricks/}, Januar 2017
+
+\bibitem{halide} \url{http://halide-lang.org/}, Januar 2017
 
 \end{thebibliography}
-
-
-\section{Eigenständigkeitserklärung}
-abc
-
 \end{document}
