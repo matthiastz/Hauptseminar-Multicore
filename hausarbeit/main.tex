@@ -62,6 +62,7 @@
 \newcommand{\vs}{\mbox{vs.}\xspace}
 
 \def\CC{{C\nolinebreak[4]\hspace{-.05em}\raisebox{.4ex}{\tiny\bf ++}}}
+\def\GPP{{G\nolinebreak[4]\hspace{-.05em}\raisebox{.4ex}{\tiny\bf ++}}}
 \setlength{\parindent}{0em} % Einrückung verhindern
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -119,8 +120,8 @@ zu verfolgen. \newline
 
 
 Bestehende Autotuning-Frameworks wurden \iAllg zielgerichtet für den Einsatz in einer 
-bestimmten Domäne entwickelt. \textsc{ATLAS} \cite{atlas} ist ein Projekt aus dem Bereich der Linearen Algebra,
-\textsc{FFTW} \cite{fftw} verwendet Autotuning zum Lösen schneller Fourier-Transformationen.
+bestimmten Domäne entwickelt. \textsc{ATLAS} \cite{atlas} ist ein Projekt aus dem Bereich der linearen Algebra,
+\textsc{FFTW} \cite{fftw} verwendet Autotuning zum Lösen schneller Fouriertransformationen.
 Im Gegensatz dazu verfolgt OpenTuner den Ansatz, ein generelles System zur Erstellung 
 von Autotunern für verschiedene Domänen einzuführen. Diese Flexibilität wird grundsätzlich durch eine stark
 ausgeprägte Erweiterbarkeit und einen großen Funktionsumfang des Frameworks ermöglicht.
@@ -133,7 +134,7 @@ zu können. Das umfasst die Darstellung der notwendigen Datenstrukturen und Bedi
 Repräsentation ist entscheidend für die Effizienz des Autotuners. \newline 
 
 Ebenso kritisch kann die \emph{Größe des gültigen Suchraumes} sein, denn durch Kombination 
-verschiedener Parameter sind schnell rießige Suchräume möglich. Eine vollständige Suche würde 
+verschiedener Parameter sind schnell riesige Suchräume möglich. Eine vollständige Suche würde 
 dann oftmals nicht abschließen,
 daher bedarf es intelligenter Suchtechniken, welche nur einen kleinen Teil der Konfigurationsmenge
 durchsuchen, um ein gutes Ergebnis zu erzielen. Die \emph{Beschaffenheit des Suchraumes} stellt
@@ -167,7 +168,7 @@ und dem Informationsaustausch zwischen Suche und Messung.
 \subsection{Suchtechniken}
 OpenTuner stellt grundlegende Suchtechniken bereit, die auf viele Arten von 
 Suchräumen anwendbar sind. Die Verwendung der Suchtechniken findet hierarchisch statt --
-die Suchsteuerung spricht eine \texttt{root technique}\footnote{zentrale Technik (sog.~Meta-Technik),
+die Suchsteuerung spricht eine \texttt{root technique}\footnote{Zentrale Technik (sog.~Meta-Technik),
 ist den normalen Suchtechniken/Heuristiken übergeordnet} an, die dann während des Tuning-Vorgangs 
 Tests auf eine Menge von \texttt{sub-techniques}\footnote{Standard-Suchtechniken:
 \zB \texttt{Torczon hillclimbers, evolutionary mutation, pattern search}} verteilt.  \newline
@@ -175,7 +176,7 @@ Tests auf eine Menge von \texttt{sub-techniques}\footnote{Standard-Suchtechniken
 Die \emph{Ensembles} sind ein Konzept von OpenTuner, welches die Kombination mehrerer Suchtechniken
 ermöglicht. Einzelne Suchtechniken tauschen Ergebnisse über die Datenbank aus -- findet eine 
 Suchtechnik eine gute Konfiguration, so können andere Techniken davon profitieren.
-Suchtechniken bekommen ihre Testanteile dynamisch zugewiesen, abhängig davon wie erfolgreich eine
+Suchtechniken bekommen ihre Testanteile dynamisch zugewiesen, abhängig davon, wie erfolgreich eine
 jeweils ist.
 
 \subsection{Konfigurations-Manipulator}
@@ -193,7 +194,7 @@ dar. Dieser verwaltet die Menge der Parameter inklusive der jeweiligen Belegung 
 \end{figure}
 
 Primitive Parameter repräsentieren numerische Werte einschließlich einem dafür
-zulässigen und definierbaren Wertebereich\footnote{untere und obere Grenze des Parameters}. 
+zulässigen und definierbaren Wertebereich\footnote{Untere und obere Grenze des Parameters}. 
 Zusätzlich existieren Varianten dieser Parameter,
 deren konkreter Wert skaliert nach außen gegeben wird. Für ein Anwendungsszenario mit 
 stark wachsenden Parametergrößen bietet sich die logarithmische Skalierung an. \newline
@@ -221,7 +222,7 @@ klar zu trennen. Diese Trennung hat \ua den Vorteil, dass mehrere Messungen para
 ausgeführt werden können -- da für den Großteil der Autotuning-Anwendungen der Messaufwand
 den Suchaufwand deutlich übersteigt, ist die Unterteilung besonders sinnvoll.
 Außerdem können dadurch Bestandteile wie das Messmodul einfach erweitert oder 
-ausgetauscht werden, ohne das zugrundeliegende Framework ändern zu müssen.
+ausgetauscht werden, ohne das zugrunde liegende Framework ändern zu müssen.
 
 
 %%% section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -233,10 +234,10 @@ Folgende Schritte realisieren in OpenTuner einen Autotuner:
 \begin{enumerate}
   \item Suchraum definieren $\rightarrow$ \emph{configuration manipulator}
   \item Messfunktion erstellen (Konfigurationsauswertung) $\rightarrow$ \emph{run function}
-  \item Festlegen des Optimierungsziels
+  \item Optimierungsziel festlegen 
 \end{enumerate}
 Weitere Optionen lassen sich von außen an den Autotuner übergeben. So kann 
-mit \texttt{./tuner.py -{}-parallelism=2} spezifiziert werden, wieviele Konfigurationen
+mit \texttt{./tuner.py -{}-parallelism=2} spezifiziert werden, wie viele Konfigurationen
 (hier~2) OpenTuner parallel auswerten soll. \newline
 
 Da mit OpenTuner ein praxisorientierter Ansatz angestrebt wird, folgt nun eine Reihe von
@@ -244,6 +245,7 @@ Beispielen, in denen das Framework eingesetzt wird, um Anwendungen in unterschie
 Hinsicht zu optimieren. Für das jeweilige Beispiel wird der Problembereich beschrieben,
 auf die Umsetzung des Autotuners eingegangen und die erzielten Resultate mit denen bisheriger
 Autotuner verglichen.
+
 
 \subsection{GCC/G++ Flags}
 Für diesen Anwendungsfall steht die Auswahl und Kombination von Compileroptionen
@@ -261,7 +263,7 @@ Suchraum kann durch Verwendung existierender Parameter ausreichend modelliert we
 \end{itemize}
 Um die eigentliche Übersetzung mit einem Compiler durchführen zu können, sind konkrete
 Zielprogramme notwendig. Für die Ergebnisse in diesem Beispiel wurde sich auf diese
-Auswahl beschränkt: Schnelle Fourier-Transformation in C (\texttt{fft.c}) und 
+Auswahl beschränkt: Schnelle Fouriertransformation in C (\texttt{fft.c}) und 
 ein Template zur Matrix-Multiplikation in \CC~(\texttt{matrixmultiply.cpp}). \newline
 
 % kurze Überleitung zur Implementierung der Schritte 1-3 in Python
@@ -303,9 +305,9 @@ Die ursprüngliche Intention des Tuning-Vorgangs war es, die Ausführungszeit de
 Executable zu minimieren. Deshalb wird das entstandene Messergebnis aus der Datenbank,
 in Spalte/Attribut \texttt{time} (Festlegen des Optimierungsziel), abgefragt und zurückgegeben. \newline
 
-Dieser Autotuner wurde in vollständiger Form\footnote{zu finden im Framework: 
+Dieser Autotuner wurde in vollständiger Form\footnote{Zu finden im Framework: 
 examples/gccflags/gccflags.py} auf die Beispiele \texttt{fft.c} 
-und \texttt{matrixmultiply.cpp} angewandt, es wurden immer 30 Tuning-Runs\footnote{wiederholte Anwendung 
+und \texttt{matrixmultiply.cpp} angewandt, es wurden immer 30 Tuning-Runs\footnote{Wiederholte Anwendung 
 des Autotuners} vollzogen\footnote{Testsystem: \texttt{Xeon E5320, gcc 4.7.3-1ubuntu1}}.
 
 \begin{figure}[h]
@@ -337,7 +339,7 @@ Der High Performance Linpack Benchmark \cite{hpl} dient zur Bestimmung der
 \texttt{floating point performance} unterschiedlicher Computersysteme und gilt als 
 Kriterium für die Wahl der Top 500 Supercomputer \cite{top500}.
 Zur Bestimmung der Performance eines Systems misst der Benchmark die Geschwindigkeit 
-für das Lösen großer Linearer Gleichungssysteme. \newline
+für das Lösen großer linearer Gleichungssysteme. \newline
 
 Es müssen etwa 15 verschiedene Parameter
 optimiert werden, dabei hat die Matrix-Blockgröße den stärksten Einfluss.
@@ -365,10 +367,10 @@ zu erzielen.
 Um zu verdeutlichen, wie flexibel und vielseitig einsetzbar das OpenTuner Framework tatsächlich ist,
 folgt nun ein sehr demonstratives Anwendungsbeispiel. Denn OpenTuner kann verwendet werden,
 um das erste Level des Videospiels Super Mario Bros. erfolgreich zu absolvieren.
-Das Spielziel wird durch eine Abfolge von Tasten-Eingaben erreicht, welche die eigentlichen
+Das Spielziel wird durch eine Abfolge von Tasteneingaben erreicht, welche die eigentlichen
 Konfigurationen im Autotuner darstellen. \newline
 
-Die Zielfunktion besteht nun darin, die Pixel-Anzahl, welche Mario in Richtung Zielflagge (rechts)
+Die Zielfunktion besteht nun darin, die Pixelanzahl, welche Mario in Richtung Zielflagge (rechts)
 zurückgelegt hat, zu maximieren. Ein NES-Emulator\footnote{\url{www.fceux.com/web/home.html}}
 nimmt die konkreten Eingaben an, die Wiedergabe erfolgt schneller als in Echtzeit. Zudem können
 mehrere Instanzen des Emulators parallel ausgewertet werden, wodurch die Ergebnissuche 
@@ -382,8 +384,8 @@ Emulators flüssig (\texttt{./mario.py -{}-parallelism=8 \ldots}) und nach etwa 
 war bereits der erste erfolgreiche Durchlauf\footnote{Mein Replay: \url{www.youtube.com/watch?v=5c7Ytwyywtk}} zu verzeichnen. \newline
 
 Im weiteren Verlauf des Tuning-Vorgangs entstehen immer bessere Durchläufe, jedoch
-hat dieses automatisierte System einen entscheidenden Nachteil: im Gegensatz zum menschlichen
-Spieler, sind keinerlei Informationen über die wirkliche Spielumgebung vorhanden.
+hat dieses automatisierte System einen entscheidenden Nachteil: Im Gegensatz zum menschlichen
+Spieler sind keinerlei Informationen über die wirkliche Spielumgebung vorhanden.
 Denn im ersten Level gibt es eine Abkürzung, welche durch einen Tastendruck nach 
 unten erreicht wird -- der Autotuner ist dafür nicht konfiguriert und wird diesen Weg
 nicht wählen.
@@ -428,7 +430,7 @@ und Erweiterbarkeit aus. Bisherige Verfahren funktionieren meist nur für einen 
 Anwendungsfall, OpenTuner hat nicht nur den Vorteil auf verschiedenste Szenarien anwendbar zu sein,
 sondern ist auch stark konfigurierbar, um \bspw neue Suchtechniken zu unterstützen. \newline
 
-Der Nutzer kann anstatt ein Programm direkt und mit großem Aufwand zu optimieren,
+Der Nutzer kann, anstatt ein Programm direkt und mit großem Aufwand zu optimieren,
 eine Art \emph{Modellierung} des Problembereichs vornehmen, was in einer deutlich
 einfacheren und klaren Handhabung resultiert. Dennoch ist natürlich grundlegendes
 Wissen über Autotuning \bzw die Domäne notwendig. \newline
