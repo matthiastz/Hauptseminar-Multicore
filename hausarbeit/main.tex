@@ -313,7 +313,7 @@ des Autotuners} vollzogen\footnote{Testsystem: \texttt{Xeon E5320, gcc 4.7.3-1ub
 \begin{figure}[h]
 \begin{center}
 \includegraphics[width=0.8\textwidth]{bilder/fft_cropped}
-\cite{OT-paper} \caption{\texttt{fft.c}}
+\cite[S.~7]{OT-paper} \caption{\texttt{fft.c}}
 \end{center}
 \end{figure}
 
@@ -325,7 +325,7 @@ hochoptimiert\footnote{cache aware tiling, threading \cite[S.~6]{OT-paper}}
 \begin{figure}[h]
 \begin{center}
 \includegraphics[width=0.8\textwidth]{bilder/mm_cropped}
-\cite{OT-paper} \caption{\texttt{matrixmultiply.cpp}}
+\cite[S.~7]{OT-paper} \caption{\texttt{matrixmultiply.cpp}}
 \end{center}
 \end{figure}
 
@@ -352,7 +352,7 @@ mit OpenTuner im Vergleich zur optimierten HPL-Implementierung von Intel\footnot
 \begin{figure}[h]
 \begin{center}
 \includegraphics[width=0.8\textwidth]{bilder/hpl}
-\cite{OT-paper} \caption{HPL}
+\cite[S.~9]{OT-paper} \caption{HPL}
 \end{center}
 \end{figure}
 
@@ -403,7 +403,7 @@ PetaBricks \cite{petab} nutzt das Konzept der \emph{algorithmic selectors}, also
 Synthese verschiedener Algorithmen (\emph{poly-algorithms}) zur Lösung eines bestimmten algorithmischen Problems.
 OpenTuner unterstützt die Verwendung von Selektoren (\texttt{SelectorParameter})
 und kann damit für eine konkrete Bedingung einen bestimmten Algorithmus auswählen. 
-Eine Anwendung könnte darin bestehen, geeignete Suchalgorithmen für konkrete
+Eine Anwendung könnte darin bestehen, geeignete Suchalgorithmen für variable
 Eingabegrößen, zu komibinieren.
 
 
